@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1859,
+      "path": "capabilities.json",
+      "sha256": "90a402c5ab676d98407c8c814da77970df29579222f41bad655b06cc0b7007f0"
+    },
+    {
+      "bytes": 125176,
+      "path": "runs.json",
+      "sha256": "04529167aa306a2e93ed8a29eca98ac6ec1debc7b5a698c6a0513c81f62140b8"
+    }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "dataset_id": "dataset-reference-2026",
+  "generator": {
+    "name": "gen_dataset",
+    "seed": 2026,
+    "version": "0.1.0"
+  },
+  "schema_version": "1.0",
+  "snapshot_hash": "83c9a22581b017a0ebc967d7c5bd4ef53f6c9edcb246e696ab402314a5eef394"
+}

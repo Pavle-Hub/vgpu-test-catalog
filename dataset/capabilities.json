@@ -1,0 +1,101 @@
+{
+  "dataset_id": "dataset-reference-2026",
+  "generated_at": "2026-01-01T00:00:00Z",
+  "gpus": [
+    {
+      "capabilities": [
+        "compute-basic",
+        "graphics"
+      ],
+      "gpu_id": "GPU-A"
+    },
+    {
+      "capabilities": [
+        "compute-basic",
+        "compute-advanced",
+        "graphics",
+        "large-memory"
+      ],
+      "gpu_id": "GPU-B"
+    },
+    {
+      "capabilities": [
+        "compute-basic",
+        "compute-advanced",
+        "graphics",
+        "large-memory",
+        "multi-instance"
+      ],
+      "gpu_id": "GPU-C"
+    }
+  ],
+  "schema_version": "1.0",
+  "testcases": [
+    {
+      "required_capabilities": [
+        "compute-basic"
+      ],
+      "testcase_id": "TC-001"
+    },
+    {
+      "required_capabilities": [
+        "graphics"
+      ],
+      "testcase_id": "TC-002"
+    },
+    {
+      "required_capabilities": [
+        "compute-advanced"
+      ],
+      "testcase_id": "TC-003"
+    },
+    {
+      "required_capabilities": [
+        "large-memory"
+      ],
+      "testcase_id": "TC-004"
+    },
+    {
+      "required_capabilities": [
+        "multi-instance"
+      ],
+      "testcase_id": "TC-005"
+    },
+    {
+      "required_capabilities": [
+        "compute-advanced",
+        "graphics"
+      ],
+      "testcase_id": "TC-006"
+    },
+    {
+      "required_capabilities": [
+        "compute-basic",
+        "large-memory"
+      ],
+      "testcase_id": "TC-007"
+    },
+    {
+      "required_capabilities": [
+        "compute-advanced",
+        "multi-instance"
+      ],
+      "testcase_id": "TC-008"
+    },
+    {
+      "required_capabilities": [
+        "graphics",
+        "large-memory"
+      ],
+      "testcase_id": "TC-009"
+    },
+    {
+      "required_capabilities": [
+        "compute-advanced",
+        "large-memory",
+        "multi-instance"
+      ],
+      "testcase_id": "TC-010"
+    }
+  ]
+}

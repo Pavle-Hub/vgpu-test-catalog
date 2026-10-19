@@ -53,10 +53,19 @@ evaluation. Each decision should be updated before implementation depends on it.
   capabilities and requirements, not a second precomputed support list.
 - **Reason:** one directional rule avoids duplicated data that could disagree.
 
+## ADR-007: Reproducible synthetic distribution
+
+- **Status:** accepted
+- **Decision:** the reference snapshot uses Python 3.13, seed `2026`, a fixed
+  logical generation timestamp, integer arithmetic for duration variation, and
+  deterministic run ordering. Supported pairs receive 30 samples except
+  `TC-010` on `GPU-C`, which receives five.
+- **Reason:** fixed inputs make byte-for-byte regeneration testable. The sparse
+  pair provides a controlled `insufficient-data` case for later evaluation.
+
 ## Decisions still to define
 
 - percentile interpolation method;
 - catalog machine-readable block format;
-- dependency versions recorded by the lockfile;
 - model identifier and Cursor settings used in agent experiments.
 

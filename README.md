@@ -31,9 +31,9 @@ agent's control.
 
 ## Project status
 
-The repository skeleton, project scope, and source dataset schemas are defined.
-The deterministic dataset generator and cross-file validator are the next
-implementation milestone.
+The repository contains a versioned reference dataset, its deterministic
+generator, JSON Schemas, and a cross-file provenance validator. The derivation
+rules and deterministic catalog checker are the next implementation milestone.
 
 ## Development prerequisites
 
@@ -41,7 +41,21 @@ implementation milestone.
 - Git
 - Cursor for the agent demonstration
 
-Detailed setup instructions will be added after the first executable milestone.
+## Quick verification
+
+From an activated development environment:
+
+```powershell
+python -m vgpu_catalog.validation dataset
+python -m pytest
+ruff check .
+```
+
+The committed reference snapshot can be regenerated with:
+
+```powershell
+python -m vgpu_catalog.dataset --output dataset
+```
 
 ## Documentation
 
