@@ -33,10 +33,28 @@ evaluation. Each decision should be updated before implementation depends on it.
   never invokes a write/fix mode.
 - **Reason:** the verifier must not trust the proposal it verifies.
 
+## ADR-005: Snapshot identity
+
+- **Status:** accepted
+- **Decision:** each source artifact is hashed as its exact UTF-8 file bytes with
+  SHA-256. `snapshot_hash` is the SHA-256 digest of a UTF-8 canonical JSON array
+  containing each artifact's `path`, `bytes`, and `sha256`, sorted by `path`.
+  Canonical JSON uses sorted object keys, no insignificant whitespace, and no
+  ASCII escaping (`sort_keys=True`, `separators=(",", ":")`,
+  `ensure_ascii=False`). The manifest itself is not part of this hash.
+- **Reason:** excluding the manifest avoids a self-referential hash, while file
+  hashes preserve sensitivity to every byte of both authoritative sources.
+
+## ADR-006: Supported GPU derivation
+
+- **Status:** accepted
+- **Decision:** a GPU supports a test case exactly when the test case's required
+  capability set is a subset of the GPU's capability set. The source stores
+  capabilities and requirements, not a second precomputed support list.
+- **Reason:** one directional rule avoids duplicated data that could disagree.
+
 ## Decisions still to define
 
-- canonical JSON serialization and hash algorithm;
-- exact run schema and capability schema;
 - percentile interpolation method;
 - catalog machine-readable block format;
 - dependency versions recorded by the lockfile;

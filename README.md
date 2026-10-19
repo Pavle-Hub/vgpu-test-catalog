@@ -31,8 +31,9 @@ agent's control.
 
 ## Project status
 
-The repository skeleton and project scope are defined. Dataset schemas and the
-deterministic generator are the next implementation milestone.
+The repository skeleton, project scope, and source dataset schemas are defined.
+The deterministic dataset generator and cross-file validator are the next
+implementation milestone.
 
 ## Development prerequisites
 

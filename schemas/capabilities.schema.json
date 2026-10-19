@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:vgpu-test-catalog:schema:capabilities:1.0",
+  "title": "Synthetic GPU capability matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "generated_at",
+    "gpus",
+    "testcases"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "dataset_id": { "$ref": "#/$defs/dataset_id" },
+    "generated_at": { "$ref": "#/$defs/utc_timestamp" },
+    "gpus": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/gpu" }
+    },
+    "testcases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/testcase" }
+    }
+  },
+  "$defs": {
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^dataset-[a-z0-9][a-z0-9-]{2,63}$"
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "capability": {
+      "enum": [
+        "compute-basic",
+        "compute-advanced",
+        "graphics",
+        "large-memory",
+        "multi-instance"
+      ]
+    },
+    "gpu": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gpu_id", "capabilities"],
+      "properties": {
+        "gpu_id": { "type": "string", "pattern": "^GPU-[A-Z]$" },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/capability" }
+        }
+      }
+    },
+    "testcase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["testcase_id", "required_capabilities"],
+      "properties": {
+        "testcase_id": { "type": "string", "pattern": "^TC-[0-9]{3}$" },
+        "required_capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/capability" }
+        }
+      }
+    }
+  }
+}
