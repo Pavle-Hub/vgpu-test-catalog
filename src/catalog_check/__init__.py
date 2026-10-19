@@ -1,0 +1,1 @@
+"""Deterministic catalog verification package."""

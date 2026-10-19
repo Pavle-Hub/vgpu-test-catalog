@@ -1,0 +1,44 @@
+# Architecture decisions
+
+This file records decisions that affect reproducibility or the validity of the
+evaluation. Each decision should be updated before implementation depends on it.
+
+## ADR-001: Public synthetic repository
+
+- **Status:** accepted
+- **Decision:** all measurements, GPU identifiers, and test cases are synthetic.
+- **Reason:** the full experiment must be public, reproducible, and independent
+  of proprietary systems.
+
+## ADR-002: Deterministic verifier precedes the agent
+
+- **Status:** accepted
+- **Decision:** implement and test the derivation oracle before implementing the
+  MCP servers and the agent skill.
+- **Reason:** an agent cannot be evaluated until correct output is independently
+  defined.
+
+## ADR-003: Pinned source snapshot
+
+- **Status:** accepted
+- **Decision:** CI verifies a repository-pinned snapshot and its content hash.
+- **Reason:** a live data source cannot provide a reproducible CI decision unless
+  the checked version is fixed.
+
+## ADR-004: Checker independence
+
+- **Status:** accepted
+- **Decision:** the agent and checker read the same declarative contract, but the
+  checker reads raw pinned data and independently computes expected values. CI
+  never invokes a write/fix mode.
+- **Reason:** the verifier must not trust the proposal it verifies.
+
+## Decisions still to define
+
+- canonical JSON serialization and hash algorithm;
+- exact run schema and capability schema;
+- percentile interpolation method;
+- catalog machine-readable block format;
+- dependency versions recorded by the lockfile;
+- model identifier and Cursor settings used in agent experiments.
+
