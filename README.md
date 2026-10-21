@@ -32,11 +32,10 @@ agent's control.
 ## Project status
 
 The repository contains a versioned reference dataset, its deterministic
-generator, JSON Schemas, a cross-file provenance validator, and a validated
-`rules.yaml` contract. The derivation oracle independently calculates the
-expected supported GPUs, timeout, pass-rate badge, last measurement, confidence
-status, and per-field provenance. Rendering and checking the Markdown catalog
-is the next implementation milestone.
+generator, JSON Schemas, a validated `rules.yaml` contract, and a mixed-ownership
+Markdown catalog. `catalog-check` independently re-derives every exact field,
+validates visible values and hidden provenance, and emits a structured JSON
+report. Its local `--write` mode replaces only marker-bounded derived blocks.
 
 ## Development prerequisites
 
@@ -51,9 +50,19 @@ From an activated development environment:
 ```powershell
 python -m vgpu_catalog.validation dataset
 python -m vgpu_catalog.derivation dataset --rules rules.yaml
+python -m catalog_check.cli --check
 python -m pytest
 ruff check .
 ```
+
+To demonstrate mechanical repair locally:
+
+```powershell
+python -m catalog_check.cli --write
+```
+
+Write mode is deliberately excluded from CI: a verifier must judge the proposed
+artifact, not silently replace it.
 
 The committed reference snapshot can be regenerated with:
 

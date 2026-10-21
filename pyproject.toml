@@ -18,6 +18,7 @@ dependencies = [
 generate-dataset = "vgpu_catalog.dataset:main"
 validate-dataset = "vgpu_catalog.validation:main"
 derive-catalog-data = "vgpu_catalog.derivation:main"
+catalog-check = "catalog_check.cli:main"
 
 [project.optional-dependencies]
 dev = [

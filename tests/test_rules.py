@@ -8,12 +8,14 @@ from vgpu_catalog.rules import RulesError, load_rules
 def test_reference_rules_load_as_immutable_contract() -> None:
     rules = load_rules()
 
-    assert rules.schema_version == "1.0"
+    assert rules.schema_version == "1.1"
     assert rules.measurement_window.minimum_samples_per_gpu == 10
     assert rules.duration.percentile == 95
     assert str(rules.duration.timeout_margin) == "1.25"
     assert rules.field_ownership.human == ("purpose", "notes")
     assert "timeout_seconds" in rules.field_ownership.derived
+    assert rules.catalog.format_version == "1.0"
+    assert rules.catalog.semantic_summary.minimum_characters == 20
 
 
 def test_rules_schema_rejects_unknown_property(tmp_path: Path) -> None:

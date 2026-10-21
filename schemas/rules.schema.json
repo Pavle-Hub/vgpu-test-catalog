@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:vgpu-test-catalog:schema:rules:1.0",
+  "$id": "urn:vgpu-test-catalog:schema:rules:1.1",
   "title": "Catalog derivation rules",
   "type": "object",
   "additionalProperties": false,
@@ -11,10 +11,11 @@
     "duration",
     "pass_rate",
     "freshness",
-    "comparison"
+    "comparison",
+    "catalog"
   ],
   "properties": {
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "const": "1.1" },
     "field_ownership": {
       "type": "object",
       "additionalProperties": false,
@@ -124,6 +125,23 @@
       "required": ["numeric_tolerance"],
       "properties": {
         "numeric_tolerance": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format_version", "semantic_summary"],
+      "properties": {
+        "format_version": { "const": "1.0" },
+        "semantic_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum_characters", "maximum_characters"],
+          "properties": {
+            "minimum_characters": { "type": "integer", "minimum": 1, "maximum": 1000 },
+            "maximum_characters": { "type": "integer", "minimum": 1, "maximum": 5000 }
+          }
+        }
       }
     }
   }

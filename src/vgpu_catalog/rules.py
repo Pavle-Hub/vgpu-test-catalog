@@ -59,6 +59,18 @@ class ComparisonRules:
 
 
 @dataclass(frozen=True, slots=True)
+class SemanticSummaryRules:
+    minimum_characters: int
+    maximum_characters: int
+
+
+@dataclass(frozen=True, slots=True)
+class CatalogFormatRules:
+    format_version: str
+    semantic_summary: SemanticSummaryRules
+
+
+@dataclass(frozen=True, slots=True)
 class CatalogRules:
     schema_version: str
     field_ownership: FieldOwnershipRules
@@ -67,6 +79,7 @@ class CatalogRules:
     pass_rate: PassRateRules
     freshness: FreshnessRules
     comparison: ComparisonRules
+    catalog: CatalogFormatRules
 
 
 def _as_decimal(value: Any) -> Decimal:
@@ -96,6 +109,13 @@ def load_rules(path: Path = DEFAULT_RULES_PATH) -> CatalogRules:
     if degraded >= healthy:
         raise RulesError(
             "pass_rate.degraded_minimum_percent must be lower than healthy_minimum_percent."
+        )
+
+    catalog = document["catalog"]
+    summary = catalog["semantic_summary"]
+    if summary["minimum_characters"] > summary["maximum_characters"]:
+        raise RulesError(
+            "catalog.semantic_summary.minimum_characters must not exceed maximum_characters."
         )
 
     ownership = document["field_ownership"]
@@ -130,4 +150,11 @@ def load_rules(path: Path = DEFAULT_RULES_PATH) -> CatalogRules:
         ),
         freshness=FreshnessRules(maximum_age_days=freshness["maximum_age_days"]),
         comparison=ComparisonRules(numeric_tolerance=_as_decimal(comparison["numeric_tolerance"])),
+        catalog=CatalogFormatRules(
+            format_version=catalog["format_version"],
+            semantic_summary=SemanticSummaryRules(
+                minimum_characters=summary["minimum_characters"],
+                maximum_characters=summary["maximum_characters"],
+            ),
+        ),
     )

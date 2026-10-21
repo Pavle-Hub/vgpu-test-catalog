@@ -143,6 +143,9 @@ def _derive_testcase(
     percentile = rules.duration.percentile
     margin = format(rules.duration.timeout_margin, "f")
     decimal_places = rules.pass_rate.decimal_places
+    healthy = format(rules.pass_rate.healthy_minimum_percent, "f")
+    degraded = format(rules.pass_rate.degraded_minimum_percent, "f")
+    freshness_days = rules.freshness.maximum_age_days
     gpu_evidence = {
         gpu_id: {
             "samples": stats["samples"] if stats else 0,
@@ -168,6 +171,7 @@ def _derive_testcase(
             "evidence": gpu_evidence,
             "provenance": _provenance(
                 source_hash,
+                f"requires_each_gpu_samples>={minimum_samples}; "
                 f"ceil(max_gpu(nearest_rank_p{percentile}(duration_seconds)) * {margin})",
                 computed_at,
             ),
@@ -179,7 +183,9 @@ def _derive_testcase(
             "evidence": gpu_evidence,
             "provenance": _provenance(
                 source_hash,
-                f"min_gpu(passed / samples * 100), round_half_up({decimal_places})",
+                f"requires_each_gpu_samples>={minimum_samples}; "
+                f"min_gpu(passed / samples * 100), round_half_up({decimal_places}); "
+                f"healthy>={healthy}, degraded>={degraded}",
                 computed_at,
             ),
         },
@@ -188,7 +194,7 @@ def _derive_testcase(
             "status": "fresh" if is_fresh else "stale",
             "provenance": _provenance(
                 source_hash,
-                "max(executed_at)",
+                f"max(executed_at); fresh_if_age_days<={freshness_days}",
                 computed_at,
             ),
         },

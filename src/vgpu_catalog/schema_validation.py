@@ -16,6 +16,7 @@ SCHEMA_FILES = {
     "capabilities": "capabilities.schema.json",
     "manifest": "manifest.schema.json",
     "rules": "rules.schema.json",
+    "catalog_derived": "catalog-derived.schema.json",
 }
 
 

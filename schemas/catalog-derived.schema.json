@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:vgpu-test-catalog:schema:catalog-derived:1.0",
+  "title": "Machine-readable derived catalog block",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format_version", "testcase_id", "fields"],
+  "properties": {
+    "format_version": { "const": "1.0" },
+    "testcase_id": { "$ref": "#/$defs/testcase_id" },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_gpus",
+        "timeout_seconds",
+        "pass_rate_badge",
+        "last_measurement"
+      ],
+      "properties": {
+        "supported_gpus": { "$ref": "#/$defs/supported_gpus" },
+        "timeout_seconds": { "$ref": "#/$defs/timeout" },
+        "pass_rate_badge": { "$ref": "#/$defs/pass_rate" },
+        "last_measurement": { "$ref": "#/$defs/last_measurement" }
+      }
+    }
+  },
+  "$defs": {
+    "testcase_id": { "type": "string", "pattern": "^TC-[0-9]{3}$" },
+    "gpu_id": { "type": "string", "pattern": "^GPU-[A-Z]$" },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_hash", "formula", "computed_at"],
+      "properties": {
+        "source_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "formula": { "type": "string", "minLength": 1 },
+        "computed_at": { "$ref": "#/$defs/utc_timestamp" }
+      }
+    },
+    "supported_gpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "status", "provenance"],
+      "properties": {
+        "value": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/gpu_id" }
+        },
+        "status": { "const": "ok" },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      }
+    },
+    "timeout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "status", "provenance"],
+      "properties": {
+        "value": { "type": ["integer", "null"], "minimum": 1 },
+        "status": { "enum": ["ok", "insufficient-data"] },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      }
+    },
+    "pass_rate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "pass_rate_percent", "status", "provenance"],
+      "properties": {
+        "value": { "enum": ["healthy", "degraded", "critical", "insufficient-data"] },
+        "pass_rate_percent": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": { "enum": ["ok", "insufficient-data"] },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      }
+    },
+    "last_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "status", "provenance"],
+      "properties": {
+        "value": {
+          "oneOf": [
+            { "$ref": "#/$defs/utc_timestamp" },
+            { "type": "null" }
+          ]
+        },
+        "status": { "enum": ["fresh", "stale"] },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      }
+    }
+  }
+}

@@ -86,8 +86,39 @@ evaluation. Each decision should be updated before implementation depends on it.
 - **Reason:** identical repository inputs must produce identical expected state
   on a laptop and in CI.
 
+## ADR-010: Mixed-ownership Markdown format
+
+- **Status:** accepted
+- **Decision:** every `## TC-NNN` section contains human-owned `Purpose` and
+  `Notes`, one `Derived fields` block bounded by testcase-specific HTML comment
+  markers, and a semantic `Summary`. The derived block contains both readable
+  Markdown and versioned hidden JSON. The JSON stores each exact value, status,
+  source hash, formula, and deterministic computation timestamp.
+- **Reason:** Markdown stays useful to readers while explicit boundaries permit
+  safe mechanical replacement. Checking both representations prevents an agent
+  from changing the visible value while leaving correct hidden metadata.
+
+## ADR-011: Checker and write-mode separation
+
+- **Status:** accepted
+- **Decision:** `catalog-check --check` is read-only, independently re-derives
+  values from the pinned dataset, and reports structured differences. Local
+  `--write` replaces only a complete, uniquely paired derived block and refuses
+  malformed structure. CI will invoke only `--check`.
+- **Reason:** automatic repair is useful in an agent feedback loop, but CI that
+  repairs the proposal would no longer verify what the agent actually wrote.
+
+## ADR-012: Semantic verification boundary
+
+- **Status:** accepted
+- **Decision:** the exact checker validates only the presence and configured
+  length range of `Summary`; it does not claim that the prose is factually or
+  stylistically correct.
+- **Reason:** exact numerical and provenance claims have a deterministic oracle,
+  while open-ended natural-language quality does not. The distinction is part
+  of the experiment rather than hidden behind a false binary guarantee.
+
 ## Decisions still to define
 
-- catalog machine-readable block format;
 - model identifier and Cursor settings used in agent experiments.
 

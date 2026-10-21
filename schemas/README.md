@@ -11,6 +11,8 @@ tools.
 - `manifest.schema.json` validates snapshot identity and artifact provenance.
 - `rules.schema.json` validates the declarative derivation and ownership
   contract used by both the catalog writer and checker.
+- `catalog-derived.schema.json` validates each hidden machine-readable Markdown
+  block, including values, status, formula, timestamp, and snapshot hash.
 
 ## Cross-file invariants
 
