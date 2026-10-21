@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:vgpu-test-catalog:schema:rules:1.0",
+  "title": "Catalog derivation rules",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "field_ownership",
+    "measurement_window",
+    "duration",
+    "pass_rate",
+    "freshness",
+    "comparison"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "field_ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human", "derived", "semantic"],
+      "properties": {
+        "human": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["purpose", "notes"] },
+          "allOf": [
+            { "contains": { "const": "purpose" } },
+            { "contains": { "const": "notes" } }
+          ]
+        },
+        "derived": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "supported_gpus",
+              "timeout_seconds",
+              "pass_rate_badge",
+              "last_measurement"
+            ]
+          },
+          "allOf": [
+            { "contains": { "const": "supported_gpus" } },
+            { "contains": { "const": "timeout_seconds" } },
+            { "contains": { "const": "pass_rate_badge" } },
+            { "contains": { "const": "last_measurement" } }
+          ]
+        },
+        "semantic": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["summary"] },
+          "allOf": [{ "contains": { "const": "summary" } }]
+        }
+      }
+    },
+    "measurement_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lookback_days", "minimum_samples_per_gpu"],
+      "properties": {
+        "lookback_days": { "type": "integer", "minimum": 1, "maximum": 3650 },
+        "minimum_samples_per_gpu": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "percentile",
+        "percentile_method",
+        "gpu_aggregation",
+        "timeout_margin",
+        "timeout_rounding"
+      ],
+      "properties": {
+        "percentile": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "percentile_method": { "const": "nearest_rank" },
+        "gpu_aggregation": { "const": "maximum" },
+        "timeout_margin": { "type": "number", "minimum": 1, "maximum": 10 },
+        "timeout_rounding": { "const": "ceil_seconds" }
+      }
+    },
+    "pass_rate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gpu_aggregation",
+        "decimal_places",
+        "healthy_minimum_percent",
+        "degraded_minimum_percent"
+      ],
+      "properties": {
+        "gpu_aggregation": { "const": "minimum" },
+        "decimal_places": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "healthy_minimum_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "degraded_minimum_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum_age_days"],
+      "properties": {
+        "maximum_age_days": { "type": "integer", "minimum": 1, "maximum": 3650 }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numeric_tolerance"],
+      "properties": {
+        "numeric_tolerance": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

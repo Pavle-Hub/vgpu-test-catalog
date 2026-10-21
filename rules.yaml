@@ -1,0 +1,36 @@
+schema_version: "1.0"
+
+field_ownership:
+  human:
+    - purpose
+    - notes
+  derived:
+    - supported_gpus
+    - timeout_seconds
+    - pass_rate_badge
+    - last_measurement
+  semantic:
+    - summary
+
+measurement_window:
+  lookback_days: 30
+  minimum_samples_per_gpu: 10
+
+duration:
+  percentile: 95
+  percentile_method: nearest_rank
+  gpu_aggregation: maximum
+  timeout_margin: 1.25
+  timeout_rounding: ceil_seconds
+
+pass_rate:
+  gpu_aggregation: minimum
+  decimal_places: 2
+  healthy_minimum_percent: 95
+  degraded_minimum_percent: 80
+
+freshness:
+  maximum_age_days: 30
+
+comparison:
+  numeric_tolerance: 0

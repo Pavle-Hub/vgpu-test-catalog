@@ -63,9 +63,31 @@ evaluation. Each decision should be updated before implementation depends on it.
 - **Reason:** fixed inputs make byte-for-byte regeneration testable. The sparse
   pair provides a controlled `insufficient-data` case for later evaluation.
 
+## ADR-008: Statistical derivation contract
+
+- **Status:** accepted
+- **Decision:** metrics use a 30-day inclusive lookback window. A test case is
+  `insufficient-data` for timeout and pass rate when any supported GPU has fewer
+  than 10 samples in that window. The configured percentile uses nearest-rank;
+  timeout is `ceil(maximum GPU p95 × 1.25)`. Pass rate is the minimum per-GPU
+  rate and is rounded half-up to two decimal places. Measurements older than 30
+  days at the pinned snapshot time are stale.
+- **Reason:** the definitions are conservative, transparent, and independent of
+  statistics-library interpolation defaults. Requiring evidence for every
+  supported GPU prevents a well-sampled platform from hiding an unsupported
+  estimate on another platform.
+
+## ADR-009: Deterministic derivation time
+
+- **Status:** accepted
+- **Decision:** derived-field `computed_at` is the pinned manifest `created_at`,
+  never the wall-clock time at which a command happens to run. Every derived
+  field also records the snapshot hash and its formula.
+- **Reason:** identical repository inputs must produce identical expected state
+  on a laptop and in CI.
+
 ## Decisions still to define
 
-- percentile interpolation method;
 - catalog machine-readable block format;
 - model identifier and Cursor settings used in agent experiments.
 

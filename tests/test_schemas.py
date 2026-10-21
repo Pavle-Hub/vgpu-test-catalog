@@ -71,7 +71,12 @@ def valid_manifest() -> dict:
 
 @pytest.mark.parametrize(
     "schema_name",
-    ["runs.schema.json", "capabilities.schema.json", "manifest.schema.json"],
+    [
+        "runs.schema.json",
+        "capabilities.schema.json",
+        "manifest.schema.json",
+        "rules.schema.json",
+    ],
 )
 def test_schema_is_valid_draft_2020_12(schema_name: str) -> None:
     Draft202012Validator.check_schema(load_schema(schema_name))

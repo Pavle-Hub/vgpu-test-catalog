@@ -15,6 +15,7 @@ SCHEMA_FILES = {
     "runs": "runs.schema.json",
     "capabilities": "capabilities.schema.json",
     "manifest": "manifest.schema.json",
+    "rules": "rules.schema.json",
 }
 
 

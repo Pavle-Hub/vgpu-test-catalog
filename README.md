@@ -32,8 +32,11 @@ agent's control.
 ## Project status
 
 The repository contains a versioned reference dataset, its deterministic
-generator, JSON Schemas, and a cross-file provenance validator. The derivation
-rules and deterministic catalog checker are the next implementation milestone.
+generator, JSON Schemas, a cross-file provenance validator, and a validated
+`rules.yaml` contract. The derivation oracle independently calculates the
+expected supported GPUs, timeout, pass-rate badge, last measurement, confidence
+status, and per-field provenance. Rendering and checking the Markdown catalog
+is the next implementation milestone.
 
 ## Development prerequisites
 
@@ -47,6 +50,7 @@ From an activated development environment:
 
 ```powershell
 python -m vgpu_catalog.validation dataset
+python -m vgpu_catalog.derivation dataset --rules rules.yaml
 python -m pytest
 ruff check .
 ```

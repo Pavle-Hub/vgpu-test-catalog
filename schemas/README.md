@@ -9,6 +9,8 @@ tools.
 - `runs.schema.json` validates the synthetic measurement records.
 - `capabilities.schema.json` validates GPU capabilities and test requirements.
 - `manifest.schema.json` validates snapshot identity and artifact provenance.
+- `rules.schema.json` validates the declarative derivation and ownership
+  contract used by both the catalog writer and checker.
 
 ## Cross-file invariants
 
