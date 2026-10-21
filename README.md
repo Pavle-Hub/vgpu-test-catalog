@@ -31,11 +31,11 @@ agent's control.
 
 ## Project status
 
-The repository contains a versioned reference dataset, its deterministic
-generator, JSON Schemas, a validated `rules.yaml` contract, and a mixed-ownership
-Markdown catalog. `catalog-check` independently re-derives every exact field,
-validates visible values and hidden provenance, and emits a structured JSON
-report. Its local `--write` mode replaces only marker-bounded derived blocks.
+The repository contains a versioned reference dataset, a validated `rules.yaml`
+contract, a mixed-ownership Markdown catalog, and two read-only MCP 2.x servers.
+`metrics-mcp` exposes structured measurement tools; `env-mcp` exposes capability
+resources. `catalog-check` independently reads the raw pinned files rather than
+trusting either MCP response or the proposed artifact.
 
 ## Development prerequisites
 
@@ -74,4 +74,5 @@ python -m vgpu_catalog.dataset --output dataset
 
 - [Project scope](docs/project-scope.md)
 - [Architecture decisions](docs/architecture-decisions.md)
+- [MCP server contracts and verification](docs/mcp-servers.md)
 

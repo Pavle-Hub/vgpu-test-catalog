@@ -118,6 +118,26 @@ evaluation. Each decision should be updated before implementation depends on it.
   while open-ended natural-language quality does not. The distinction is part
   of the experiment rather than hidden behind a false binary guarantee.
 
+## ADR-013: MCP source composition
+
+- **Status:** accepted
+- **Decision:** `metrics-mcp` exposes parameterized measurement queries as MCP
+  tools, while `env-mcp` exposes the static capability matrix and a supported-GPU
+  URI template as MCP resources. Both are read-only stdio servers built with the
+  MCP 2.x `MCPServer` API and validate the complete pinned snapshot at startup.
+- **Reason:** the split demonstrates tool/resource semantics and multi-server
+  composition without allowing measurement presence to become a second,
+  conflicting definition of environment support.
+
+## ADR-014: MCP evidence versus policy
+
+- **Status:** accepted
+- **Decision:** MCP responses return raw counts, statistics, capability facts,
+  snapshot time, and `source_hash`. Confidence thresholds, timeout margins,
+  badge thresholds, and field ownership remain exclusively in `rules.yaml`.
+- **Reason:** duplicating policy inside either server would undermine the single
+  declarative contract shared by the agent workflow and deterministic checker.
+
 ## Decisions still to define
 
 - model identifier and Cursor settings used in agent experiments.
