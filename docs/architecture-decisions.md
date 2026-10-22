@@ -138,6 +138,29 @@ evaluation. Each decision should be updated before implementation depends on it.
 - **Reason:** duplicating policy inside either server would undermine the single
   declarative contract shared by the agent workflow and deterministic checker.
 
+## ADR-015: Versioned project-level Cursor integration
+
+- **Status:** accepted
+- **Decision:** commit the two local stdio server declarations in
+  `.cursor/mcp.json` and the agent workflow in
+  `.cursor/skills/sync-catalog/SKILL.md`. Paths use Cursor's
+  `${workspaceFolder}` interpolation and the reference Windows `.venv`.
+- **Reason:** experiment participants must run the same named tools and workflow
+  without copying machine-specific absolute paths or relying on an unrecorded
+  chat prompt.
+
+## ADR-016: Bounded agent correction without write-mode bypass
+
+- **Status:** accepted
+- **Decision:** the Skill makes its first proposal from MCP evidence and
+  `rules.yaml`, invokes only `catalog-check --check`, and may perform at most two
+  focused repairs after the initial check. It must escalate after the third
+  failed check. The Skill cannot invoke deterministic derivation output or
+  `catalog-check --write`, and it never commits or pushes.
+- **Reason:** a finite loop prevents uncontrolled retries, while forbidding the
+  write-mode shortcut preserves the experiment's distinction between an agent
+  proposal and independent deterministic verification.
+
 ## Decisions still to define
 
 - model identifier and Cursor settings used in agent experiments.

@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "metrics-mcp": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "metrics_mcp.server",
+        "--dataset",
+        "${workspaceFolder}/dataset"
+      ]
+    },
+    "env-mcp": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "env_mcp.server",
+        "--dataset",
+        "${workspaceFolder}/dataset"
+      ]
+    }
+  }
+}
