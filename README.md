@@ -32,12 +32,13 @@ agent's control.
 ## Project status
 
 The repository contains a versioned reference dataset, a validated `rules.yaml`
-contract, a mixed-ownership Markdown catalog, two read-only MCP 2.x servers, and
-a project-level Cursor integration. `metrics-mcp` exposes structured measurement
-tools; `env-mcp` exposes capability resources. The `sync-catalog` Skill composes
-their evidence under a bounded three-attempt repair policy. `catalog-check`
-independently reads the raw pinned files rather than trusting either MCP response
-or the proposed artifact.
+contract, a mixed-ownership Markdown catalog, two read-only MCP 2.x servers, a
+project-level Cursor integration, and a controlled evaluation framework.
+`metrics-mcp` exposes structured measurement tools; `env-mcp` exposes capability
+resources. The `sync-catalog` Skill composes their evidence under a bounded
+three-attempt repair policy. `catalog-check` independently reads the raw pinned
+files rather than trusting either MCP response or the proposed artifact. Five
+fault operators and clean controls measure checker and agent behavior separately.
 
 ## Development prerequisites
 
@@ -78,4 +79,5 @@ python -m vgpu_catalog.dataset --output dataset
 - [Architecture decisions](docs/architecture-decisions.md)
 - [MCP server contracts and verification](docs/mcp-servers.md)
 - [Cursor MCP and Skill workflow](docs/cursor-workflow.md)
+- [Evaluation workflow](eval/README.md)
 

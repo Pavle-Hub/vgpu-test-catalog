@@ -21,6 +21,7 @@ derive-catalog-data = "vgpu_catalog.derivation:main"
 catalog-check = "catalog_check.cli:main"
 metrics-mcp = "metrics_mcp.server:main"
 env-mcp = "env_mcp.server:main"
+evaluate-catalog = "vgpu_eval.cli:main"
 
 [project.optional-dependencies]
 dev = [
@@ -35,6 +36,7 @@ packages = [
   "src/catalog_check",
   "src/metrics_mcp",
   "src/env_mcp",
+  "src/vgpu_eval",
 ]
 
 [tool.pytest.ini_options]

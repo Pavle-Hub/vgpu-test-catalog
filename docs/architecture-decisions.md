@@ -161,6 +161,29 @@ evaluation. Each decision should be updated before implementation depends on it.
   write-mode shortcut preserves the experiment's distinction between an agent
   proposal and independent deterministic verification.
 
+## ADR-017: Deterministic fault operators and clean controls
+
+- **Status:** accepted
+- **Decision:** evaluate five versioned fault classes: wrong value, stale value,
+  hallucinated field, broken format, and false provenance. Each operator changes
+  one selected derived block deterministically. Detection suites also contain a
+  clean control for each selected test case and retain every checker report.
+- **Reason:** faulty cases alone can estimate recall but not false failures or
+  precision. Clean controls make the checker's confusion matrix measurable and
+  every result traceable to an exact input artifact.
+
+## ADR-018: Explicit agent-run lifecycle
+
+- **Status:** accepted
+- **Decision:** interactive experiments use `start`, `finish`, and `restore`
+  phases. Start requires a valid baseline and saves it before in-place fault
+  injection. Finish preserves the agent output before scoring exact validity and
+  human-field integrity. Restore refuses unfinished or subsequently modified
+  work. Generated run artifacts remain untracked by default.
+- **Reason:** agent execution is external and nondeterministic, so its inputs,
+  configuration, attempts, output, and cleanup must be recorded without risking
+  silent data loss or contaminating the next run.
+
 ## Decisions still to define
 
 - model identifier and Cursor settings used in agent experiments.
