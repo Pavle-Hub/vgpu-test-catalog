@@ -11,6 +11,7 @@ from vgpu_eval.protocol import verify_protocol
 from vgpu_eval.runs import (
     AgentRunError,
     finish_agent_run,
+    interrupt_agent_run,
     restore_agent_run,
     start_agent_run,
     start_clean_agent_run,
@@ -214,3 +215,32 @@ def test_restore_refuses_to_discard_unrecorded_agent_work(tmp_path: Path) -> Non
 
     with pytest.raises(AgentRunError, match="Finish the run"):
         restore_agent_run(catalog_path, results_dir, run_id="active-run")
+
+
+def test_interrupted_run_is_unscored_and_restores_baseline(tmp_path: Path) -> None:
+    catalog_path = tmp_path / "test_catalog.md"
+    copyfile(REFERENCE_CATALOG, catalog_path)
+    results_dir = tmp_path / "runs"
+    start_agent_run(
+        catalog_path,
+        DATASET_DIR,
+        results_dir,
+        fault_class=FaultClass.BROKEN_FORMAT,
+        testcase_id="TC-004",
+        model_id="Cursor Grok 4.6",
+        mode="with-checker",
+        run_id="interrupted-run",
+    )
+
+    interrupted = interrupt_agent_run(
+        catalog_path,
+        results_dir,
+        run_id="interrupted-run",
+        reason="Agent quota exhausted.",
+    )
+
+    assert interrupted["status"] == "interrupted"
+    assert interrupted["interruption"]["scored"] is False
+    assert interrupted["interruption"]["baseline_restored"] is True
+    assert catalog_path.read_bytes() == REFERENCE_CATALOG.read_bytes()
+    assert summarize_agent_runs(results_dir)["metrics"]["runs"] == 0

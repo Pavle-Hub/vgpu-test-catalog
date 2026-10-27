@@ -386,6 +386,49 @@ def restore_agent_run(catalog_path: Path, results_dir: Path, *, run_id: str) -> 
     return manifest
 
 
+def interrupt_agent_run(
+    catalog_path: Path,
+    results_dir: Path,
+    *,
+    run_id: str,
+    reason: str,
+) -> dict[str, Any]:
+    """Record an infrastructure interruption and restore the unscored baseline."""
+
+    if not reason.strip():
+        raise AgentRunError("An interruption reason is required.")
+    catalog_path = catalog_path.resolve()
+    results_dir = results_dir.resolve()
+    run_dir = results_dir / run_id
+    manifest = _load_run(run_dir)
+    if manifest.get("status") != "awaiting-agent":
+        raise AgentRunError(
+            f"Run status must be awaiting-agent, not {manifest.get('status')!r}."
+        )
+    if manifest.get("catalog_path") != str(catalog_path):
+        raise AgentRunError("catalog_path differs from the path recorded at run start.")
+
+    current_bytes = catalog_path.read_bytes()
+    (run_dir / "interrupted-output.md").write_bytes(current_bytes)
+    baseline_bytes = (run_dir / "baseline-catalog.md").read_bytes()
+    if sha256_bytes(baseline_bytes) != manifest.get("baseline_catalog_sha256"):
+        raise AgentRunError("Recorded baseline hash does not match the run manifest.")
+    temporary = catalog_path.with_name(f".{catalog_path.name}.interrupt.tmp")
+    temporary.write_bytes(baseline_bytes)
+    temporary.replace(catalog_path)
+
+    manifest["status"] = "interrupted"
+    manifest["interrupted_at"] = _now()
+    manifest["interruption"] = {
+        "reason": reason.strip(),
+        "output_sha256": sha256_bytes(current_bytes),
+        "baseline_restored": True,
+        "scored": False,
+    }
+    _write_json(run_dir / "run.json", manifest)
+    return manifest
+
+
 def _group_metrics(runs: list[dict[str, Any]]) -> dict[str, int | float]:
     total = len(runs)
     successes = sum(bool(run["result"]["success"]) for run in runs)

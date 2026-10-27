@@ -1,0 +1,15 @@
+[mcp_servers."metrics-mcp"]
+command = ".venv/Scripts/python.exe"
+args = ["-m", "metrics_mcp.server", "--dataset", "dataset"]
+cwd = "."
+enabled = true
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+[mcp_servers."env-mcp"]
+command = ".venv/Scripts/python.exe"
+args = ["-m", "env_mcp.server", "--dataset", "dataset"]
+cwd = "."
+enabled = true
+startup_timeout_sec = 20
+tool_timeout_sec = 60

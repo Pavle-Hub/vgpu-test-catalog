@@ -19,6 +19,7 @@ from vgpu_eval.protocol import (
 from vgpu_eval.runs import (
     AgentRunError,
     finish_agent_run,
+    interrupt_agent_run,
     restore_agent_run,
     start_agent_run,
     summarize_agent_runs,
@@ -85,6 +86,14 @@ def build_parser() -> argparse.ArgumentParser:
     restore.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
     restore.add_argument("--run-id", required=True)
 
+    interrupt = subparsers.add_parser(
+        "interrupt", help="Record an unscored infrastructure interruption and restore."
+    )
+    interrupt.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
+    interrupt.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
+    interrupt.add_argument("--run-id", required=True)
+    interrupt.add_argument("--reason", required=True)
+
     summarize = subparsers.add_parser("summarize", help="Aggregate recorded agent runs.")
     summarize.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
     summarize.add_argument("--output", type=Path)
@@ -149,6 +158,13 @@ def main() -> int:
             )
         elif args.command == "restore":
             result = restore_agent_run(args.catalog, args.results_dir, run_id=args.run_id)
+        elif args.command == "interrupt":
+            result = interrupt_agent_run(
+                args.catalog,
+                args.results_dir,
+                run_id=args.run_id,
+                reason=args.reason,
+            )
         else:
             protocol_id: str | None = None
             excluded_run_ids: set[str] | None = None

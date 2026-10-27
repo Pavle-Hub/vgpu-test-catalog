@@ -1,5 +1,6 @@
 import json
 import re
+import tomllib
 from pathlib import Path
 
 import yaml
@@ -7,6 +8,8 @@ import yaml
 PROJECT_ROOT = Path(__file__).parents[1]
 MCP_CONFIG_PATH = PROJECT_ROOT / ".cursor" / "mcp.json"
 SKILL_PATH = PROJECT_ROOT / ".cursor" / "skills" / "sync-catalog" / "SKILL.md"
+CODEX_MCP_CONFIG_PATH = PROJECT_ROOT / ".codex" / "config.toml"
+CODEX_SKILL_PATH = PROJECT_ROOT / ".agents" / "skills" / "sync-catalog" / "SKILL.md"
 
 
 def test_project_mcp_config_declares_pinned_local_servers() -> None:
@@ -59,3 +62,33 @@ def test_sync_catalog_skill_encodes_safety_contract() -> None:
         assert phrase in content
 
     assert content.count("catalog_check.cli --check") == 1
+
+
+def test_codex_project_config_declares_the_same_local_servers() -> None:
+    config = tomllib.loads(CODEX_MCP_CONFIG_PATH.read_text(encoding="utf-8"))
+
+    servers = config["mcp_servers"]
+    assert set(servers) == {"metrics-mcp", "env-mcp"}
+    expected_modules = {
+        "metrics-mcp": "metrics_mcp.server",
+        "env-mcp": "env_mcp.server",
+    }
+    for name, module in expected_modules.items():
+        server = servers[name]
+        assert server["command"] == ".venv/Scripts/python.exe"
+        assert server["args"] == ["-m", module, "--dataset", "dataset"]
+        assert server["cwd"] == "."
+        assert server["enabled"] is True
+
+
+def test_codex_skill_routes_to_the_canonical_safety_contract() -> None:
+    content = CODEX_SKILL_PATH.read_text(encoding="utf-8")
+    match = re.match(r"\A---\n(?P<frontmatter>.*?)\n---\n", content, re.DOTALL)
+
+    assert match is not None
+    frontmatter = yaml.safe_load(match.group("frontmatter"))
+    assert frontmatter["name"] == CODEX_SKILL_PATH.parent.name == "sync-catalog"
+    assert ".cursor/skills/sync-catalog/SKILL.md" in content
+    assert "Edit only `catalog/test_catalog.md`." in content
+    assert "Do not commit or push." in content
+    assert "$sync-catalog" in content
