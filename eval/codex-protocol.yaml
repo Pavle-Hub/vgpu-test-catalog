@@ -31,6 +31,7 @@ success_criteria:
   - With-checker uses one to three checker attempts; without-checker uses zero.
   - Deterministic writers, direct source-data reads, reference-output recovery, and test suites are not used by the agent.
 execution:
+  runtime: A local copy of the existing Python runtime and virtual-environment packages is verified outside AppData; a model-free sandbox preflight precedes each session.
   permissions: Workspace-write sandbox with on-request approvals and invocation-scoped trust for the generated workspace; Windows uses the elevated sandbox backend.
   isolation: Fresh exported repository and fresh ephemeral CLI session for every attempt; no prior results are copied.
   history: The only workspace commit contains the injected input, never the correct pre-injection catalog.

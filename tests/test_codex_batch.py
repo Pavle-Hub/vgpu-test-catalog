@@ -139,6 +139,7 @@ def test_cli_pins_model_effort_and_requires_both_local_servers(tmp_path: Path) -
         assert 'windows.sandbox="elevated"' in command
     assert "mcp_servers.env-mcp.required=true" in command
     assert "mcp_servers.metrics-mcp.required=true" in command
+    assert 'mcp_servers.metrics-mcp.tools.get_duration_stats.approval_mode="approve"' in command
 
 
 def test_audit_counts_each_checker_invocation_and_rejects_without_mode() -> None:
@@ -265,10 +266,38 @@ def test_policy_block_is_interruption_even_when_cli_returns_zero(
     monkeypatch.setattr("vgpu_eval.codex_batch.subprocess.Popen", PolicyBlockedProcess)
     monkeypatch.setattr(
         "vgpu_eval.codex_batch.prepare_workspace",
-        lambda row, directory: prepared,
+        lambda row, directory, **kwargs: prepared,
     )
     result = run_case("codex", config, row, tmp_path / "attempt")
 
     assert result["returncode"] == 0
     assert result["status"] == "interrupted"
     assert result["infrastructure_issues"] == ["command-execution-blocked-by-policy"]
+
+
+def test_audit_classifies_mcp_approval_and_runtime_access_as_infrastructure() -> None:
+    events = [
+        {
+            "type": "item.completed",
+            "item": {
+                "type": "command_execution",
+                "command": "python -m vgpu_catalog.validation dataset",
+                "exit_code": 1,
+                "aggregated_output": "did not find executable: Access is denied.",
+            },
+        },
+        {
+            "type": "item.completed",
+            "item": {
+                "type": "mcp_tool_call",
+                "server": "metrics-mcp",
+                "tool": "list_testcases",
+                "status": "failed",
+                "error": {
+                    "message": "MCP tool call requires approval, but approval policy is never",
+                },
+            },
+        },
+    ]
+    audit = audit_events(events, "without-checker")
+    assert audit["infrastructure_issues"] == ["mcp-approval-required", "runtime-access-denied"]

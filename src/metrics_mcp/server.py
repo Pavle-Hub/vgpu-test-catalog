@@ -8,6 +8,7 @@ from typing import Annotated
 
 from mcp.server.mcpserver import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
+from mcp.types import ToolAnnotations
 from pydantic import Field
 
 from metrics_mcp.models import DurationStatsResult, PassRateResult, TestcaseListResult
@@ -47,6 +48,12 @@ def create_server(dataset_dir: Path = DEFAULT_DATASET_DIR) -> MCPServer:
         name="list_testcases",
         description="List test cases that exist in the pinned measurement snapshot.",
         structured_output=True,
+        annotations=ToolAnnotations(
+            readOnlyHint=True,
+            destructiveHint=False,
+            idempotentHint=True,
+            openWorldHint=False,
+        ),
     )
     def list_testcases() -> TestcaseListResult:
         return service.list_testcases()
@@ -55,6 +62,12 @@ def create_server(dataset_dir: Path = DEFAULT_DATASET_DIR) -> MCPServer:
         name="get_duration_stats",
         description="Return nearest-rank p50/p95 and maximum duration for one test/GPU pair.",
         structured_output=True,
+        annotations=ToolAnnotations(
+            readOnlyHint=True,
+            destructiveHint=False,
+            idempotentHint=True,
+            openWorldHint=False,
+        ),
     )
     def get_duration_stats(
         testcase_id: TestcaseId,
@@ -70,6 +83,12 @@ def create_server(dataset_dir: Path = DEFAULT_DATASET_DIR) -> MCPServer:
         name="get_pass_rate",
         description="Return pass/fail counts and pass percentage for one test/GPU pair.",
         structured_output=True,
+        annotations=ToolAnnotations(
+            readOnlyHint=True,
+            destructiveHint=False,
+            idempotentHint=True,
+            openWorldHint=False,
+        ),
     )
     def get_pass_rate(
         testcase_id: TestcaseId,

@@ -44,6 +44,22 @@ the child invocation; no global trust entry or full-access mode is added.
 Host-side policy rejections in stderr are recorded as infrastructure
 interruptions even if the CLI returns zero and emits `turn.completed`.
 
+On Windows, a per-user Python installation under AppData can be inaccessible to
+the sandbox account. The runner copies the existing interpreter, standard
+library, DLLs, and installed virtual-environment packages to
+`eval/results/codex-eval-1/python-runtime/`. No download, package upgrade, or
+global permission change is performed. A version/package identity marker
+prevents silent reuse after the environment changes. The evaluator still runs
+in the original environment.
+
+Before a model call, a direct `codex sandbox windows` preflight tests imports
+and a temporary write under the generated workspace's catalog directory.
+Its stdout/stderr are preserved as `sandbox-preflight.*.txt`. If this fails, the
+runner stops without invoking the model. The workspace includes a generated
+`.codex/config.toml` matching its explicit MCP launch settings. The three local
+metrics tools declare read-only, idempotent, closed-world annotations and are
+explicitly approved for that child invocation only.
+
 This runs an isolated hallucinated-field pair, one attempt per mode. The two
 sessions use the same Skill, instructions, model, and source snapshot. The
 explicit mode controls whether checker feedback is available. The source

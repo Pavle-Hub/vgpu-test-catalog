@@ -110,6 +110,63 @@ def tracked_hashes() -> dict[str, str]:
     }
 
 
+def ensure_runtime(output: Path) -> Path:
+    """Copy the existing Windows Python runtime out of sandbox-restricted AppData."""
+
+    if sys.platform != "win32":
+        return Path(sys.executable).resolve()
+    runtime = output / "python-runtime"
+    marker = runtime / "runtime-identity.json"
+    identity = {
+        "python": sys.version,
+        "base_executable_sha256": sha256_bytes(Path(sys._base_executable).read_bytes()),
+        "requirements_sha256": sha256_bytes((ROOT / "requirements.lock").read_bytes()),
+        "packages": sorted(
+            (d.metadata["Name"], d.version)
+            for d in importlib.metadata.distributions()
+            if d.metadata.get("Name")
+        ),
+    }
+    # JSON arrays make the persisted representation equal on subsequent runs.
+    identity = json.loads(json.dumps(identity))
+    if marker.is_file():
+        if json.loads(marker.read_text(encoding="utf-8")) != identity:
+            raise BatchError(
+                "Python environment changed; use a new output directory and repeat pilot."
+            )
+        return runtime / "python.exe"
+    if runtime.exists():
+        raise BatchError(f"Incomplete runtime exists at {runtime}; use a new --output directory.")
+    runtime.mkdir(parents=True)
+    base = Path(sys.base_prefix)
+    for pattern in ("python*.exe", "*.dll"):
+        for source in base.glob(pattern):
+            shutil.copyfile(source, runtime / source.name)
+    for folder in ("Lib", "DLLs"):
+        shutil.copytree(
+            base / folder,
+            runtime / folder,
+            ignore=shutil.ignore_patterns("site-packages", "__pycache__"),
+        )
+    shutil.copytree(
+        Path(sys.prefix) / "Lib/site-packages",
+        runtime / "Lib/site-packages",
+        ignore=shutil.ignore_patterns("__pycache__"),
+    )
+    python = runtime / "python.exe"
+    probe = subprocess.run(
+        [str(python), "-B", "-c", "import mcp, yaml, catalog_check.cli; print('runtime-ok')"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    if probe.returncode != 0:
+        raise BatchError(f"Copied Python runtime failed verification: {probe.stderr}")
+    write_json(marker, identity)
+    return python
+
+
 def make_plan(config: dict[str, Any]) -> list[dict[str, Any]]:
     design = config["design"]
     pairs: list[dict[str, Any]] = []
@@ -164,7 +221,11 @@ def inventory(workspace: Path) -> dict[str, str]:
     return result
 
 
-def prepare_workspace(row: dict[str, Any], directory: Path) -> tuple[Path, bytes, dict[str, str]]:
+def prepare_workspace(
+    row: dict[str, Any],
+    directory: Path,
+    runtime_python: Path | None = None,
+) -> tuple[Path, bytes, dict[str, str]]:
     workspace = directory / "workspace"
     workspace.mkdir(parents=True, exist_ok=False)
     for name in git("ls-files", "-z").split("\0"):
@@ -179,6 +240,21 @@ def prepare_workspace(row: dict[str, Any], directory: Path) -> tuple[Path, bytes
         target = workspace / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / relative, target)
+    python = str(runtime_python or Path(sys.executable).resolve())
+    config_lines = []
+    for server, module in (("env-mcp", "env_mcp.server"), ("metrics-mcp", "metrics_mcp.server")):
+        config_lines.extend(
+            [
+                f'[mcp_servers."{server}"]',
+                f"command = {json.dumps(python)}",
+                f"args = {json.dumps(['-m', module, '--dataset', str(workspace / 'dataset')])}",
+                f"cwd = {json.dumps(str(workspace))}",
+                "required = true",
+                "",
+            ]
+        )
+    (workspace / ".codex").mkdir()
+    (workspace / ".codex/config.toml").write_bytes("\n".join(config_lines).encode("utf-8"))
     catalog = workspace / "catalog/test_catalog.md"
     baseline = catalog.read_bytes()
     write_json(directory / "case.json", row)
@@ -214,8 +290,14 @@ def prepare_workspace(row: dict[str, Any], directory: Path) -> tuple[Path, bytes
     return workspace, baseline, inventory(workspace)
 
 
-def cli_command(cli: str, workspace: Path, config: dict[str, Any], final: Path) -> list[str]:
-    python = str(Path(sys.executable).resolve())
+def cli_command(
+    cli: str,
+    workspace: Path,
+    config: dict[str, Any],
+    final: Path,
+    runtime_python: Path | None = None,
+) -> list[str]:
+    python = str(runtime_python or Path(sys.executable).resolve())
     command = [
         cli,
         "--no-daemon",
@@ -252,11 +334,46 @@ def cli_command(cli: str, workspace: Path, config: dict[str, Any], final: Path) 
         }
         for key, value in values.items():
             command.extend(["-c", f"mcp_servers.{server}.{key}={json.dumps(value)}"])
+    for tool in ("list_testcases", "get_duration_stats", "get_pass_rate"):
+        command.extend(["-c", f'mcp_servers.metrics-mcp.tools.{tool}.approval_mode="approve"'])
     return command
+
+
+def sandbox_preflight(cli: str, workspace: Path, python: Path, directory: Path) -> bool:
+    """Check interpreter execution and catalog-directory writes without a model call."""
+
+    if sys.platform != "win32":
+        return True
+    code = (
+        "import mcp, yaml, catalog_check.cli; from pathlib import Path; "
+        "p=Path('catalog/.runtime-probe'); p.write_text('ok'); p.unlink(); "
+        "print('sandbox-runtime-ok')"
+    )
+    args = [
+        cli,
+        "-C",
+        str(workspace),
+        "-c",
+        'windows.sandbox="elevated"',
+        "-c",
+        'sandbox_mode="workspace-write"',
+        "sandbox",
+        "windows",
+        "--",
+        str(python),
+        "-B",
+        "-c",
+        code,
+    ]
+    result = subprocess.run(args, cwd=workspace, capture_output=True, timeout=120, check=False)
+    (directory / "sandbox-preflight.stdout.txt").write_bytes(result.stdout)
+    (directory / "sandbox-preflight.stderr.txt").write_bytes(result.stderr)
+    return result.returncode == 0 and b"sandbox-runtime-ok" in result.stdout
 
 
 def audit_events(events: list[dict[str, Any]], mode: str) -> dict[str, Any]:
     commands: list[str] = []
+    infrastructure_issues: list[str] = []
     calls: list[dict[str, Any]] = []
     completed = False
     usage: dict[str, Any] = {}
@@ -269,7 +386,12 @@ def audit_events(events: list[dict[str, Any]], mode: str) -> dict[str, Any]:
         item = event.get("item", {})
         if item.get("type") == "command_execution":
             commands.append(str(item.get("command", "")))
+            output = str(item.get("aggregated_output", ""))
+            if item.get("exit_code") not in (None, 0) and "Access is denied" in output:
+                infrastructure_issues.append("runtime-access-denied")
         if item.get("type") == "mcp_tool_call":
+            if "requires approval" in json.dumps(item.get("error")):
+                infrastructure_issues.append("mcp-approval-required")
             calls.append(
                 {key: item.get(key) for key in ("server", "tool", "arguments", "status", "error")}
             )
@@ -317,6 +439,7 @@ def audit_events(events: list[dict[str, Any]], mode: str) -> dict[str, Any]:
         "commands": commands,
         "mcp_calls": calls,
         "usage": usage,
+        "infrastructure_issues": sorted(set(infrastructure_issues)),
         "audit_limit": (
             "Command-text and file-diff audit; not a proof against deliberate obfuscation."
         ),
@@ -336,13 +459,17 @@ def read_events(path: Path) -> list[dict[str, Any]]:
 
 
 def run_case(
-    cli: str, config: dict[str, Any], row: dict[str, Any], directory: Path
+    cli: str,
+    config: dict[str, Any],
+    row: dict[str, Any],
+    directory: Path,
+    runtime_python: Path | None = None,
 ) -> dict[str, Any]:
     directory.mkdir(parents=True, exist_ok=False)
     started = now()
-    workspace, baseline, before = prepare_workspace(row, directory)
-    command = cli_command(cli, workspace, config, directory / "agent-final.txt")
-    python = str(Path(sys.executable).resolve())
+    workspace, baseline, before = prepare_workspace(row, directory, runtime_python=runtime_python)
+    command = cli_command(cli, workspace, config, directory / "agent-final.txt", runtime_python)
+    python = str(runtime_python or Path(sys.executable).resolve())
     prompt = (
         config["prompts"][row["mode"]]
         + "\nRuntime: replace .venv/Scripts/python.exe with this project interpreter: "
@@ -354,11 +481,19 @@ def run_case(
     (directory / "prompt.txt").write_bytes(prompt.encode("utf-8"))
     write_json(directory / "invocation.json", {"arguments": command, "started_at": started})
     timed_out = False
+    preflight_ok = runtime_python is None or sandbox_preflight(
+        cli,
+        workspace,
+        Path(python),
+        directory,
+    )
     with (
         (directory / "events.jsonl").open("wb") as out,
         (directory / "stderr.txt").open("wb") as err,
     ):
         try:
+            if not preflight_ok:
+                raise OSError("Sandbox runtime preflight failed; no model was invoked.")
             process = subprocess.Popen(
                 command + [prompt],
                 cwd=workspace,
@@ -401,7 +536,9 @@ def run_case(
     scope = set(changed).issubset({"catalog/test_catalog.md"})
     stderr_text = (directory / "stderr.txt").read_text(encoding="utf-8", errors="replace")
     policy_blocked = "exec_command failed" in stderr_text and "blocked by policy" in stderr_text
-    infrastructure_issues = []
+    infrastructure_issues = list(audit["infrastructure_issues"])
+    if not preflight_ok:
+        infrastructure_issues.append("sandbox-runtime-preflight-failed")
     if policy_blocked:
         infrastructure_issues.append("command-execution-blocked-by-policy")
     if "sandbox failed" in stderr_text or "sandbox setup failed" in stderr_text:
@@ -618,15 +755,35 @@ def main() -> int:
             },
             "plan": plan,
         }
+        runtime_python = ensure_runtime(output)
+        identity["runtime_python"] = str(runtime_python)
+        runtime_marker = runtime_python.parent / "runtime-identity.json"
+        if runtime_marker.is_file():
+            identity["runtime_identity_sha256"] = sha256_bytes(runtime_marker.read_bytes())
         if args.pilot:
             rows = [row for row in plan if row["pair_id"] == "hallucinated-field-r03"]
             if len(rows) != 2:
                 raise BatchError("Pilot pair is missing from plan.")
             pilot = output / "pilots" / datetime.now(UTC).strftime("%Y%m%dT%H%M%S%f")
             write_json(pilot / "identity.json", identity)
+            write_json(
+                output / "pilot-verification.json",
+                {
+                    "passed": False,
+                    "identity": identity,
+                    "pilot_path": str(pilot),
+                    "status": "running",
+                },
+            )
             results = []
             for row in rows:
-                result = run_case(cli, config, row, pilot / row["run_id"])
+                result = run_case(
+                    cli,
+                    config,
+                    row,
+                    pilot / row["run_id"],
+                    runtime_python=runtime_python,
+                )
                 results.append(result)
                 print(
                     json.dumps(
@@ -694,7 +851,7 @@ def main() -> int:
                     flush=True,
                 )
             attempt = parent / f"attempt-{len(list(parent.glob('attempt-*'))) + 1:02d}"
-            result = run_case(cli, config, row, attempt)
+            result = run_case(cli, config, row, attempt, runtime_python=runtime_python)
             write_analysis(output, plan)
             print(
                 json.dumps(
