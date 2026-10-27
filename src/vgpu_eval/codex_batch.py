@@ -233,9 +233,15 @@ def cli_command(cli: str, workspace: Path, config: dict[str, Any], final: Path) 
         config["agent"]["model"],
         "-c",
         f'model_reasoning_effort="{config["agent"]["reasoning_effort"]}"',
+        "-c",
+        'approval_policy="on-request"',
+        "-c",
+        f'projects.{json.dumps(str(workspace.resolve()))}.trust_level="trusted"',
         "-o",
         str(final),
     ]
+    if sys.platform == "win32":
+        command.extend(["-c", 'windows.sandbox="elevated"'])
     for server, module in (("env-mcp", "env_mcp.server"), ("metrics-mcp", "metrics_mcp.server")):
         values = {
             "command": python,
@@ -292,11 +298,12 @@ def audit_events(events: list[dict[str, Any]], mode: str) -> dict[str, Any]:
     successful = [
         call for call in calls if call.get("status") == "completed" and not call.get("error")
     ]
-    servers = {str(call.get("server", "")) for call in successful}
     # Hosts may expose MCP resources through generic resource helpers. Preserve
     # arguments as well, so an env-mcp resource read is attributable in the audit.
-    env_evidence = "env-mcp" in servers or any(
-        "env-mcp" in json.dumps(call.get("arguments")) for call in successful
+    env_evidence = any(
+        call.get("tool") in {"read_resource", "read_mcp_resource"}
+        and (call.get("server") == "env-mcp" or "env-mcp" in json.dumps(call.get("arguments")))
+        for call in successful
     )
     metrics_tools = {call.get("tool") for call in successful if call.get("server") == "metrics-mcp"}
     evidence_read = env_evidence and {"get_duration_stats", "get_pass_rate"}.issubset(metrics_tools)
@@ -392,7 +399,16 @@ def run_case(
         output.decode("utf-8", errors="replace")
     )
     scope = set(changed).issubset({"catalog/test_catalog.md"})
-    interrupted = timed_out or returncode != 0 or not audit["turn_completed"]
+    stderr_text = (directory / "stderr.txt").read_text(encoding="utf-8", errors="replace")
+    policy_blocked = "exec_command failed" in stderr_text and "blocked by policy" in stderr_text
+    infrastructure_issues = []
+    if policy_blocked:
+        infrastructure_issues.append("command-execution-blocked-by-policy")
+    if "sandbox failed" in stderr_text or "sandbox setup failed" in stderr_text:
+        infrastructure_issues.append("sandbox-initialization-failed")
+    interrupted = (
+        timed_out or returncode != 0 or not audit["turn_completed"] or bool(infrastructure_issues)
+    )
     success = report.valid and protected and scope and not audit["violations"] and not interrupted
     result = {
         **row,
@@ -401,6 +417,7 @@ def run_case(
         "status": "interrupted" if interrupted else "completed",
         "returncode": returncode,
         "timed_out": timed_out,
+        "infrastructure_issues": infrastructure_issues,
         "success": success,
         "checker_valid": report.valid,
         "protected_fields_preserved": protected,

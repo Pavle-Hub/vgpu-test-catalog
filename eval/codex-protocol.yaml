@@ -31,6 +31,7 @@ success_criteria:
   - With-checker uses one to three checker attempts; without-checker uses zero.
   - Deterministic writers, direct source-data reads, reference-output recovery, and test suites are not used by the agent.
 execution:
+  permissions: Workspace-write sandbox with on-request approvals and invocation-scoped trust for the generated workspace; Windows uses the elevated sandbox backend.
   isolation: Fresh exported repository and fresh ephemeral CLI session for every attempt; no prior results are copied.
   history: The only workspace commit contains the injected input, never the correct pre-injection catalog.
   pilot: A two-mode hallucinated-field pair must demonstrate integration before final data collection.

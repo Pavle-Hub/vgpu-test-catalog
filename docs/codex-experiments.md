@@ -36,6 +36,14 @@ the executable version against the candidate protocol. If discovery is still
 unsuccessful, supply an explicit executable path with `--codex` for both pilot
 and collection. No permanent PATH change or CLI reinstallation is required.
 
+Because user configuration is excluded from measured sessions, the runner
+explicitly sets workspace-write, on-request approvals, and invocation-scoped
+trust for each generated workspace. On Windows it also selects the elevated
+sandbox backend used by the desktop installation. These settings apply only to
+the child invocation; no global trust entry or full-access mode is added.
+Host-side policy rejections in stderr are recorded as infrastructure
+interruptions even if the CLI returns zero and emits `turn.completed`.
+
 This runs an isolated hallucinated-field pair, one attempt per mode. The two
 sessions use the same Skill, instructions, model, and source snapshot. The
 explicit mode controls whether checker feedback is available. The source

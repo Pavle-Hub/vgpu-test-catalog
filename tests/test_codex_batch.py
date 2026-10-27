@@ -133,6 +133,10 @@ def test_cli_pins_model_effort_and_requires_both_local_servers(tmp_path: Path) -
     assert "--ephemeral" in command
     assert "workspace-write" in command
     assert command[command.index("--model") + 1] == config["agent"]["model"]
+    assert 'approval_policy="on-request"' in command
+    assert any(arg.endswith('.trust_level="trusted"') for arg in command)
+    if sys.platform == "win32":
+        assert 'windows.sandbox="elevated"' in command
     assert "mcp_servers.env-mcp.required=true" in command
     assert "mcp_servers.metrics-mcp.required=true" in command
 
@@ -237,3 +241,34 @@ def test_failed_client_start_is_preserved_as_unscored_interruption(tmp_path: Pat
     assert (tmp_path / "failed-client/result.json").is_file()
     assert analyze([result], 60)["completed_runs"] == 0
     assert (ROOT / "catalog/test_catalog.md").read_bytes() == baseline
+
+
+def test_policy_block_is_interruption_even_when_cli_returns_zero(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class PolicyBlockedProcess:
+        def __init__(self, *args, **kwargs):
+            kwargs["stdout"].write(b'{"type":"turn.completed","usage":{}}\n')
+            kwargs["stderr"].write(
+                b"ERROR tools::router: exec_command failed: "
+                b"CreateProcess rejected: blocked by policy\n"
+            )
+
+        def wait(self, timeout=None):
+            return 0
+
+    # Prepare before mocking: git also uses Popen internally.
+    config = configuration()
+    row = make_plan(config)[0]
+    prepared = prepare_workspace(row, tmp_path / "input")
+    monkeypatch.setattr("vgpu_eval.codex_batch.subprocess.Popen", PolicyBlockedProcess)
+    monkeypatch.setattr(
+        "vgpu_eval.codex_batch.prepare_workspace",
+        lambda row, directory: prepared,
+    )
+    result = run_case("codex", config, row, tmp_path / "attempt")
+
+    assert result["returncode"] == 0
+    assert result["status"] == "interrupted"
+    assert result["infrastructure_issues"] == ["command-execution-blocked-by-policy"]
