@@ -18,7 +18,7 @@ This entry is the broad compatibility baseline for the catalog.
 
 <!-- catalog:derived:start TC-001 -->
 - **Supported GPUs:** `GPU-A`, `GPU-B`, `GPU-C`
-- **Timeout:** `26 s`
+- **Timeout:** `999 s`
 - **Pass rate:** `degraded` (`90.00%`)
 - **Last measurement:** `2025-12-05T18:00:00Z` (`fresh`)
 <!-- catalog:derived-data
