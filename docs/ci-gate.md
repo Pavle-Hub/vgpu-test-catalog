@@ -12,6 +12,10 @@ class and clean control on all ten test cases. No catalog repair runs in CI.
 Every command is a separate step so a failure stops the job. The job ends by
 checking that tracked files have not changed.
 
+The pytest configuration uses `.tmp/pytest` for temporary test files.
+`tests/conftest.py` creates the parent directory before pytest initializes its
+temporary fixtures, including on a clean checkout where `.tmp/` is absent.
+
 ## Activate required checks on GitHub
 
 1. Push the workflow to `main` and wait for a successful `Catalog CI` run.
