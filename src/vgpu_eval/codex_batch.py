@@ -358,8 +358,6 @@ def sandbox_preflight(cli: str, workspace: Path, python: Path, directory: Path) 
         "-c",
         'sandbox_mode="workspace-write"',
         "sandbox",
-        "windows",
-        "--",
         str(python),
         "-B",
         "-c",

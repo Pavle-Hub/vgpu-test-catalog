@@ -52,8 +52,10 @@ global permission change is performed. A version/package identity marker
 prevents silent reuse after the environment changes. The evaluator still runs
 in the original environment.
 
-Before a model call, a direct `codex sandbox windows` preflight tests imports
+Before a model call, a direct `codex sandbox <python> ...` preflight tests imports
 and a temporary write under the generated workspace's catalog directory.
+The pinned Windows CLI takes the executable directly after `sandbox`; it does
+not accept a `windows` platform subcommand there.
 Its stdout/stderr are preserved as `sandbox-preflight.*.txt`. If this fails, the
 runner stops without invoking the model. The workspace includes a generated
 `.codex/config.toml` matching its explicit MCP launch settings. The three local

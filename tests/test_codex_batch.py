@@ -2,6 +2,7 @@ import copy
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -16,6 +17,7 @@ from vgpu_eval.codex_batch import (
     make_plan,
     prepare_workspace,
     run_case,
+    sandbox_preflight,
     wilson,
     write_analysis,
     write_json,
@@ -24,6 +26,34 @@ from vgpu_eval.codex_batch import (
 
 def configuration() -> dict:
     return load_config(ROOT / "eval/codex-protocol.yaml")
+
+
+def test_windows_preflight_runs_python_directly(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr("vgpu_eval.codex_batch.sys.platform", "win32")
+    python = tmp_path / "python-runtime/python.exe"
+    captured = []
+
+    def fake_run(args, **kwargs):
+        captured.append(args)
+        assert kwargs["cwd"] == tmp_path
+        return SimpleNamespace(
+            returncode=0, stdout=b"sandbox-runtime-ok\n", stderr=b""
+        )
+
+    monkeypatch.setattr("vgpu_eval.codex_batch.subprocess.run", fake_run)
+    assert sandbox_preflight("codex.exe", tmp_path, python, tmp_path)
+    command = captured[0]
+    assert command[command.index("sandbox") + 1 :] == [
+        str(python), "-B", "-c",
+        "import mcp, yaml, catalog_check.cli; from pathlib import Path; "
+        "p=Path('catalog/.runtime-probe'); p.write_text('ok'); p.unlink(); "
+        "print('sandbox-runtime-ok')",
+    ]
+    assert (tmp_path / "sandbox-preflight.stdout.txt").read_bytes() == b"sandbox-runtime-ok\n"
+    assert (tmp_path / "sandbox-preflight.stderr.txt").read_bytes() == b""
 
 
 def test_cli_discovery_falls_back_to_desktop_installation(
