@@ -403,15 +403,31 @@ def _group_metrics(runs: list[dict[str, Any]]) -> dict[str, int | float]:
     }
 
 
-def summarize_agent_runs(results_dir: Path) -> dict[str, Any]:
-    """Aggregate all recorded/restored runs by fault, mode, and model."""
+def summarize_agent_runs(
+    results_dir: Path,
+    *,
+    protocol_id: str | None = None,
+    excluded_run_ids: set[str] | None = None,
+) -> dict[str, Any]:
+    """Aggregate eligible recorded/restored runs by fault, mode, and model."""
 
     results_dir = results_dir.resolve()
+    excluded_run_ids = excluded_run_ids or set()
     runs: list[dict[str, Any]] = []
+    excluded: list[str] = []
     for path in sorted(results_dir.glob("*/run.json")) if results_dir.is_dir() else []:
         value = json.loads(path.read_text(encoding="utf-8"))
-        if value.get("status") in {"recorded", "restored"} and "result" in value:
-            runs.append(value)
+        if value.get("status") not in {"recorded", "restored"} or "result" not in value:
+            continue
+        run_id = str(value.get("run_id", path.parent.name))
+        run_protocol = value.get("protocol")
+        run_protocol_id = (
+            run_protocol.get("protocol_id") if isinstance(run_protocol, dict) else None
+        )
+        if run_id in excluded_run_ids or (protocol_id and run_protocol_id != protocol_id):
+            excluded.append(run_id)
+            continue
+        runs.append(value)
 
     grouped: dict[str, dict[str, list[dict[str, Any]]]] = {
         "by_fault_class": defaultdict(list),
@@ -423,7 +439,7 @@ def summarize_agent_runs(results_dir: Path) -> dict[str, Any]:
         grouped["by_mode"][run["mode"]].append(run)
         grouped["by_model"][run["model_id"]].append(run)
 
-    return {
+    summary = {
         "schema_version": "1.0",
         "metrics": _group_metrics(runs),
         "by_fault_class": {
@@ -438,3 +454,7 @@ def summarize_agent_runs(results_dir: Path) -> dict[str, Any]:
         },
         "run_ids": [run["run_id"] for run in runs],
     }
+    if protocol_id is not None:
+        summary["protocol_id"] = protocol_id
+        summary["excluded_run_ids"] = sorted(excluded)
+    return summary

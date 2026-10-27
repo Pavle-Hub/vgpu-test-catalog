@@ -222,6 +222,21 @@ def verify_protocol(
     }
 
 
+def protocol_summary_filter(
+    protocol_path: Path,
+    *,
+    project_root: Path = PROJECT_ROOT,
+) -> tuple[str, set[str]]:
+    """Return the frozen protocol ID and explicitly excluded run IDs."""
+
+    report = verify_protocol(protocol_path, project_root=project_root)
+    if not report["valid"]:
+        raise ProtocolError("Protocol verification failed: " + "; ".join(report["issues"]))
+    protocol = _load_protocol(protocol_path.resolve())
+    exclusions = {str(item["run_id"]) for item in protocol["exclusions"]}
+    return str(protocol["protocol_id"]), exclusions
+
+
 def _git(project_root: Path, *arguments: str) -> str:
     completed = subprocess.run(
         ["git", "-C", str(project_root), *arguments],

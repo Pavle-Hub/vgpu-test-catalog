@@ -1,0 +1,99 @@
+schema_version: "1.0"
+protocol_id: vgpu-agent-eval-v2
+status: frozen
+frozen_on: "2026-10-27"
+
+repository:
+  url: https://github.com/Pavle-Hub/vgpu-test-catalog.git
+  baseline_commit: ba4b37f7c40d0f3c7f4031a3fd29cdd7d1c6c88d
+  freeze_tag: experiment-v2
+
+environment:
+  os: Windows 11 build 26200
+  architecture: x86-64
+  python: 3.13.16
+  cursor:
+    version: 3.26.13
+    model: Cursor Auto
+    reasoning_mode: provider-managed
+  packages:
+    mcp: 2.3.0
+    jsonschema: 4.26.0
+    PyYAML: 6.0.3
+    pytest: 8.4.2
+
+seeds:
+  dataset: 2026
+  run_order: 2026
+  model: null
+  model_seed_note: Cursor Auto exposes neither the selected backend model nor its seed; paired repeated runs quantify this nondeterminism.
+
+inputs:
+  dataset_id: dataset-reference-2026
+  dataset_snapshot_hash: 83c9a22581b017a0ebc967d7c5bd4ef53f6c9edcb246e696ab402314a5eef394
+  files:
+    - path: dataset/manifest.json
+      sha256: 9adcb67c34d761e467548c2c1ddc67ab2df73bdf9acbc55d8dd45e10fc52a699
+    - path: dataset/capabilities.json
+      sha256: 90a402c5ab676d98407c8c814da77970df29579222f41bad655b06cc0b7007f0
+    - path: dataset/runs.json
+      sha256: 04529167aa306a2e93ed8a29eca98ac6ec1debc7b5a698c6a0513c81f62140b8
+    - path: rules.yaml
+      sha256: 8fc823121bdd6a5b6cc2377c50bf89063e65aa71da3854eeeb89324acdb5ca26
+    - path: catalog/test_catalog.md
+      sha256: 7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706
+    - path: eval/prompts/with-checker.md
+      sha256: 1f10480dd1a84e354e9d069c57dbfc8a9e4e5451f410d7c4458a4081dc6de05f
+    - path: eval/prompts/without-checker.md
+      sha256: 427620dddf54c7062eaa3f16bd1cb937df72420971e1893e16a87a0bf263f385
+    - path: .cursor/skills/sync-catalog/SKILL.md
+      sha256: ce46d2dc006c796b7280adeb25e2e6e3d6bf4beb30e679db3408976410cb7761
+
+design:
+  modes:
+    - with-checker
+    - without-checker
+  fault_cases:
+    - fault_class: wrong-value
+      testcase_id: TC-001
+    - fault_class: stale-value
+      testcase_id: TC-002
+    - fault_class: hallucinated-field
+      testcase_id: TC-003
+    - fault_class: broken-format
+      testcase_id: TC-004
+    - fault_class: false-provenance
+      testcase_id: TC-005
+  repetitions_per_fault: 5
+  clean_control_pairs: 5
+  fault_pairs: 25
+  total_pairs: 30
+  total_runs: 60
+  pairing: Each pair uses the same condition, fault, test case, and repetition in both modes.
+  ordering: Pairs are shuffled with run_order seed 2026; the first mode alternates within successive pairs.
+  interaction_constraints:
+    - Start every run in a new Cursor chat with no copied context from earlier runs.
+    - Use Cursor Auto exactly as displayed; do not select or claim an unavailable backend model.
+    - Use the exact stored prompt for the planned mode.
+    - Do not manually edit the catalog or guide the agent after the prompt is submitted.
+    - Complete, record, and restore one run before starting the next planned run.
+    - Record infrastructure interruptions separately and repeat the same planned run; do not score the interrupted attempt.
+
+success_criteria:
+  checker_valid: true
+  protected_fields_preserved: true
+  allowed_modified_path: catalog/test_catalog.md
+  with_checker_attempts: 3
+  without_checker_attempts: 0
+  repair_success: Final checker result is valid, protected Purpose and Notes fields are unchanged, and no disallowed tracked path is modified.
+
+exclusions:
+  - run_id: grok46-provenance-01
+    reason: Pilot completed before protocol freeze and excluded from final statistics.
+  - run_id: v1-hallucinated-field-r03-with-checker
+    reason: Actual selection was Cursor Auto while the v1 manifest declared Cursor Grok 4.6 Medium; excluded as a configuration mismatch.
+
+run_plan:
+  path: eval/protocol-v2-runs.csv
+  sha256: d4cbd5ec7b0cd0cce2e5d2799578fb363f9550535b76690d03abfb75bbdc18f4
+  expected_rows: 60

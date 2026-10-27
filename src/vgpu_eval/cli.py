@@ -10,7 +10,12 @@ from typing import Any
 from vgpu_catalog.hashing import pretty_json_bytes
 from vgpu_catalog.rules import DEFAULT_RULES_PATH
 from vgpu_eval.faults import FaultClass, FaultInjectionError
-from vgpu_eval.protocol import ProtocolError, start_planned_run, verify_protocol
+from vgpu_eval.protocol import (
+    ProtocolError,
+    protocol_summary_filter,
+    start_planned_run,
+    verify_protocol,
+)
 from vgpu_eval.runs import (
     AgentRunError,
     finish_agent_run,
@@ -23,7 +28,7 @@ from vgpu_eval.suite import EvaluationSuiteError, generate_detection_suite
 DEFAULT_CATALOG = Path("catalog/test_catalog.md")
 DEFAULT_DATASET = Path("dataset")
 DEFAULT_RESULTS = Path("eval/results/runs")
-DEFAULT_PROTOCOL = Path("eval/protocol-v1.yaml")
+DEFAULT_PROTOCOL = Path("eval/protocol-v2.yaml")
 
 
 def _print(value: dict[str, Any]) -> None:
@@ -83,6 +88,7 @@ def build_parser() -> argparse.ArgumentParser:
     summarize = subparsers.add_parser("summarize", help="Aggregate recorded agent runs.")
     summarize.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
     summarize.add_argument("--output", type=Path)
+    summarize.add_argument("--protocol", type=Path)
     return parser
 
 
@@ -144,7 +150,15 @@ def main() -> int:
         elif args.command == "restore":
             result = restore_agent_run(args.catalog, args.results_dir, run_id=args.run_id)
         else:
-            result = summarize_agent_runs(args.results_dir)
+            protocol_id: str | None = None
+            excluded_run_ids: set[str] | None = None
+            if args.protocol:
+                protocol_id, excluded_run_ids = protocol_summary_filter(args.protocol)
+            result = summarize_agent_runs(
+                args.results_dir,
+                protocol_id=protocol_id,
+                excluded_run_ids=excluded_run_ids,
+            )
             if args.output:
                 args.output.parent.mkdir(parents=True, exist_ok=True)
                 args.output.write_bytes(pretty_json_bytes(result))

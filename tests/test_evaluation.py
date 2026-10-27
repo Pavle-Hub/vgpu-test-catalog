@@ -20,7 +20,7 @@ from vgpu_eval.suite import generate_detection_suite
 
 REFERENCE_CATALOG = Path("catalog/test_catalog.md")
 DATASET_DIR = Path("dataset")
-PROTOCOL_PATH = Path("eval/protocol-v1.yaml")
+PROTOCOL_PATH = Path("eval/protocol-v2.yaml")
 
 
 def _without_target_block(document: str, testcase_id: str) -> str:
@@ -92,6 +92,13 @@ def test_frozen_protocol_inputs_and_plan_are_valid() -> None:
     assert report["clean_pairs"] == 5
 
 
+def test_superseded_protocol_remains_auditable() -> None:
+    report = verify_protocol(Path("eval/protocol-v1.yaml"))
+
+    assert report["valid"], report["issues"]
+    assert report["protocol_id"] == "vgpu-agent-eval-v1"
+
+
 def test_agent_run_can_be_started_recorded_summarized_and_restored(tmp_path: Path) -> None:
     catalog_path = tmp_path / "test_catalog.md"
     copyfile(REFERENCE_CATALOG, catalog_path)
@@ -136,9 +143,16 @@ def test_agent_run_can_be_started_recorded_summarized_and_restored(tmp_path: Pat
         "remaining_issue_paths": [],
     }
 
-    summary = summarize_agent_runs(results_dir)
+    manifest_path = results_dir / "test-run" / "run.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["protocol"] = {"protocol_id": "test-protocol"}
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    summary = summarize_agent_runs(results_dir, protocol_id="test-protocol")
     assert summary["metrics"]["repair_success_rate"] == 1.0
     assert summary["by_fault_class"]["false-provenance"]["runs"] == 1
+    excluded = summarize_agent_runs(results_dir, excluded_run_ids={"test-run"})
+    assert excluded["metrics"]["runs"] == 0
 
     restored = restore_agent_run(catalog_path, results_dir, run_id="test-run")
     assert restored["status"] == "restored"
