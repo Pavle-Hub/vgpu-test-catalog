@@ -12,7 +12,13 @@ only deliberately selected, anonymized experiment results later.
 
 ## Frozen final protocol
 
-The active final protocol is `eval/protocol-v3.yaml`; its 60-row execution
+The following frozen protocols describe historical Cursor execution. For the
+Codex migration candidate and automated pilot/freeze/collection/analysis flow,
+see [Isolated Codex experiments](../docs/codex-experiments.md). Codex final data
+must not be labeled as Cursor data. A candidate is frozen only after its live
+pilot succeeds.
+
+The most recent Cursor protocol is `eval/protocol-v3.yaml`; its 60-row execution
 schedule is `eval/protocol-v3-runs.csv`. It freezes Cursor 3.26.13, Cursor Grok
 4.6 with Medium reasoning, five fault classes, five paired repetitions per
 class, five paired clean controls, exact inputs and prompts, and the success
