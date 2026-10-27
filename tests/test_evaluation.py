@@ -20,7 +20,7 @@ from vgpu_eval.suite import generate_detection_suite
 
 REFERENCE_CATALOG = Path("catalog/test_catalog.md")
 DATASET_DIR = Path("dataset")
-PROTOCOL_PATH = Path("eval/protocol-v2.yaml")
+PROTOCOL_PATH = Path("eval/protocol-v3.yaml")
 
 
 def _without_target_block(document: str, testcase_id: str) -> str:
@@ -92,11 +92,18 @@ def test_frozen_protocol_inputs_and_plan_are_valid() -> None:
     assert report["clean_pairs"] == 5
 
 
-def test_superseded_protocol_remains_auditable() -> None:
-    report = verify_protocol(Path("eval/protocol-v1.yaml"))
+@pytest.mark.parametrize(
+    ("path", "protocol_id"),
+    [
+        (Path("eval/protocol-v1.yaml"), "vgpu-agent-eval-v1"),
+        (Path("eval/protocol-v2.yaml"), "vgpu-agent-eval-v2"),
+    ],
+)
+def test_superseded_protocol_remains_auditable(path: Path, protocol_id: str) -> None:
+    report = verify_protocol(path)
 
     assert report["valid"], report["issues"]
-    assert report["protocol_id"] == "vgpu-agent-eval-v1"
+    assert report["protocol_id"] == protocol_id
 
 
 def test_agent_run_can_be_started_recorded_summarized_and_restored(tmp_path: Path) -> None:

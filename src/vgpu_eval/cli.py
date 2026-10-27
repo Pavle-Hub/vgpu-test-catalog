@@ -28,7 +28,7 @@ from vgpu_eval.suite import EvaluationSuiteError, generate_detection_suite
 DEFAULT_CATALOG = Path("catalog/test_catalog.md")
 DEFAULT_DATASET = Path("dataset")
 DEFAULT_RESULTS = Path("eval/results/runs")
-DEFAULT_PROTOCOL = Path("eval/protocol-v2.yaml")
+DEFAULT_PROTOCOL = Path("eval/protocol-v3.yaml")
 
 
 def _print(value: dict[str, Any]) -> None:

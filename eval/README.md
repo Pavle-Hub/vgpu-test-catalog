@@ -12,19 +12,19 @@ only deliberately selected, anonymized experiment results later.
 
 ## Frozen final protocol
 
-The active final protocol is `eval/protocol-v2.yaml`; its 60-row execution
-schedule is `eval/protocol-v2-runs.csv`. It freezes Cursor 3.26.13 with the only
-available selection, Cursor Auto, plus five fault classes, five paired
-repetitions per class, five paired clean controls, exact inputs and prompts,
-and the success criterion.
+The active final protocol is `eval/protocol-v3.yaml`; its 60-row execution
+schedule is `eval/protocol-v3-runs.csv`. It freezes Cursor 3.26.13, Cursor Grok
+4.6 with Medium reasoning, five fault classes, five paired repetitions per
+class, five paired clean controls, exact inputs and prompts, and the success
+criterion.
 
-Cursor Auto exposes neither the provider-selected backend model nor its model
+Cursor exposes the fixed model identity and reasoning mode, but not a model
 seed. This limitation is recorded rather than replaced by a fabricated value.
 Dataset generation and randomized run ordering both use the recorded seed
-2026; repeated paired runs measure the remaining nondeterminism. The superseded
-v1 protocol remains versioned for auditability, but no v1 result enters final
-statistics. Both `grok46-provenance-01` and the mislabeled v1 Auto run are
-explicitly excluded by v2.
+2026; repeated paired runs measure the remaining model nondeterminism. The
+superseded v1 and v2 protocols remain versioned for auditability, but none of
+their results enters final statistics. The pilot and both configuration-mismatch
+runs are explicitly excluded by v3.
 
 Verify every frozen file, the protocol schema, all pairings, and the complete
 run matrix before starting experiments:
@@ -35,12 +35,12 @@ run matrix before starting experiments:
 
 The command must report `"valid": true`, 60 runs, 25 fault pairs, and 5 clean
 pairs. `start-planned` additionally requires a clean worktree at the exact
-`experiment-v2` tag. It reads all parameters from the plan, so fault, test
+`experiment-v3` tag. It reads all parameters from the plan, so fault, test
 case, model, mode, and prompt cannot be mistyped. Start the first row with:
 
 ```powershell
 .venv\Scripts\python.exe eval\inject_faults.py start-planned `
-  --run-id v2-hallucinated-field-r03-with-checker
+  --run-id v3-hallucinated-field-r03-with-checker
 ```
 
 After the Cursor interaction, use the existing `finish` and `restore` commands
@@ -136,7 +136,7 @@ Aggregate all finished runs:
 
 ```powershell
 .venv\Scripts\python.exe eval\inject_faults.py summarize `
-  --protocol eval\protocol-v2.yaml `
+  --protocol eval\protocol-v3.yaml `
   --output eval\results\agent-summary.json
 ```
 
