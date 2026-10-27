@@ -7,6 +7,7 @@ import csv
 import importlib.metadata
 import json
 import math
+import os
 import random
 import re
 import shutil
@@ -32,6 +33,57 @@ MODES = ("with-checker", "without-checker")
 
 class BatchError(ValueError):
     """An experiment cannot proceed with a trustworthy configuration."""
+
+
+def find_codex(expected_version: str, explicit: Path | None = None) -> tuple[str, str]:
+    """Find a matching CLI on PATH or in the standard local app installation."""
+
+    candidates: list[Path] = []
+    if explicit is not None:
+        candidates.append(explicit)
+    else:
+        on_path = shutil.which("codex")
+        if on_path:
+            candidates.append(Path(on_path))
+        supplied = os.environ.get("CODEX_CLI_PATH")
+        if supplied:
+            candidates.append(Path(supplied))
+        local_roots = [Path.home() / "AppData/Local"]
+        if os.environ.get("LOCALAPPDATA"):
+            local_roots.append(Path(os.environ["LOCALAPPDATA"]))
+        for local in local_roots:
+            desktop_bin = local / "OpenAI/Codex/bin"
+            if desktop_bin.is_dir():
+                candidates.extend(sorted(desktop_bin.glob("*/codex.exe")))
+            candidates.append(local / "Programs/OpenAI/Codex/codex.exe")
+
+    seen: set[Path] = set()
+    found: list[str] = []
+    for candidate in candidates:
+        candidate = candidate.resolve()
+        if candidate in seen or not candidate.is_file():
+            continue
+        seen.add(candidate)
+        try:
+            version = subprocess.check_output(
+                [str(candidate), "--version"],
+                text=True,
+                timeout=10,
+                stderr=subprocess.PIPE,
+            ).strip()
+        except (OSError, subprocess.SubprocessError):
+            continue
+        if version == f"codex-cli {expected_version}":
+            return str(candidate), version
+        found.append(f"{candidate}: {version}")
+    if found:
+        raise BatchError(
+            f"Need Codex CLI {expected_version}; installed versions differ: " + "; ".join(found)
+        )
+    raise BatchError(
+        "Codex CLI was not found on PATH or in its local installation. "
+        "Supply its executable with --codex C:/path/to/codex.exe."
+    )
 
 
 def now() -> str:
@@ -521,6 +573,7 @@ def main() -> int:
     action.add_argument("--summarize", action="store_true")
     parser.add_argument("--config", type=Path, default=ROOT / "eval/codex-protocol.yaml")
     parser.add_argument("--output", type=Path, default=ROOT / "eval/results/codex-eval-1")
+    parser.add_argument("--codex", type=Path, help="Explicit path to the Codex CLI executable.")
     args = parser.parse_args()
     try:
         config = load_config(args.config)
@@ -530,12 +583,7 @@ def main() -> int:
         if args.summarize:
             print(json.dumps(write_analysis(output, plan), indent=2))
             return 0
-        cli = shutil.which("codex")
-        if not cli:
-            raise BatchError("Codex CLI is not on PATH.")
-        version = subprocess.check_output([cli, "--version"], text=True).strip()
-        if version != f"codex-cli {config['agent']['version']}":
-            raise BatchError(f"CLI version differs from protocol: {version}")
+        cli, version = find_codex(config["agent"]["version"], args.codex)
         if git("status", "--porcelain", "--untracked-files=all"):
             raise BatchError("Commit project changes before running measured experiments.")
         if not check_catalog(

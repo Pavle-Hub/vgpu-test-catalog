@@ -10,6 +10,7 @@ from vgpu_eval.codex_batch import (
     analyze,
     audit_events,
     cli_command,
+    find_codex,
     git,
     load_config,
     make_plan,
@@ -23,6 +24,53 @@ from vgpu_eval.codex_batch import (
 
 def configuration() -> dict:
     return load_config(ROOT / "eval/codex-protocol.yaml")
+
+
+def test_cli_discovery_falls_back_to_desktop_installation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cli = tmp_path / "AppData/Local/OpenAI/Codex/bin/build-id/codex.exe"
+    cli.parent.mkdir(parents=True)
+    cli.touch()
+    monkeypatch.setattr("vgpu_eval.codex_batch.shutil.which", lambda _: None)
+    monkeypatch.setattr(Path, "home", lambda: tmp_path)
+    monkeypatch.delenv("CODEX_CLI_PATH", raising=False)
+    monkeypatch.setenv("LOCALAPPDATA", str(tmp_path / "sandbox-redirect"))
+    monkeypatch.setattr(
+        "vgpu_eval.codex_batch.subprocess.check_output",
+        lambda *args, **kwargs: "codex-cli test-version\n",
+    )
+
+    path, version = find_codex("test-version")
+    assert Path(path) == cli.resolve()
+    assert version == "codex-cli test-version"
+
+
+def test_explicit_cli_does_not_fall_back_to_another_installation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        "vgpu_eval.codex_batch.shutil.which",
+        lambda _: pytest.fail("Explicit selection must not search PATH"),
+    )
+    with pytest.raises(ValueError, match="was not found"):
+        find_codex("test-version", tmp_path / "missing.exe")
+
+
+def test_cli_discovery_rejects_wrong_version(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cli = tmp_path / "codex.exe"
+    cli.touch()
+    monkeypatch.setattr(
+        "vgpu_eval.codex_batch.subprocess.check_output",
+        lambda *args, **kwargs: "codex-cli other-version\n",
+    )
+    with pytest.raises(ValueError, match="installed versions differ"):
+        find_codex("test-version", cli)
 
 
 def evidence_events() -> list[dict]:

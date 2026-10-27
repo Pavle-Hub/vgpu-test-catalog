@@ -30,6 +30,12 @@ ordinary PowerShell terminal, run:
 .venv\Scripts\python.exe tools\run_codex_experiments.py --pilot
 ```
 
+The runner searches PATH and the standard Codex desktop installation folders,
+including `%USERPROFILE%/AppData/Local/OpenAI/Codex/bin/*/codex.exe`. It checks
+the executable version against the candidate protocol. If discovery is still
+unsuccessful, supply an explicit executable path with `--codex` for both pilot
+and collection. No permanent PATH change or CLI reinstallation is required.
+
 This runs an isolated hallucinated-field pair, one attempt per mode. The two
 sessions use the same Skill, instructions, model, and source snapshot. The
 explicit mode controls whether checker feedback is available. The source
