@@ -1,0 +1,63 @@
+name: Catalog CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  catalog-gate:
+    name: catalog-gate
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Preserve committed bytes for frozen input hashes
+        run: git config --global core.autocrlf false
+
+      - name: Check out proposed revision
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.13.16'
+          cache: pip
+          cache-dependency-path: requirements.lock
+
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements.lock
+
+      - name: Install project
+        run: python -m pip install --no-deps -e .
+
+      - name: Validate pinned dataset
+        run: python -m vgpu_catalog.validation dataset
+
+      - name: Check proposed catalog without repairing it
+        run: python -m catalog_check.cli --check
+
+      - name: Verify frozen protocol inputs
+        run: python eval/inject_faults.py protocol-check
+
+      - name: Run test suite
+        run: python -m pytest
+
+      - name: Check Python style
+        run: python -m ruff check .
+
+      - name: Evaluate all controlled checker faults and clean controls
+        run: python eval/inject_faults.py suite --output eval/results/ci-checker-suite
+
+      - name: Verify tracked files were not modified
+        run: git diff --exit-code HEAD -- .
