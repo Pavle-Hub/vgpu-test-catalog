@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
@@ -90,6 +91,20 @@ def _open_runs(results_dir: Path) -> list[str]:
     return open_runs
 
 
+def _git_modified_paths(repository_root: Path, repository_head: str) -> list[str]:
+    completed = subprocess.run(
+        ["git", "-C", str(repository_root), "diff", "--name-only", repository_head, "--"],
+        check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    if completed.returncode != 0:
+        detail = completed.stderr.strip() or completed.stdout.strip()
+        raise AgentRunError(f"Could not inspect experiment worktree: {detail}")
+    return sorted(path for path in completed.stdout.splitlines() if path)
+
+
 def start_agent_run(
     catalog_path: Path,
     dataset_dir: Path,
@@ -102,6 +117,7 @@ def start_agent_run(
     run_id: str | None = None,
     rules_path: Path = DEFAULT_RULES_PATH,
     prompt_path: Path | None = None,
+    protocol_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Save a valid baseline, inject one fault in place, and open an agent run."""
 
@@ -173,8 +189,92 @@ def start_agent_run(
         "faulty_catalog_sha256": sha256_bytes(faulty_bytes),
         "initial_issue_codes": sorted({issue.code for issue in faulty_report.issues}),
     }
+    if protocol_metadata is not None:
+        manifest["protocol"] = protocol_metadata
     _write_json(run_dir / "run.json", manifest)
     temporary_catalog.replace(catalog_path)
+    return manifest
+
+
+def start_clean_agent_run(
+    catalog_path: Path,
+    dataset_dir: Path,
+    results_dir: Path,
+    *,
+    model_id: str,
+    mode: str,
+    run_id: str,
+    rules_path: Path = DEFAULT_RULES_PATH,
+    prompt_path: Path | None = None,
+    protocol_metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Open a clean-control run without mutating the valid catalog."""
+
+    if mode not in {"with-checker", "without-checker"}:
+        raise AgentRunError("mode must be 'with-checker' or 'without-checker'.")
+    if not model_id.strip():
+        raise AgentRunError("model_id must not be empty.")
+    if not RUN_ID_PATTERN.fullmatch(run_id):
+        raise AgentRunError(
+            "run_id may contain only letters, numbers, dot, underscore, and hyphen."
+        )
+
+    catalog_path = catalog_path.resolve()
+    dataset_dir = dataset_dir.resolve()
+    results_dir = results_dir.resolve()
+    rules_path = rules_path.resolve()
+    prompt_path = (prompt_path or PROMPT_DIR / f"{mode}.md").resolve()
+    prompt_bytes = prompt_path.read_bytes()
+    if not prompt_bytes.strip():
+        raise AgentRunError("Experiment prompt must not be empty.")
+    open_runs = _open_runs(results_dir)
+    if open_runs:
+        raise AgentRunError(f"Finish and restore the open run first: {', '.join(open_runs)}")
+
+    run_dir = results_dir / run_id
+    if run_dir.exists():
+        raise AgentRunError(f"Run directory already exists: {run_dir}")
+    baseline_bytes = catalog_path.read_bytes()
+    baseline_report = check_catalog(catalog_path, dataset_dir, rules_path)
+    if not baseline_report.valid:
+        raise AgentRunError("Catalog must pass before a clean-control run is started.")
+
+    run_dir.mkdir(parents=True)
+    (run_dir / "baseline-catalog.md").write_bytes(baseline_bytes)
+    (run_dir / "input-catalog.md").write_bytes(baseline_bytes)
+    (run_dir / "prompt.md").write_bytes(prompt_bytes)
+    _write_json(
+        run_dir / "initial-checker-report.json",
+        {"mode": "check", **baseline_report.as_dict()},
+    )
+    manifest = {
+        "schema_version": "1.0",
+        "run_id": run_id,
+        "status": "awaiting-agent",
+        "started_at": _now(),
+        "model_id": model_id.strip(),
+        "mode": mode,
+        "prompt_id": prompt_path.stem,
+        "prompt_sha256": sha256_bytes(prompt_bytes),
+        "catalog_path": str(catalog_path),
+        "dataset_dir": str(dataset_dir),
+        "rules_path": str(rules_path),
+        **_input_identity(dataset_dir, rules_path),
+        "fault": {
+            "fault_class": "clean-control",
+            "testcase_id": None,
+            "changed_path": None,
+            "original": None,
+            "injected": None,
+            "expected_issue_codes": [],
+        },
+        "baseline_catalog_sha256": sha256_bytes(baseline_bytes),
+        "input_catalog_sha256": sha256_bytes(baseline_bytes),
+        "initial_issue_codes": [],
+    }
+    if protocol_metadata is not None:
+        manifest["protocol"] = protocol_metadata
+    _write_json(run_dir / "run.json", manifest)
     return manifest
 
 
@@ -225,7 +325,17 @@ def finish_agent_run(
     agent_protected = _protected_fields(agent_bytes.decode("utf-8"))
     protected_preserved = baseline_protected == agent_protected
     checker_valid = report.valid
-    success = checker_valid and protected_preserved
+    protocol = manifest.get("protocol")
+    repository_scope_preserved = True
+    modified_paths: list[str] = []
+    if isinstance(protocol, dict):
+        repository_root = Path(str(protocol["repository_root"]))
+        repository_head = str(protocol["repository_head"])
+        modified_paths = _git_modified_paths(repository_root, repository_head)
+        repository_scope_preserved = set(modified_paths).issubset(
+            {str(protocol["allowed_modified_path"])}
+        )
+    success = checker_valid and protected_preserved and repository_scope_preserved
     manifest["status"] = "recorded"
     manifest["finished_at"] = _now()
     manifest["agent_output_sha256"] = sha256_bytes(agent_bytes)
@@ -238,6 +348,9 @@ def finish_agent_run(
         "remaining_issue_codes": sorted({issue.code for issue in report.issues}),
         "remaining_issue_paths": sorted({issue.path for issue in report.issues}),
     }
+    if isinstance(protocol, dict):
+        manifest["result"]["repository_scope_preserved"] = repository_scope_preserved
+        manifest["result"]["modified_paths"] = modified_paths
     if notes:
         manifest["notes"] = notes
     _write_json(run_dir / "run.json", manifest)

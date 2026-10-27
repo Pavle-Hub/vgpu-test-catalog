@@ -13,6 +13,8 @@ tools.
   contract used by both the catalog writer and checker.
 - `catalog-derived.schema.json` validates each hidden machine-readable Markdown
   block, including values, status, formula, timestamp, and snapshot hash.
+- `evaluation-protocol.schema.json` validates the frozen agent, environment,
+  input, pairing, success-criterion, and run-plan contract.
 
 ## Cross-file invariants
 

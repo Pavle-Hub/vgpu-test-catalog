@@ -10,6 +10,44 @@ The evaluation layer separates two questions:
 Generated artifacts live under `eval/results/` and are ignored by Git. Publish
 only deliberately selected, anonymized experiment results later.
 
+## Frozen final protocol
+
+The final protocol is `eval/protocol-v1.yaml`; its 60-row execution schedule is
+`eval/protocol-v1-runs.csv`. It freezes Cursor 3.26.13, Cursor Grok 4.6 with
+medium reasoning, five fault classes, five paired repetitions per class, five
+paired clean controls, exact inputs and prompts, and the success criterion.
+The earlier `grok46-provenance-01` run is a pilot and is excluded because it
+predates the freeze and used a different Cursor version.
+
+The agent API does not expose a model seed. This limitation is recorded rather
+than replaced by a fabricated value. Dataset generation and randomized run
+ordering both use the recorded seed 2026; repeated paired runs measure the
+remaining model nondeterminism.
+
+Verify every frozen file, the protocol schema, all pairings, and the complete
+run matrix before starting experiments:
+
+```powershell
+.venv\Scripts\python.exe eval\inject_faults.py protocol-check
+```
+
+The command must report `"valid": true`, 60 runs, 25 fault pairs, and 5 clean
+pairs. `start-planned` additionally requires a clean worktree at the exact
+`experiment-v1` tag. It reads all parameters from the plan, so fault, test
+case, model, mode, and prompt cannot be mistyped. Start the first row with:
+
+```powershell
+.venv\Scripts\python.exe eval\inject_faults.py start-planned `
+  --run-id v1-hallucinated-field-r03-with-checker
+```
+
+After the Cursor interaction, use the existing `finish` and `restore` commands
+with the same run ID. Start a fresh Cursor chat for every row and follow the CSV
+order. A planned result succeeds only if the final checker passes, `Purpose`
+and `Notes` are unchanged, and no tracked path outside
+`catalog/test_catalog.md` is modified. With-checker runs allow at most three
+checker attempts; without-checker runs record zero checker attempts.
+
 ## Fault classes
 
 | Class | Controlled mutation | Expected checker signal |

@@ -7,17 +7,20 @@ import pytest
 from catalog_check.checker import check_catalog
 from catalog_check.markdown import find_blocks
 from vgpu_eval.faults import FaultClass, inject_fault
+from vgpu_eval.protocol import verify_protocol
 from vgpu_eval.runs import (
     AgentRunError,
     finish_agent_run,
     restore_agent_run,
     start_agent_run,
+    start_clean_agent_run,
     summarize_agent_runs,
 )
 from vgpu_eval.suite import generate_detection_suite
 
 REFERENCE_CATALOG = Path("catalog/test_catalog.md")
 DATASET_DIR = Path("dataset")
+PROTOCOL_PATH = Path("eval/protocol-v1.yaml")
 
 
 def _without_target_block(document: str, testcase_id: str) -> str:
@@ -80,6 +83,15 @@ def test_detection_suite_includes_faults_and_clean_control(tmp_path: Path) -> No
     assert persisted == suite
 
 
+def test_frozen_protocol_inputs_and_plan_are_valid() -> None:
+    report = verify_protocol(PROTOCOL_PATH)
+
+    assert report["valid"], report["issues"]
+    assert report["runs"] == 60
+    assert report["fault_pairs"] == 25
+    assert report["clean_pairs"] == 5
+
+
 def test_agent_run_can_be_started_recorded_summarized_and_restored(tmp_path: Path) -> None:
     catalog_path = tmp_path / "test_catalog.md"
     copyfile(REFERENCE_CATALOG, catalog_path)
@@ -131,6 +143,37 @@ def test_agent_run_can_be_started_recorded_summarized_and_restored(tmp_path: Pat
     restored = restore_agent_run(catalog_path, results_dir, run_id="test-run")
     assert restored["status"] == "restored"
     assert catalog_path.read_bytes() == REFERENCE_CATALOG.read_bytes()
+
+
+def test_clean_control_run_can_be_recorded_and_restored(tmp_path: Path) -> None:
+    catalog_path = tmp_path / "test_catalog.md"
+    copyfile(REFERENCE_CATALOG, catalog_path)
+    results_dir = tmp_path / "runs"
+
+    started = start_clean_agent_run(
+        catalog_path,
+        DATASET_DIR,
+        results_dir,
+        model_id="Cursor Grok 4.6",
+        mode="without-checker",
+        run_id="clean-control",
+    )
+    assert started["fault"]["fault_class"] == "clean-control"
+    assert started["initial_issue_codes"] == []
+
+    finished = finish_agent_run(
+        catalog_path,
+        DATASET_DIR,
+        results_dir,
+        run_id="clean-control",
+        checker_attempts=0,
+    )
+    assert finished["result"]["success"]
+
+    summary = summarize_agent_runs(results_dir)
+    assert summary["by_fault_class"]["clean-control"]["runs"] == 1
+    restored = restore_agent_run(catalog_path, results_dir, run_id="clean-control")
+    assert restored["status"] == "restored"
 
 
 def test_restore_refuses_to_discard_unrecorded_agent_work(tmp_path: Path) -> None:

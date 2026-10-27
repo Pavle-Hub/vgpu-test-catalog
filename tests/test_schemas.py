@@ -77,6 +77,7 @@ def valid_manifest() -> dict:
         "manifest.schema.json",
         "rules.schema.json",
         "catalog-derived.schema.json",
+        "evaluation-protocol.schema.json",
     ],
 )
 def test_schema_is_valid_draft_2020_12(schema_name: str) -> None:

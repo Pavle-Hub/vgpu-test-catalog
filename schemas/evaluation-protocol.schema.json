@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/evaluation-protocol.schema.json",
+  "title": "AI agent evaluation protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "status",
+    "frozen_on",
+    "repository",
+    "environment",
+    "seeds",
+    "inputs",
+    "design",
+    "success_criteria",
+    "exclusions",
+    "run_plan"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "protocol_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"},
+    "status": {"const": "frozen"},
+    "frozen_on": {"type": "string", "format": "date"},
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "baseline_commit", "freeze_tag"],
+      "properties": {
+        "url": {"type": "string", "format": "uri"},
+        "baseline_commit": {"$ref": "#/$defs/sha1"},
+        "freeze_tag": {"type": "string", "minLength": 1}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "architecture", "python", "cursor", "packages"],
+      "properties": {
+        "os": {"type": "string", "minLength": 1},
+        "architecture": {"type": "string", "minLength": 1},
+        "python": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "cursor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["version", "model", "reasoning_mode"],
+          "properties": {
+            "version": {"type": "string", "minLength": 1},
+            "model": {"type": "string", "minLength": 1},
+            "reasoning_mode": {"type": "string", "minLength": 1}
+          }
+        },
+        "packages": {
+          "type": "object",
+          "additionalProperties": {"type": "string", "minLength": 1},
+          "minProperties": 1
+        }
+      }
+    },
+    "seeds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset", "run_order", "model", "model_seed_note"],
+      "properties": {
+        "dataset": {"type": "integer"},
+        "run_order": {"type": "integer"},
+        "model": {"type": ["integer", "null"]},
+        "model_seed_note": {"type": "string", "minLength": 1}
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "dataset_snapshot_hash", "files"],
+      "properties": {
+        "dataset_id": {"type": "string", "minLength": 1},
+        "dataset_snapshot_hash": {"$ref": "#/$defs/sha256"},
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      }
+    },
+    "design": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modes",
+        "fault_cases",
+        "repetitions_per_fault",
+        "clean_control_pairs",
+        "fault_pairs",
+        "total_pairs",
+        "total_runs",
+        "pairing",
+        "ordering",
+        "interaction_constraints"
+      ],
+      "properties": {
+        "modes": {
+          "type": "array",
+          "const": ["with-checker", "without-checker"]
+        },
+        "fault_cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fault_class", "testcase_id"],
+            "properties": {
+              "fault_class": {"type": "string", "minLength": 1},
+              "testcase_id": {"type": "string", "pattern": "^TC-[0-9]{3}$"}
+            }
+          }
+        },
+        "repetitions_per_fault": {"type": "integer", "minimum": 1},
+        "clean_control_pairs": {"type": "integer", "minimum": 1},
+        "fault_pairs": {"type": "integer", "minimum": 1},
+        "total_pairs": {"type": "integer", "minimum": 1},
+        "total_runs": {"type": "integer", "minimum": 2},
+        "pairing": {"type": "string", "minLength": 1},
+        "ordering": {"type": "string", "minLength": 1},
+        "interaction_constraints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "success_criteria": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checker_valid",
+        "protected_fields_preserved",
+        "allowed_modified_path",
+        "with_checker_attempts",
+        "without_checker_attempts",
+        "repair_success"
+      ],
+      "properties": {
+        "checker_valid": {"const": true},
+        "protected_fields_preserved": {"const": true},
+        "allowed_modified_path": {"type": "string", "minLength": 1},
+        "with_checker_attempts": {"type": "integer", "minimum": 1},
+        "without_checker_attempts": {"const": 0},
+        "repair_success": {"type": "string", "minLength": 1}
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["run_id", "reason"],
+        "properties": {
+          "run_id": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "run_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "expected_rows"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "expected_rows": {"type": "integer", "minimum": 1}
+      }
+    }
+  },
+  "$defs": {
+    "sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

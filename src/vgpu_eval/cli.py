@@ -10,6 +10,7 @@ from typing import Any
 from vgpu_catalog.hashing import pretty_json_bytes
 from vgpu_catalog.rules import DEFAULT_RULES_PATH
 from vgpu_eval.faults import FaultClass, FaultInjectionError
+from vgpu_eval.protocol import ProtocolError, start_planned_run, verify_protocol
 from vgpu_eval.runs import (
     AgentRunError,
     finish_agent_run,
@@ -22,6 +23,7 @@ from vgpu_eval.suite import EvaluationSuiteError, generate_detection_suite
 DEFAULT_CATALOG = Path("catalog/test_catalog.md")
 DEFAULT_DATASET = Path("dataset")
 DEFAULT_RESULTS = Path("eval/results/runs")
+DEFAULT_PROTOCOL = Path("eval/protocol-v1.yaml")
 
 
 def _print(value: dict[str, Any]) -> None:
@@ -43,6 +45,11 @@ def build_parser() -> argparse.ArgumentParser:
     suite.add_argument("--output", type=Path, required=True)
     suite.add_argument("--testcase", action="append", dest="testcases")
 
+    protocol_check = subparsers.add_parser(
+        "protocol-check", help="Verify the frozen protocol, inputs, and run plan."
+    )
+    protocol_check.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
+
     start = subparsers.add_parser("start", help="Inject one in-place agent experiment fault.")
     _common_paths(start)
     start.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
@@ -52,6 +59,14 @@ def build_parser() -> argparse.ArgumentParser:
     start.add_argument("--mode", choices=["with-checker", "without-checker"], required=True)
     start.add_argument("--run-id")
     start.add_argument("--prompt", type=Path)
+
+    planned = subparsers.add_parser(
+        "start-planned", help="Start one run from the frozen experiment plan."
+    )
+    _common_paths(planned)
+    planned.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
+    planned.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
+    planned.add_argument("--run-id", required=True)
 
     finish = subparsers.add_parser("finish", help="Record the current agent output.")
     _common_paths(finish)
@@ -90,6 +105,10 @@ def main() -> int:
                 "case_count": len(result["cases"]),
                 "metrics": metrics,
             }
+        elif args.command == "protocol-check":
+            result = verify_protocol(args.protocol)
+            _print(result)
+            return 0 if result["valid"] else 1
         elif args.command == "start":
             result = start_agent_run(
                 args.catalog,
@@ -102,6 +121,15 @@ def main() -> int:
                 run_id=args.run_id,
                 rules_path=args.rules,
                 prompt_path=args.prompt,
+            )
+        elif args.command == "start-planned":
+            result = start_planned_run(
+                args.protocol,
+                args.run_id,
+                args.catalog,
+                args.dataset,
+                args.results_dir,
+                rules_path=args.rules,
             )
         elif args.command == "finish":
             result = finish_agent_run(
@@ -122,7 +150,14 @@ def main() -> int:
                 args.output.write_bytes(pretty_json_bytes(result))
         _print(display or result)
         return 0
-    except (AgentRunError, EvaluationSuiteError, FaultInjectionError, OSError, ValueError) as error:
+    except (
+        AgentRunError,
+        EvaluationSuiteError,
+        FaultInjectionError,
+        ProtocolError,
+        OSError,
+        ValueError,
+    ) as error:
         print(json.dumps({"valid": False, "error": str(error)}, ensure_ascii=False, indent=2))
         return 1
 
