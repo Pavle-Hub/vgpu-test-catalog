@@ -1,0 +1,678 @@
+{
+  "height": 815,
+  "shapes": [
+    {
+      "color": "#263342",
+      "size": 30,
+      "text": "Autonomna popravka po klasi greške",
+      "type": "text",
+      "x": 46,
+      "y": 30
+    },
+    {
+      "color": "#263342",
+      "size": 20,
+      "text": "Tačke: opažena uspešnost  |  Linije: 95% Wilson intervali",
+      "type": "text",
+      "x": 46,
+      "y": 78
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 55,
+      "y": 126
+    },
+    {
+      "color": "#2366A8",
+      "size": 20,
+      "text": "with-checker",
+      "type": "text",
+      "x": 75,
+      "y": 113
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 325,
+      "y": 126
+    },
+    {
+      "color": "#BD641C",
+      "size": 20,
+      "text": "without-checker",
+      "type": "text",
+      "x": 345,
+      "y": 113
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 365.0,
+      "x2": 365.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "0",
+      "type": "text",
+      "x": 350.0,
+      "y": 658
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 483.0,
+      "x2": 483.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "20",
+      "type": "text",
+      "x": 468.0,
+      "y": 658
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 601.0,
+      "x2": 601.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "40",
+      "type": "text",
+      "x": 586.0,
+      "y": 658
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 719.0,
+      "x2": 719.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "60",
+      "type": "text",
+      "x": 704.0,
+      "y": 658
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 837.0,
+      "x2": 837.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "80",
+      "type": "text",
+      "x": 822.0,
+      "y": 658
+    },
+    {
+      "color": "#DDE3E9",
+      "type": "line",
+      "width": 1,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 180,
+      "y2": 645
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "100",
+      "type": "text",
+      "x": 940.0,
+      "y": 658
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "Uspešnost (%)",
+      "type": "text",
+      "x": 545,
+      "y": 690
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Pogrešna vrednost",
+      "type": "text",
+      "x": 46,
+      "y": 197
+    },
+    {
+      "color": "#607080",
+      "size": 16,
+      "text": "wrong-value",
+      "type": "text",
+      "x": 46,
+      "y": 225
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 207,
+      "y2": 207
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 201,
+      "y2": 213
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 201,
+      "y2": 213
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 955.0,
+      "y": 207
+    },
+    {
+      "color": "#2366A8",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 194
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 235,
+      "y2": 235
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 229,
+      "y2": 241
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 229,
+      "y2": 241
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 955.0,
+      "y": 235
+    },
+    {
+      "color": "#BD641C",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 222
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Zastarela vrednost",
+      "type": "text",
+      "x": 46,
+      "y": 285
+    },
+    {
+      "color": "#607080",
+      "size": 16,
+      "text": "stale-value",
+      "type": "text",
+      "x": 46,
+      "y": 313
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 295,
+      "y2": 295
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 289,
+      "y2": 301
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 289,
+      "y2": 301
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 955.0,
+      "y": 295
+    },
+    {
+      "color": "#2366A8",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 282
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 323,
+      "y2": 323
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 317,
+      "y2": 329
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 317,
+      "y2": 329
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 955.0,
+      "y": 323
+    },
+    {
+      "color": "#BD641C",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 310
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Izmišljeno polje",
+      "type": "text",
+      "x": 46,
+      "y": 373
+    },
+    {
+      "color": "#607080",
+      "size": 16,
+      "text": "hallucinated-field",
+      "type": "text",
+      "x": 46,
+      "y": 401
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 383,
+      "y2": 383
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 377,
+      "y2": 389
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 377,
+      "y2": 389
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 955.0,
+      "y": 383
+    },
+    {
+      "color": "#2366A8",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 370
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 411,
+      "y2": 411
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 405,
+      "y2": 417
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 405,
+      "y2": 417
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 955.0,
+      "y": 411
+    },
+    {
+      "color": "#BD641C",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 398
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Narušen format",
+      "type": "text",
+      "x": 46,
+      "y": 461
+    },
+    {
+      "color": "#607080",
+      "size": 16,
+      "text": "broken-format",
+      "type": "text",
+      "x": 46,
+      "y": 489
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 3,
+      "x": 386.3722240931338,
+      "x2": 733.4345684401101,
+      "y": 471,
+      "y2": 471
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 386.3722240931338,
+      "x2": 386.3722240931338,
+      "y": 465,
+      "y2": 477
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 733.4345684401101,
+      "x2": 733.4345684401101,
+      "y": 465,
+      "y2": 477
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 483.0,
+      "y": 471
+    },
+    {
+      "color": "#2366A8",
+      "size": 19,
+      "text": "1/5 (20,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 458
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 499,
+      "y2": 499
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 493,
+      "y2": 505
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 493,
+      "y2": 505
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 955.0,
+      "y": 499
+    },
+    {
+      "color": "#BD641C",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 486
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Netačno poreklo",
+      "type": "text",
+      "x": 46,
+      "y": 549
+    },
+    {
+      "color": "#607080",
+      "size": 16,
+      "text": "false-provenance",
+      "type": "text",
+      "x": 46,
+      "y": 577
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 559,
+      "y2": 559
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 553,
+      "y2": 565
+    },
+    {
+      "color": "#2366A8",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 553,
+      "y2": 565
+    },
+    {
+      "color": "#2366A8",
+      "square": false,
+      "type": "point",
+      "x": 955.0,
+      "y": 559
+    },
+    {
+      "color": "#2366A8",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 546
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 3,
+      "x": 698.6553457779269,
+      "x2": 955.0,
+      "y": 587,
+      "y2": 587
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 698.6553457779269,
+      "x2": 698.6553457779269,
+      "y": 581,
+      "y2": 593
+    },
+    {
+      "color": "#BD641C",
+      "type": "line",
+      "width": 2,
+      "x": 955.0,
+      "x2": 955.0,
+      "y": 581,
+      "y2": 593
+    },
+    {
+      "color": "#BD641C",
+      "square": true,
+      "type": "point",
+      "x": 955.0,
+      "y": 587
+    },
+    {
+      "color": "#BD641C",
+      "size": 19,
+      "text": "5/5 (100,0%)",
+      "type": "text",
+      "x": 989,
+      "y": 574
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "n = 5 po klasi i režimu. Neotklonjeni kvarovi: 4 (broken-format / with-checker).",
+      "type": "text",
+      "x": 46,
+      "y": 733
+    },
+    {
+      "color": "#263342",
+      "size": 17,
+      "text": "audit-v2 · isti ciljni kvar po klasi · studija nije opšti rang modela",
+      "type": "text",
+      "x": 46,
+      "y": 767
+    }
+  ],
+  "width": 1250
+}

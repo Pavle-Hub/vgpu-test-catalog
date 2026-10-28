@@ -89,6 +89,9 @@ režima, a intervali ne rešavaju pitanje reprezentativnosti odabranih kvarova.
 Tri odabrana slučaja, objašnjenja i prenosivi paket dokaza opisani su u
 [reprezentativnim primerima](representative-examples.md).
 
+Tabele, PNG/SVG grafikoni i predlog teksta za poglavlje nalaze se u
+[materijalu za rezultate rada](results-for-thesis.md).
+
 Za novu odvojenu kopiju analize, bez agentskih poziva:
 
 ```powershell
