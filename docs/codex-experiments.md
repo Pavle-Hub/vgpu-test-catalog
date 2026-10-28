@@ -115,6 +115,12 @@ outcome.
 
 ## Analyze and retain evidence
 
+The completed collection has a documented post-hoc command-audit correction.
+See [results and correction](codex-evaluation-results.md). Original scores are
+preserved; corrected scores live in a separate `reanalysis/audit-v2/` directory.
+Use `tools/reanalyze_codex_experiments.py` for a fresh offline revision, not a
+new agent batch. The ordinary `--summarize` below still reports original scores.
+
 The batch updates its reports after each completed attempt. To rebuild them:
 
 ```powershell

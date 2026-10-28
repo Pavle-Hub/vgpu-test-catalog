@@ -18,6 +18,7 @@ from vgpu_eval.codex_batch import (
     prepare_workspace,
     run_case,
     sandbox_preflight,
+    source_read_mentions,
     wilson,
     write_analysis,
     write_json,
@@ -206,6 +207,33 @@ def test_audit_rejects_missing_sources_and_deterministic_oracles() -> None:
     assert not audit["turn_completed"]
     assert "deterministic-writer-or-derivation-command" in audit["violations"]
     assert "missing-auditable-MCP-evidence" in audit["violations"]
+
+
+@pytest.mark.parametrize("command", [
+    "rg --files -g '!dataset/runs.json' -g '!dataset/capabilities.json'",
+    'rg --files --glob="!dataset/runs.json"',
+    r"rg --files -g '!dataset\runs.json'",
+    '''powershell.exe -Command "Get-Content rules.yaml; '''
+    '''rg --files -g '\"'!dataset/runs.json'\"'"''',
+])
+def test_source_audit_exempts_explicit_negative_file_listing_globs(command: str) -> None:
+    reads, exclusions = source_read_mentions(command)
+    assert not reads
+    assert exclusions
+
+
+@pytest.mark.parametrize("command", [
+    "Get-Content -Raw dataset/runs.json",
+    "python -c \"open('dataset/capabilities.json').read()\"",
+    "rg --files dataset/runs.json",
+    "rg --files -g 'dataset/runs.json'",
+    "rg --files -g '!dataset/runs.json'; Get-Content dataset/runs.json",
+    "Get-Content dataset/runs.json; rg --files -g '!dataset/runs.json'",
+    "rg --files -g '!dataset/runs.json' | Get-Content dataset/capabilities.json",
+])
+def test_source_audit_still_flags_positive_paths_and_compound_readers(command: str) -> None:
+    reads, _ = source_read_mentions(command)
+    assert reads
 
 
 def test_clean_controls_and_interrupted_attempts_do_not_inflate_repair_rates() -> None:
