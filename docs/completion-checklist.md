@@ -39,7 +39,9 @@ agent repair success.
 4. Three representative cases and a portable, hashed evidence pack are prepared;
    see `docs/representative-examples.md`. Aggregate/class tables and PNG/SVG
    figures with interpretation are prepared in `docs/results-for-thesis.md`.
-   Capture the suggested evidence views and prepare the architecture diagram.
+   Architecture and separate experiment/CI diagrams with source references,
+   PNG/SVG images and chapter text are prepared in `docs/architecture-for-thesis.md`.
+   Capture the remaining suggested evidence views for the thesis appendix.
    The user reports a separate backup of the raw collection; `eval/results/`
    remains Git-ignored. Keep that archive alongside the portable examples.
 5. Freeze the final release and write the implementation, methodology, results,

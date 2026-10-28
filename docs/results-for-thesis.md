@@ -1,5 +1,8 @@
 # Tabele, grafikoni i tumačenje rezultata za diplomski rad
 
+Za opis komponenti i toka sistema videti
+[arhitekturu i eksperimentalni/CI tok](architecture-for-thesis.md).
+
 Ovaj materijal je pripremljen iz korigovanih ocena `audit-v2` protokola
 `codex-agent-eval-1`. Brojevi su ponovo izračunati iz pojedinačnih sačuvanih
 ocena i upoređeni sa korigovanim zbirnim izveštajem. Nisu pokretane nove

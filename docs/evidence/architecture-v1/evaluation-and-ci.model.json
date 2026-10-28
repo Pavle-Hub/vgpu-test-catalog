@@ -1,0 +1,190 @@
+{
+  "edges": [
+    {
+      "conditional": false,
+      "label": "sledeći korak",
+      "source": "plan",
+      "target": "workspace"
+    },
+    {
+      "conditional": false,
+      "label": "sledeći korak",
+      "source": "workspace",
+      "target": "session"
+    },
+    {
+      "conditional": false,
+      "label": "sledeći korak",
+      "source": "session",
+      "target": "score"
+    },
+    {
+      "conditional": false,
+      "label": "zapis rezultata",
+      "source": "score",
+      "target": "raw"
+    },
+    {
+      "conditional": false,
+      "label": "analiza",
+      "source": "raw",
+      "target": "analysis"
+    },
+    {
+      "conditional": false,
+      "label": "razvojni tok",
+      "source": "pr",
+      "target": "gate"
+    },
+    {
+      "conditional": false,
+      "label": "razvojni tok",
+      "source": "gate",
+      "target": "ruleset"
+    },
+    {
+      "conditional": false,
+      "label": "razvojni tok",
+      "source": "ruleset",
+      "target": "merge"
+    }
+  ],
+  "nodes": {
+    "analysis": {
+      "bounds": [
+        50,
+        480,
+        670,
+        155
+      ],
+      "lines": [
+        "Naknadna analiza i materijal za rad",
+        "audit-v2: korekcija klasifikacije, bez novih sesija",
+        "uparena statistika · odvojene kontrole · intervali",
+        "tabele, grafikoni i reprezentativni primeri"
+      ]
+    },
+    "gate": {
+      "bounds": [
+        415,
+        765,
+        305,
+        140
+      ],
+      "lines": [
+        "catalog-gate / Actions",
+        "validacija i checker --check",
+        "testovi, stil i fault suite"
+      ]
+    },
+    "merge": {
+      "bounds": [
+        1145,
+        765,
+        305,
+        140
+      ],
+      "lines": [
+        "Odluka o merge-u",
+        "nakon potrebnih provera",
+        "potvrđuje korisnik"
+      ]
+    },
+    "plan": {
+      "bounds": [
+        50,
+        200,
+        305,
+        170
+      ],
+      "lines": [
+        "Zamrznut protokol",
+        "model, promptovi i verzije",
+        "upareni raspored i seed",
+        "snapshot i hash-evi"
+      ]
+    },
+    "pr": {
+      "bounds": [
+        50,
+        765,
+        305,
+        140
+      ],
+      "lines": [
+        "Pull request",
+        "promene koje šalje korisnik",
+        "prema grani main"
+      ]
+    },
+    "raw": {
+      "bounds": [
+        780,
+        480,
+        670,
+        155
+      ],
+      "lines": [
+        "Sačuvani dokazi i originalne ocene",
+        "ulaz / izlaz, events.jsonl, checker izveštaji i audit",
+        "eval/results/codex-eval-1/ — bez povratka agentu",
+        "prekidi ostaju sačuvani, ali neocenjeni"
+      ]
+    },
+    "ruleset": {
+      "bounds": [
+        780,
+        765,
+        305,
+        140
+      ],
+      "lines": [
+        "GitHub ruleset",
+        "obavezan status provere",
+        "neuspeh blokira spajanje"
+      ]
+    },
+    "score": {
+      "bounds": [
+        1145,
+        200,
+        305,
+        170
+      ],
+      "lines": [
+        "Završni evaluator",
+        "checker u oba režima",
+        "izvorni dataset i pravila",
+        "zaštićena polja + scope"
+      ]
+    },
+    "session": {
+      "bounds": [
+        780,
+        200,
+        305,
+        170
+      ],
+      "lines": [
+        "Nova agentska sesija",
+        "skill + lokalni MCP",
+        "with: do 3 checker poziva",
+        "without: bez checker-a"
+      ]
+    },
+    "workspace": {
+      "bounds": [
+        415,
+        200,
+        305,
+        170
+      ],
+      "lines": [
+        "Nova radna kopija",
+        "ubrizgan kvar ili kontrola",
+        "početna provera evaluatora",
+        "bez ispravne Git istorije"
+      ]
+    }
+  }
+}

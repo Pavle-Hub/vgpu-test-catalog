@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1085" viewBox="0 0 1500 1085" role="img">
+<title>Eksperimenti i odvojena GitHub kontrola</title>
+<desc>Ocenjivanje nije agentska povratna informacija; CI ne pokreće eksperimentalne sesije.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="50" y="60" font-size="32" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Eksperimenti i odvojena GitHub kontrola</text>
+<text x="50" y="102" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Ocenjivanje nije agentska povratna informacija; CI ne pokreće eksperimentalne sesije.</text>
+<text x="50" y="169" font-size="24" font-family="Segoe UI,Arial,sans-serif" fill="#263342">A. Eksperimentalni tok — Codex batch runner</text>
+<line x1="50" y1="200" x2="355" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="355" y1="200" x2="355" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="355" y1="370" x2="50" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="50" y1="370" x2="50" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<text x="68" y="241" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Zamrznut protokol</text>
+<text x="68" y="269" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">model, promptovi i verzije</text>
+<text x="68" y="301" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">upareni raspored i seed</text>
+<text x="68" y="333" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">snapshot i hash-evi</text>
+<line x1="415" y1="200" x2="720" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="200" x2="720" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="370" x2="415" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="415" y1="370" x2="415" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<text x="433" y="241" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Nova radna kopija</text>
+<text x="433" y="269" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">ubrizgan kvar ili kontrola</text>
+<text x="433" y="301" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">početna provera evaluatora</text>
+<text x="433" y="333" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">bez ispravne Git istorije</text>
+<line x1="780" y1="200" x2="1085" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1085" y1="200" x2="1085" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1085" y1="370" x2="780" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="780" y1="370" x2="780" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<text x="798" y="241" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Nova agentska sesija</text>
+<text x="798" y="269" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">skill + lokalni MCP</text>
+<text x="798" y="301" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">with: do 3 checker poziva</text>
+<text x="798" y="333" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">without: bez checker-a</text>
+<line x1="1145" y1="200" x2="1450" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="200" x2="1450" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="370" x2="1145" y2="370" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1145" y1="370" x2="1145" y2="200" stroke="#AEBCC8" stroke-width="1"/>
+<text x="1163" y="241" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Završni evaluator</text>
+<text x="1163" y="269" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">checker u oba režima</text>
+<text x="1163" y="301" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">izvorni dataset i pravila</text>
+<text x="1163" y="333" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">zaštićena polja + scope</text>
+<line x1="355" y1="285" x2="415" y2="285" stroke="#52687B" stroke-width="2"/>
+<line x1="415" y1="285" x2="405" y2="291" stroke="#52687B" stroke-width="2"/>
+<line x1="415" y1="285" x2="405" y2="279" stroke="#52687B" stroke-width="2"/>
+<line x1="720" y1="285" x2="780" y2="285" stroke="#52687B" stroke-width="2"/>
+<line x1="780" y1="285" x2="770" y2="291" stroke="#52687B" stroke-width="2"/>
+<line x1="780" y1="285" x2="770" y2="279" stroke="#52687B" stroke-width="2"/>
+<line x1="1085" y1="285" x2="1145" y2="285" stroke="#52687B" stroke-width="2"/>
+<line x1="1145" y1="285" x2="1135" y2="291" stroke="#52687B" stroke-width="2"/>
+<line x1="1145" y1="285" x2="1135" y2="279" stroke="#52687B" stroke-width="2"/>
+<line x1="780" y1="480" x2="1450" y2="480" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="480" x2="1450" y2="635" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="635" x2="780" y2="635" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="780" y1="635" x2="780" y2="480" stroke="#AEBCC8" stroke-width="1"/>
+<text x="798" y="521" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Sačuvani dokazi i originalne ocene</text>
+<text x="798" y="549" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">ulaz / izlaz, events.jsonl, checker izveštaji i audit</text>
+<text x="798" y="581" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">eval/results/codex-eval-1/ — bez povratka agentu</text>
+<text x="798" y="613" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">prekidi ostaju sačuvani, ali neocenjeni</text>
+<line x1="50" y1="480" x2="720" y2="480" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="480" x2="720" y2="635" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="635" x2="50" y2="635" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="50" y1="635" x2="50" y2="480" stroke="#AEBCC8" stroke-width="1"/>
+<text x="68" y="521" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Naknadna analiza i materijal za rad</text>
+<text x="68" y="549" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">audit-v2: korekcija klasifikacije, bez novih sesija</text>
+<text x="68" y="581" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">uparena statistika · odvojene kontrole · intervali</text>
+<text x="68" y="613" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">tabele, grafikoni i reprezentativni primeri</text>
+<line x1="1300" y1="370" x2="1300" y2="480" stroke="#52687B" stroke-width="2"/>
+<line x1="1300" y1="480" x2="1294" y2="470" stroke="#52687B" stroke-width="2"/>
+<line x1="1300" y1="480" x2="1306" y2="470" stroke="#52687B" stroke-width="2"/>
+<text x="1085" y="426" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#52687B">zapis rezultata</text>
+<line x1="780" y1="558" x2="720" y2="558" stroke="#52687B" stroke-width="2"/>
+<line x1="720" y1="558" x2="730" y2="552" stroke="#52687B" stroke-width="2"/>
+<line x1="720" y1="558" x2="730" y2="564" stroke="#52687B" stroke-width="2"/>
+<text x="50" y="714" font-size="24" font-family="Segoe UI,Arial,sans-serif" fill="#263342">B. Razvojni tok — odvojeno od rada agenta i prikupljanja rezultata</text>
+<line x1="50" y1="765" x2="355" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="355" y1="765" x2="355" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="355" y1="905" x2="50" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="50" y1="905" x2="50" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<text x="68" y="806" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Pull request</text>
+<text x="68" y="834" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">promene koje šalje korisnik</text>
+<text x="68" y="866" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">prema grani main</text>
+<line x1="415" y1="765" x2="720" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="765" x2="720" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="720" y1="905" x2="415" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="415" y1="905" x2="415" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<text x="433" y="806" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">catalog-gate / Actions</text>
+<text x="433" y="834" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">validacija i checker --check</text>
+<text x="433" y="866" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">testovi, stil i fault suite</text>
+<line x1="780" y1="765" x2="1085" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1085" y1="765" x2="1085" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1085" y1="905" x2="780" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="780" y1="905" x2="780" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<text x="798" y="806" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">GitHub ruleset</text>
+<text x="798" y="834" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">obavezan status provere</text>
+<text x="798" y="866" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">neuspeh blokira spajanje</text>
+<line x1="1145" y1="765" x2="1450" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="765" x2="1450" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1450" y1="905" x2="1145" y2="905" stroke="#AEBCC8" stroke-width="1"/>
+<line x1="1145" y1="905" x2="1145" y2="765" stroke="#AEBCC8" stroke-width="1"/>
+<text x="1163" y="806" font-size="23" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Odluka o merge-u</text>
+<text x="1163" y="834" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">nakon potrebnih provera</text>
+<text x="1163" y="866" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">potvrđuje korisnik</text>
+<line x1="355" y1="835" x2="415" y2="835" stroke="#52687B" stroke-width="2"/>
+<line x1="415" y1="835" x2="405" y2="841" stroke="#52687B" stroke-width="2"/>
+<line x1="415" y1="835" x2="405" y2="829" stroke="#52687B" stroke-width="2"/>
+<line x1="720" y1="835" x2="780" y2="835" stroke="#52687B" stroke-width="2"/>
+<line x1="780" y1="835" x2="770" y2="841" stroke="#52687B" stroke-width="2"/>
+<line x1="780" y1="835" x2="770" y2="829" stroke="#52687B" stroke-width="2"/>
+<line x1="1085" y1="835" x2="1145" y2="835" stroke="#52687B" stroke-width="2"/>
+<line x1="1145" y1="835" x2="1135" y2="841" stroke="#52687B" stroke-width="2"/>
+<line x1="1145" y1="835" x2="1135" y2="829" stroke="#52687B" stroke-width="2"/>
+<text x="50" y="979" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Ruleset je podešavanje na GitHub-u, nije Python komponenta ni deo MCP-a.</text>
+<text x="50" y="1020" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Prikazan je konfigurisan način rada, ne nova provera udaljenog servisa.</text>
+</svg>

@@ -1,0 +1,93 @@
+{
+  "description": "Authored logical views checked against code; not a runtime trace.",
+  "files_sha256": {
+    "evaluation-and-ci.drawing.json": "fb584a9390ca81fba80d22176836ba32bad09272a1a83dad8754f71b1ecb9bd0",
+    "evaluation-and-ci.mmd": "fed4abab059d28b2542495fb7624a4acefcd4b3799ee895c9a33677d8040ab2e",
+    "evaluation-and-ci.model.json": "a242c3dab33311a5e2bebf07efddf43c143eeb2da13d6b3d241993aa030f8c21",
+    "evaluation-and-ci.png": "11e6b06500b9ee5ec922d0de6854f28b1f9f8a222656d9ef68ab639db7875034",
+    "evaluation-and-ci.svg": "3befdc30cca210e18738944522765f365988fd2dc0e2a2c67698f0401c615aa9",
+    "maintenance.drawing.json": "44cbc849f9ef1a7cf8c0a288f0add30ea45b8106d5f8b07c6992df6035f666d7",
+    "maintenance.mmd": "56851e080416e848947d6e38fac5a35162dcc5568a660e226f364d6eddbf2971",
+    "maintenance.model.json": "b49b796f89bdfa1335449094ff69e23c581ea21eafa09c46a1831e9ddb621a1c",
+    "maintenance.png": "bfedcc6a6a0bbc4bf39ae9c7c12ae4f5e6b83b5a111a6ed11c0f7b6a3ecc52d7",
+    "maintenance.svg": "b46460851450149fd6578a0a025ef7caad845188efc862d9e19a876b7a76a4e3"
+  },
+  "generator_sha256": {
+    "architecture.py": "8afc8d05b4ed5cc0d771d0cfa8223ff466341538abef5cb8e1635593ebe98aba",
+    "png_render.py": "998ab573f5c4852c84392066ebce8ec9d6ebb135d27bf46289726c25da92c936",
+    "results_figures.py": "808dd1d7bf8f37b08aeaaae324ad39d47a989575655c0c3ca86f830c85d9f498"
+  },
+  "inspected_head": "f659d7dcfef9065039b7d073058778e71b8916e0",
+  "references": {
+    "analysis": [
+      "src/vgpu_eval/codex_reanalysis.py",
+      "src/vgpu_eval/results_figures.py"
+    ],
+    "catalog": [
+      "catalog/test_catalog.md"
+    ],
+    "checker": [
+      "src/catalog_check/checker.py",
+      "src/catalog_check/cli.py"
+    ],
+    "ci": [
+      ".github/workflows/catalog-ci.yml"
+    ],
+    "contract": [
+      "rules.yaml",
+      "schemas/catalog-derived.schema.json",
+      ".agents/skills/sync-catalog/SKILL.md",
+      ".cursor/skills/sync-catalog/SKILL.md"
+    ],
+    "expected": [
+      "src/vgpu_catalog/derivation.py"
+    ],
+    "mcp": [
+      "src/env_mcp/server.py",
+      "src/env_mcp/service.py",
+      "src/metrics_mcp/server.py",
+      "src/metrics_mcp/service.py",
+      ".codex/config.toml"
+    ],
+    "runner": [
+      "src/vgpu_eval/codex_batch.py",
+      "src/vgpu_eval/faults.py",
+      "src/vgpu_eval/runs.py",
+      "eval/codex-protocol.yaml"
+    ],
+    "snapshot": [
+      "src/vgpu_catalog/snapshot.py",
+      "src/vgpu_catalog/validation.py"
+    ]
+  },
+  "scope_limits": [
+    "Skill and audit establish workflow constraints, not hardened isolation.",
+    "without-checker excludes agent feedback, not independent final evaluation.",
+    "Protected text comparison belongs to the workflow/evaluator, not checker alone.",
+    "GitHub rulesets require separate hosted evidence; they are not inferred from CI YAML."
+  ],
+  "source_sha256": {
+    ".agents/skills/sync-catalog/SKILL.md": "151ae3714d6f405dbd0bc6f195fc139069361e91c2f74dcdc6486c1fe70b8f0a",
+    ".codex/config.toml": "8ad69de7bdc222f13486086f7200552b35a6558f4ac9c5e06b1e48ab0a19753b",
+    ".cursor/skills/sync-catalog/SKILL.md": "ce46d2dc006c796b7280adeb25e2e6e3d6bf4beb30e679db3408976410cb7761",
+    ".github/workflows/catalog-ci.yml": "0041a1cafcc6889ef7167212feec8a51a74b7f78f16a271d9b1ab72f6dc72c82",
+    "catalog/test_catalog.md": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+    "eval/codex-protocol.yaml": "7f15353fe921b1438c59aeff9ebf942693e67931e7ff68dfe332ac94d5faaf7d",
+    "rules.yaml": "8fc823121bdd6a5b6cc2377c50bf89063e65aa71da3854eeeb89324acdb5ca26",
+    "schemas/catalog-derived.schema.json": "cb84507cb0f3cc10344615b41df1e935a6cbe8ff52b29c25d34f5fd5ce6576c2",
+    "src/catalog_check/checker.py": "c1833e4dafed9111b716e715944e239b5dc8811f757228d31f298aba484c620f",
+    "src/catalog_check/cli.py": "195625335e5695a9b788aeda17fbe0232e1d60b733a7bc41f524fab167e8f7b0",
+    "src/env_mcp/server.py": "01b16e4dc74aa98f40c04a079bd2144bb72eaf6b1c54aca0574bd5ba59cc0e2e",
+    "src/env_mcp/service.py": "9213b5c716857f63ecb83e33b5c34b9600f29435872dd184ecd11f2bf306f8cb",
+    "src/metrics_mcp/server.py": "d0600eb1dce55c6c12fcf8e5386bd2fb74a4debeec758dd1019443bf801d3e09",
+    "src/metrics_mcp/service.py": "3509f8b16ff83e6fd57991b0c8edfeda878f8a65cd2d09ee69d072e8da9ee5b4",
+    "src/vgpu_catalog/derivation.py": "c4ef8786c4f7a7778df26db17487cba4265e4c6cf7336c804014b0076e02a78e",
+    "src/vgpu_catalog/snapshot.py": "da2e0a33e73cf8f009375f412b28e780007733a9c946e81ffe303abe71a6aa4d",
+    "src/vgpu_catalog/validation.py": "a5d326022d47b1082df12df940fdc4eb7be21cca72ae2f5b75a4b633bbd3d06f",
+    "src/vgpu_eval/codex_batch.py": "229a93f062cf7037dcd849c908e503caf4c2ecc0d24991acc1661e912535f9e2",
+    "src/vgpu_eval/codex_reanalysis.py": "e8fca7eb8b10978a0f97736ee0cdfd5b98e67c62fa63ab690b76d6336d7f4f27",
+    "src/vgpu_eval/faults.py": "89515b260e7cc8774cfdd65ee3083504f2a259cd14f75934fb6822d0bfad804e",
+    "src/vgpu_eval/results_figures.py": "808dd1d7bf8f37b08aeaaae324ad39d47a989575655c0c3ca86f830c85d9f498",
+    "src/vgpu_eval/runs.py": "c58c64bc9a6807efb53698e47a79ab6c5a7307b4a7310d2730fe2f19c5f06576"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "edges": [
+    {
+      "conditional": false,
+      "label": "uputstva i pravila",
+      "source": "contract",
+      "target": "agent"
+    },
+    {
+      "conditional": false,
+      "label": "čitanje",
+      "source": "snapshot",
+      "target": "mcp"
+    },
+    {
+      "conditional": false,
+      "label": "MCP stdio",
+      "source": "mcp",
+      "target": "agent"
+    },
+    {
+      "conditional": false,
+      "label": "predlog / izmena",
+      "source": "agent",
+      "target": "catalog"
+    },
+    {
+      "conditional": false,
+      "label": "lokalni proračun",
+      "source": "snapshot",
+      "target": "expected"
+    },
+    {
+      "conditional": false,
+      "label": "referenca",
+      "source": "expected",
+      "target": "checker"
+    },
+    {
+      "conditional": false,
+      "label": "čita predlog",
+      "source": "catalog",
+      "target": "checker"
+    },
+    {
+      "conditional": true,
+      "label": "JSON povratna veza (samo with-checker)",
+      "source": "checker",
+      "target": "agent"
+    }
+  ],
+  "nodes": {
+    "agent": {
+      "bounds": [
+        945,
+        175,
+        430,
+        210
+      ],
+      "lines": [
+        "AI agent / Codex CLI",
+        "sync-catalog skill",
+        "MCP dokazi + pravila",
+        "predlog izmene kataloga",
+        "granice određene uputstvima"
+      ]
+    },
+    "catalog": {
+      "bounds": [
+        945,
+        490,
+        430,
+        190
+      ],
+      "lines": [
+        "catalog/test_catalog.md",
+        "Purpose / Notes: očuvati",
+        "Derived blocks: tačan ugovor",
+        "Summary: semantički tekst",
+        "jedini dozvoljeni izlaz agenta"
+      ]
+    },
+    "checker": {
+      "bounds": [
+        490,
+        750,
+        360,
+        180
+      ],
+      "lines": [
+        "Deterministički checker",
+        "predlog ↔ očekivano stanje",
+        "JSON: valid + issues",
+        "--check ne menja katalog"
+      ]
+    },
+    "contract": {
+      "bounds": [
+        50,
+        175,
+        335,
+        155
+      ],
+      "lines": [
+        "Ugovor i skill",
+        "rules.yaml · schemas",
+        ".agents → .cursor/skills",
+        "granice, režim i stop-uslovi"
+      ]
+    },
+    "expected": {
+      "bounds": [
+        50,
+        750,
+        335,
+        180
+      ],
+      "lines": [
+        "Očekivano stanje",
+        "dataset + rules.yaml + schemas",
+        "vgpu_catalog.derivation",
+        "lokalno, bez LLM-a"
+      ]
+    },
+    "mcp": {
+      "bounds": [
+        490,
+        405,
+        360,
+        260
+      ],
+      "lines": [
+        "Dva read-only MCP servera",
+        "env-mcp: resources",
+        "matrica i podržani GPU modeli",
+        "metrics-mcp: tools",
+        "list_testcases",
+        "get_duration_stats · get_pass_rate"
+      ]
+    },
+    "snapshot": {
+      "bounds": [
+        50,
+        430,
+        335,
+        175
+      ],
+      "lines": [
+        "Validirani snapshot",
+        "dataset/runs.json",
+        "capabilities.json · manifest.json",
+        "hash i vreme izvora"
+      ]
+    }
+  }
+}

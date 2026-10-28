@@ -1,0 +1,16 @@
+flowchart LR
+  contract["Ugovor i skill<br/>rules.yaml · schemas<br/>.agents → .cursor/skills<br/>granice, režim i stop-uslovi"]
+  snapshot["Validirani snapshot<br/>dataset/runs.json<br/>capabilities.json · manifest.json<br/>hash i vreme izvora"]
+  mcp["Dva read-only MCP servera<br/>env-mcp: resources<br/>matrica i podržani GPU modeli<br/>metrics-mcp: tools<br/>list_testcases<br/>get_duration_stats · get_pass_rate"]
+  agent["AI agent / Codex CLI<br/>sync-catalog skill<br/>MCP dokazi + pravila<br/>predlog izmene kataloga<br/>granice određene uputstvima"]
+  catalog["catalog/test_catalog.md<br/>Purpose / Notes: očuvati<br/>Derived blocks: tačan ugovor<br/>Summary: semantički tekst<br/>jedini dozvoljeni izlaz agenta"]
+  expected["Očekivano stanje<br/>dataset + rules.yaml + schemas<br/>vgpu_catalog.derivation<br/>lokalno, bez LLM-a"]
+  checker["Deterministički checker<br/>predlog ↔ očekivano stanje<br/>JSON: valid + issues<br/>--check ne menja katalog"]
+  contract -->|"uputstva i pravila"| agent
+  snapshot -->|"čitanje"| mcp
+  mcp -->|"MCP stdio"| agent
+  agent -->|"predlog / izmena"| catalog
+  snapshot -->|"lokalni proračun"| expected
+  expected -->|"referenca"| checker
+  catalog -->|"čita predlog"| checker
+  checker -->|"JSON povratna veza (samo with-checker)"| agent

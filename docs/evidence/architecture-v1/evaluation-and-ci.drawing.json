@@ -1,0 +1,928 @@
+{
+  "description": "Ocenjivanje nije agentska povratna informacija; CI ne pokreće eksperimentalne sesije.",
+  "height": 1085,
+  "shapes": [
+    {
+      "color": "#263342",
+      "size": 32,
+      "text": "Eksperimenti i odvojena GitHub kontrola",
+      "type": "text",
+      "x": 50,
+      "y": 28
+    },
+    {
+      "color": "#263342",
+      "size": 20,
+      "text": "Ocenjivanje nije agentska povratna informacija; CI ne pokreće eksperimentalne sesije.",
+      "type": "text",
+      "x": 50,
+      "y": 82
+    },
+    {
+      "color": "#263342",
+      "size": 24,
+      "text": "A. Eksperimentalni tok — Codex batch runner",
+      "type": "text",
+      "x": 50,
+      "y": 145
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 355,
+      "y": 200,
+      "y2": 200
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 355,
+      "x2": 355,
+      "y": 200,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 355,
+      "x2": 50,
+      "y": 370,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 50,
+      "y": 370,
+      "y2": 200
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Zamrznut protokol",
+      "type": "text",
+      "x": 68,
+      "y": 218
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "model, promptovi i verzije",
+      "type": "text",
+      "x": 68,
+      "y": 250
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "upareni raspored i seed",
+      "type": "text",
+      "x": 68,
+      "y": 282
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "snapshot i hash-evi",
+      "type": "text",
+      "x": 68,
+      "y": 314
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 415,
+      "x2": 720,
+      "y": 200,
+      "y2": 200
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 720,
+      "y": 200,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 415,
+      "y": 370,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 415,
+      "x2": 415,
+      "y": 370,
+      "y2": 200
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Nova radna kopija",
+      "type": "text",
+      "x": 433,
+      "y": 218
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "ubrizgan kvar ili kontrola",
+      "type": "text",
+      "x": 433,
+      "y": 250
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "početna provera evaluatora",
+      "type": "text",
+      "x": 433,
+      "y": 282
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "bez ispravne Git istorije",
+      "type": "text",
+      "x": 433,
+      "y": 314
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 1085,
+      "y": 200,
+      "y2": 200
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1085,
+      "x2": 1085,
+      "y": 200,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1085,
+      "x2": 780,
+      "y": 370,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 780,
+      "y": 370,
+      "y2": 200
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Nova agentska sesija",
+      "type": "text",
+      "x": 798,
+      "y": 218
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "skill + lokalni MCP",
+      "type": "text",
+      "x": 798,
+      "y": 250
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "with: do 3 checker poziva",
+      "type": "text",
+      "x": 798,
+      "y": 282
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "without: bez checker-a",
+      "type": "text",
+      "x": 798,
+      "y": 314
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1145,
+      "x2": 1450,
+      "y": 200,
+      "y2": 200
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 1450,
+      "y": 200,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 1145,
+      "y": 370,
+      "y2": 370
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1145,
+      "x2": 1145,
+      "y": 370,
+      "y2": 200
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Završni evaluator",
+      "type": "text",
+      "x": 1163,
+      "y": 218
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "checker u oba režima",
+      "type": "text",
+      "x": 1163,
+      "y": 250
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "izvorni dataset i pravila",
+      "type": "text",
+      "x": 1163,
+      "y": 282
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "zaštićena polja + scope",
+      "type": "text",
+      "x": 1163,
+      "y": 314
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 355,
+      "x2": 415,
+      "y": 285,
+      "y2": 285
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 415,
+      "x2": 405,
+      "y": 285,
+      "y2": 291
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 415,
+      "x2": 405,
+      "y": 285,
+      "y2": 279
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 720,
+      "x2": 780,
+      "y": 285,
+      "y2": 285
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 780,
+      "x2": 770,
+      "y": 285,
+      "y2": 291
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 780,
+      "x2": 770,
+      "y": 285,
+      "y2": 279
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1085,
+      "x2": 1145,
+      "y": 285,
+      "y2": 285
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1145,
+      "x2": 1135,
+      "y": 285,
+      "y2": 291
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1145,
+      "x2": 1135,
+      "y": 285,
+      "y2": 279
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 1450,
+      "y": 480,
+      "y2": 480
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 1450,
+      "y": 480,
+      "y2": 635
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 780,
+      "y": 635,
+      "y2": 635
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 780,
+      "y": 635,
+      "y2": 480
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Sačuvani dokazi i originalne ocene",
+      "type": "text",
+      "x": 798,
+      "y": 498
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "ulaz / izlaz, events.jsonl, checker izveštaji i audit",
+      "type": "text",
+      "x": 798,
+      "y": 530
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "eval/results/codex-eval-1/ — bez povratka agentu",
+      "type": "text",
+      "x": 798,
+      "y": 562
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "prekidi ostaju sačuvani, ali neocenjeni",
+      "type": "text",
+      "x": 798,
+      "y": 594
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 720,
+      "y": 480,
+      "y2": 480
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 720,
+      "y": 480,
+      "y2": 635
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 50,
+      "y": 635,
+      "y2": 635
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 50,
+      "y": 635,
+      "y2": 480
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Naknadna analiza i materijal za rad",
+      "type": "text",
+      "x": 68,
+      "y": 498
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "audit-v2: korekcija klasifikacije, bez novih sesija",
+      "type": "text",
+      "x": 68,
+      "y": 530
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "uparena statistika · odvojene kontrole · intervali",
+      "type": "text",
+      "x": 68,
+      "y": 562
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "tabele, grafikoni i reprezentativni primeri",
+      "type": "text",
+      "x": 68,
+      "y": 594
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1300,
+      "x2": 1300,
+      "y": 370,
+      "y2": 480
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1300,
+      "x2": 1294,
+      "y": 480,
+      "y2": 470
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1300,
+      "x2": 1306,
+      "y": 480,
+      "y2": 470
+    },
+    {
+      "color": "#52687B",
+      "size": 17,
+      "text": "zapis rezultata",
+      "type": "text",
+      "x": 1085,
+      "y": 409
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 780,
+      "x2": 720,
+      "y": 558,
+      "y2": 558
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 720,
+      "x2": 730,
+      "y": 558,
+      "y2": 552
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 720,
+      "x2": 730,
+      "y": 558,
+      "y2": 564
+    },
+    {
+      "color": "#263342",
+      "size": 24,
+      "text": "B. Razvojni tok — odvojeno od rada agenta i prikupljanja rezultata",
+      "type": "text",
+      "x": 50,
+      "y": 690
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 355,
+      "y": 765,
+      "y2": 765
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 355,
+      "x2": 355,
+      "y": 765,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 355,
+      "x2": 50,
+      "y": 905,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 50,
+      "x2": 50,
+      "y": 905,
+      "y2": 765
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Pull request",
+      "type": "text",
+      "x": 68,
+      "y": 783
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "promene koje šalje korisnik",
+      "type": "text",
+      "x": 68,
+      "y": 815
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "prema grani main",
+      "type": "text",
+      "x": 68,
+      "y": 847
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 415,
+      "x2": 720,
+      "y": 765,
+      "y2": 765
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 720,
+      "y": 765,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 720,
+      "x2": 415,
+      "y": 905,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 415,
+      "x2": 415,
+      "y": 905,
+      "y2": 765
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "catalog-gate / Actions",
+      "type": "text",
+      "x": 433,
+      "y": 783
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "validacija i checker --check",
+      "type": "text",
+      "x": 433,
+      "y": 815
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "testovi, stil i fault suite",
+      "type": "text",
+      "x": 433,
+      "y": 847
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 1085,
+      "y": 765,
+      "y2": 765
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1085,
+      "x2": 1085,
+      "y": 765,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1085,
+      "x2": 780,
+      "y": 905,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 780,
+      "x2": 780,
+      "y": 905,
+      "y2": 765
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "GitHub ruleset",
+      "type": "text",
+      "x": 798,
+      "y": 783
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "obavezan status provere",
+      "type": "text",
+      "x": 798,
+      "y": 815
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "neuspeh blokira spajanje",
+      "type": "text",
+      "x": 798,
+      "y": 847
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1145,
+      "x2": 1450,
+      "y": 765,
+      "y2": 765
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 1450,
+      "y": 765,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1450,
+      "x2": 1145,
+      "y": 905,
+      "y2": 905
+    },
+    {
+      "color": "#AEBCC8",
+      "type": "line",
+      "width": 1,
+      "x": 1145,
+      "x2": 1145,
+      "y": 905,
+      "y2": 765
+    },
+    {
+      "color": "#263342",
+      "size": 23,
+      "text": "Odluka o merge-u",
+      "type": "text",
+      "x": 1163,
+      "y": 783
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "nakon potrebnih provera",
+      "type": "text",
+      "x": 1163,
+      "y": 815
+    },
+    {
+      "color": "#263342",
+      "size": 19,
+      "text": "potvrđuje korisnik",
+      "type": "text",
+      "x": 1163,
+      "y": 847
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 355,
+      "x2": 415,
+      "y": 835,
+      "y2": 835
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 415,
+      "x2": 405,
+      "y": 835,
+      "y2": 841
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 415,
+      "x2": 405,
+      "y": 835,
+      "y2": 829
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 720,
+      "x2": 780,
+      "y": 835,
+      "y2": 835
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 780,
+      "x2": 770,
+      "y": 835,
+      "y2": 841
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 780,
+      "x2": 770,
+      "y": 835,
+      "y2": 829
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1085,
+      "x2": 1145,
+      "y": 835,
+      "y2": 835
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1145,
+      "x2": 1135,
+      "y": 835,
+      "y2": 841
+    },
+    {
+      "color": "#52687B",
+      "type": "line",
+      "width": 2,
+      "x": 1145,
+      "x2": 1135,
+      "y": 835,
+      "y2": 829
+    },
+    {
+      "color": "#263342",
+      "size": 21,
+      "text": "Ruleset je podešavanje na GitHub-u, nije Python komponenta ni deo MCP-a.",
+      "type": "text",
+      "x": 50,
+      "y": 958
+    },
+    {
+      "color": "#263342",
+      "size": 20,
+      "text": "Prikazan je konfigurisan način rada, ne nova provera udaljenog servisa.",
+      "type": "text",
+      "x": 50,
+      "y": 1000
+    }
+  ],
+  "title": "Eksperimenti i odvojena GitHub kontrola",
+  "width": 1500
+}
