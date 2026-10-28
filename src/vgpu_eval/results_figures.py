@@ -213,10 +213,12 @@ def chart(summary: dict[str, Any], *, by_class: bool) -> dict[str, Any]:
 
 def svg(drawing: dict[str, Any]) -> bytes:
     width, height = drawing["width"], drawing["height"]
+    title = drawing.get("title", "Rezultati korigovane analize audit-v2")
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
              f'viewBox="0 0 {width} {height}" role="img">',
-             '<title>Rezultati korigovane analize audit-v2</title>',
-             '<desc>Opažene stope uspeha i 95% Wilson intervali; kontrole su odvojene.</desc>',
+             f'<title>{escape(title)}</title>',
+             '<desc>' + escape(drawing.get("description", "Opažene stope uspeha i 95% Wilson "
+                                          "intervali; kontrole su odvojene.")) + '</desc>',
              '<rect width="100%" height="100%" fill="white"/>']
     for item in drawing["shapes"]:
         x, y, color = item["x"], item["y"], item["color"]

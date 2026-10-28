@@ -1,0 +1,19 @@
+flowchart LR
+  plan["Zamrznut protokol<br/>model, promptovi i verzije<br/>upareni raspored i seed<br/>snapshot i hash-evi"]
+  workspace["Nova radna kopija<br/>ubrizgan kvar ili kontrola<br/>početna provera evaluatora<br/>bez ispravne Git istorije"]
+  session["Nova agentska sesija<br/>skill + lokalni MCP<br/>with: do 3 checker poziva<br/>without: bez checker-a"]
+  score["Završni evaluator<br/>checker u oba režima<br/>izvorni dataset i pravila<br/>zaštićena polja + scope"]
+  raw["Sačuvani dokazi i originalne ocene<br/>ulaz / izlaz, events.jsonl, checker izveštaji i audit<br/>eval/results/codex-eval-1/ — bez povratka agentu<br/>prekidi ostaju sačuvani, ali neocenjeni"]
+  analysis["Naknadna analiza i materijal za rad<br/>audit-v2: korekcija klasifikacije, bez novih sesija<br/>uparena statistika · odvojene kontrole · intervali<br/>tabele, grafikoni i reprezentativni primeri"]
+  pr["Pull request<br/>promene koje šalje korisnik<br/>prema grani main"]
+  gate["catalog-gate / Actions<br/>validacija i checker --check<br/>testovi, stil i fault suite"]
+  ruleset["GitHub ruleset<br/>obavezan status provere<br/>neuspeh blokira spajanje"]
+  merge["Odluka o merge-u<br/>nakon potrebnih provera<br/>potvrđuje korisnik"]
+  plan -->|"sledeći korak"| workspace
+  workspace -->|"sledeći korak"| session
+  session -->|"sledeći korak"| score
+  score -->|"zapis rezultata"| raw
+  raw -->|"analiza"| analysis
+  pr -->|"razvojni tok"| gate
+  gate -->|"razvojni tok"| ruleset
+  ruleset -->|"razvojni tok"| merge
