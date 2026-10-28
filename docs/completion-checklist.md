@@ -1,6 +1,6 @@
 # Completion checklist
 
-Status checked on 2026-10-27.
+Status checked on 2026-10-28.
 
 ## Implemented and locally verified
 
@@ -13,36 +13,33 @@ Status checked on 2026-10-27.
 - Agent run recording, restoration, interruption, and protocol-filtered metrics.
 - Historical frozen Cursor protocols and schedules.
 - GitHub Actions workflow and merge-protection demonstration instructions.
+- Isolated Codex batch runner, verified two-mode pilot, frozen collection, and
+  all 60 completed final sessions (plus one preserved, unscored interruption).
+- Non-destructive offline command-audit correction, separate revised scores,
+  paired comparisons, and uncertainty estimates. See
+  `docs/codex-evaluation-results.md` for measured outcomes and limitations.
 
-Local verification: 83 tests pass. The checker detection suite contains 60
+The checker detection suite contains 60
 cases: 50 faults detected, 10 clean controls accepted, zero false positives and
 zero false negatives on this controlled dataset. These numbers do not measure
 agent repair success.
 
 ## Remaining implementation and evidence
 
-1. Verify Skill discovery and both MCP servers in a fresh Codex project chat.
-   Registration has been checked, but a complete Codex catalog sync has not yet
-   been observed.
-2. Agree and freeze the executable agent experiment configuration. The current
-   v3 protocol names Cursor Grok 4.6 Medium and requires HEAD at `experiment-v3`.
-   Current development has advanced beyond that tag, and Cursor quota is
-   exhausted. Codex runs require their own accurately recorded agent protocol,
-   prompts, and baseline; changing the client alone does not update v3.
-3. Run the final paired agent experiments across all five fault classes and
-   clean controls, including both checker modes and the chosen repetitions.
-   No completed run is currently eligible under v3; its first run was interrupted.
-4. Produce protocol-filtered final results, paired comparisons, and uncertainty
-   estimates appropriate for the number of repetitions. Keep clean-control
-   outcomes separate from fault repair rates in the thesis.
-5. Push and verify the first hosted `Catalog CI` run. Validate installation of
-   the locked packages on the clean GitHub runner.
-6. Enable required `catalog-gate` checks on `main` and demonstrate an invalid PR
-   whose merge is blocked. Capture hosted evidence as described in `ci-gate.md`.
-7. Select representative input/output catalogs, JSON reports, tables, screenshots,
+1. Final Codex collection and corrected analysis are complete under
+   `codex-agent-eval-1`, not historical Cursor v3. Preserve the original frozen
+   protocol and raw scores alongside the documented audit-v2 correction.
+   Do not relabel Codex results as Cursor results or rerun failed cases.
+2. Hosted CI verification is complete for the current base implementation;
+   rerun it for the Codex batch implementation when its PR is pushed.
+3. The active `Protect main` ruleset requires `catalog-gate`; PR #1 demonstrates
+   an incorrect timeout rejected at the checker step. The user captured a
+   screenshot of the blocked merge. Retain that screenshot with the PR and run
+   URLs as the final merge-enforcement evidence.
+4. Select representative input/output catalogs, JSON reports, tables, screenshots,
    and architecture figures for the thesis. Package the raw final results and
    transcripts for reproducibility; `eval/results/` is currently Git-ignored.
-8. Freeze the final release and write the implementation, methodology, results,
+5. Freeze the final release and write the implementation, methodology, results,
    limitations, and conclusion chapters using the verified evidence.
 
 The checker verifies the defined derived-data contract. Semantic Summary quality,

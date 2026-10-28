@@ -1,0 +1,41 @@
+protocol_id: codex-agent-eval-1
+status: candidate
+agent:
+  client: Codex CLI
+  version: 0.163.0-alpha.11
+  model: gpt-6.1-sol
+  reasoning_effort: high
+  authentication: existing ChatGPT login
+  model_seed: null
+  model_seed_note: The CLI does not expose a model seed; each repetition starts a new ephemeral session.
+design:
+  seed: 2026
+  repetitions: 5
+  clean_pairs: 5
+  max_seconds_per_run: 900
+  modes: [with-checker, without-checker]
+  fault_cases:
+    - {fault_class: wrong-value, testcase_id: TC-001}
+    - {fault_class: stale-value, testcase_id: TC-002}
+    - {fault_class: hallucinated-field, testcase_id: TC-003}
+    - {fault_class: broken-format, testcase_id: TC-004}
+    - {fault_class: false-provenance, testcase_id: TC-005}
+prompts:
+  with-checker: '$sync-catalog mode=with-checker'
+  without-checker: '$sync-catalog mode=without-checker'
+success_criteria:
+  - Final independent checker passes.
+  - Purpose and Notes match the pre-injection baseline byte for byte.
+  - No file outside catalog/test_catalog.md is modified or added, except interpreter caches.
+  - Both environment and measurement evidence are read through MCP.
+  - With-checker uses one to three checker attempts; without-checker uses zero.
+  - Deterministic writers, direct source-data reads, reference-output recovery, and test suites are not used by the agent.
+execution:
+  runtime: A local copy of the existing Python runtime and virtual-environment packages is verified outside AppData; a model-free sandbox preflight precedes each session.
+  permissions: Workspace-write sandbox with on-request approvals and invocation-scoped trust for the generated workspace; Windows uses the elevated sandbox backend.
+  isolation: Fresh exported repository and fresh ephemeral CLI session for every attempt; no prior results are copied.
+  history: The only workspace commit contains the injected input, never the correct pre-injection catalog.
+  pilot: A two-mode hallucinated-field pair must demonstrate integration before final data collection.
+  freeze: Before final collection, persist this configuration, all tracked file hashes, CLI version, Python and packages, plan, and repository HEAD in the result directory.
+  interruption: Preserve partial logs, stop the batch, and use a new attempt directory on explicit resume. Never score infrastructure interruptions as repairs.
+  analysis: Report fault repair and clean-control preservation separately, paired outcomes, Wilson intervals, and exact paired binomial tests as exploratory results.

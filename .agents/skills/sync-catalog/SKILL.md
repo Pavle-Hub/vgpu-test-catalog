@@ -9,6 +9,17 @@ Read `.cursor/skills/sync-catalog/SKILL.md` completely before acting. That file
 is the canonical cross-client workflow and safety contract; follow every step
 and stopping condition in it.
 
+## Experiment mode
+
+The default mode is `with-checker`. When the user explicitly supplies
+`mode=without-checker`, perform the same evidence collection, derivation, and
+protected-field checks, with these changes: skip canonical section 4 entirely,
+make one proposal only, and do not run or read any deterministic checker,
+derivation, writer, or test-suite output. In section 5 inspect protected text
+and Git scope without requiring a checker report. Report zero checker attempts
+and state that evaluator-side verification is pending. Do not run the checker
+after that report. This mode measures one proposal without checker feedback.
+
 Apply these Codex host requirements:
 
 - Work from the repository root and use the project virtual environment.

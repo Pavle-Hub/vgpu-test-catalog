@@ -26,6 +26,10 @@ async def _metrics_round_trip() -> None:
             "get_duration_stats",
             "get_pass_rate",
         ]
+        for tool in tools.tools:
+            assert tool.annotations.read_only_hint is True
+            assert tool.annotations.destructive_hint is False
+            assert tool.annotations.open_world_hint is False
         duration_tool = next(tool for tool in tools.tools if tool.name == "get_duration_stats")
         assert duration_tool.input_schema["properties"]["testcase_id"]["pattern"] == (
             "^TC-[0-9]{3}$"

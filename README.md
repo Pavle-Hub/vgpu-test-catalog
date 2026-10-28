@@ -45,7 +45,7 @@ fault operators and clean controls measure checker and agent behavior separately
 
 - Python 3.11-3.14 (Python 3.13 is recommended for the reference environment)
 - Git
-- Cursor for the agent demonstration
+- Cursor or Codex for the agent demonstration
 
 ## Quick verification
 
@@ -81,6 +81,7 @@ python -m vgpu_catalog.dataset --output dataset
 - [MCP server contracts and verification](docs/mcp-servers.md)
 - [Cursor MCP and Skill workflow](docs/cursor-workflow.md)
 - [Evaluation workflow](eval/README.md)
+- [Isolated Codex experiments](docs/codex-experiments.md)
 - [CI gate and merge protection](docs/ci-gate.md)
 - [Completion checklist](docs/completion-checklist.md)
 
