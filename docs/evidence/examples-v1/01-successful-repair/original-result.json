@@ -1,0 +1,35 @@
+{
+  "baseline_sha256": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+  "changed_paths": [
+    "catalog/test_catalog.md"
+  ],
+  "checker_attempts": 1,
+  "checker_valid": true,
+  "condition": "fault",
+  "evidence_read": true,
+  "fault_class": "hallucinated-field",
+  "finished_at": "2026-10-28T00:02:12.309322+00:00",
+  "infrastructure_issues": [],
+  "mode": "with-checker",
+  "order": 1,
+  "output_sha256": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+  "pair_id": "hallucinated-field-r03",
+  "protected_fields_preserved": true,
+  "repetition": 3,
+  "returncode": 0,
+  "run_id": "ce1-hallucinated-field-r03-with-checker",
+  "scope_preserved": true,
+  "started_at": "2026-10-28T00:01:05.040378+00:00",
+  "status": "completed",
+  "success": true,
+  "testcase_id": "TC-003",
+  "timed_out": false,
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 318080,
+    "input_tokens": 353314,
+    "output_tokens": 3699,
+    "reasoning_output_tokens": 436
+  },
+  "violations": []
+}

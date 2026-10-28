@@ -1,0 +1,21 @@
+{
+  "catalog_path": "catalog/test_catalog.md",
+  "dataset_dir": "dataset",
+  "issues": [
+    {
+      "actual": null,
+      "code": "DERIVED_DATA_INVALID",
+      "expected": null,
+      "message": "Invalid derived JSON for TC-004: Expecting ',' delimiter: line 45 column 3 (char 1486)",
+      "path": "TC-004"
+    },
+    {
+      "actual": null,
+      "code": "MARKDOWN_DRIFT",
+      "expected": null,
+      "message": "Visible or hidden derived Markdown differs from deterministic output.",
+      "path": "TC-004"
+    }
+  ],
+  "valid": false
+}

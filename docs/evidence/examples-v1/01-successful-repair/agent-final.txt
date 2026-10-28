@@ -1,0 +1,7 @@
+Updated [catalog/test_catalog.md](catalog/test_catalog.md): removed TC-003’s unsupported `agent_confidence` field from Markdown and hidden JSON. All other derived values match MCP evidence.
+
+- Checker passed on attempt **1**.
+- Summaries unchanged; Purpose and Notes preserved byte-for-byte.
+- Git scope: only `catalog/test_catalog.md` changed. No commit or push.
+
+Source hash: `83c9a22581b017a0ebc967d7c5bd4ef53f6c9edcb246e696ab402314a5eef394`

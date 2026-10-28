@@ -1,0 +1,19 @@
+--- input.md
++++ output.md
+@@ -165,13 +165,9 @@
+ - **Timeout:** `41 s`
+ - **Pass rate:** `degraded` (`86.67%`)
+ - **Last measurement:** `2025-12-12T00:00:00Z` (`fresh`)
+-- **Agent confidence:** `high`
+-<!-- catalog:derived-data
+-{
+-  "fields": {
+-    "agent_confidence": {
+-      "value": "high"
+-    },
++<!-- catalog:derived-data
++{
++  "fields": {
+     "last_measurement": {
+       "provenance": {
+         "computed_at": "2026-01-01T00:00:00Z",

@@ -1,0 +1,21 @@
+{
+  "catalog_path": "catalog/test_catalog.md",
+  "dataset_dir": "dataset",
+  "issues": [
+    {
+      "actual": null,
+      "code": "DERIVED_SCHEMA_ERROR",
+      "expected": null,
+      "message": "fields: Additional properties are not allowed ('agent_confidence' was unexpected)",
+      "path": "TC-003"
+    },
+    {
+      "actual": null,
+      "code": "MARKDOWN_DRIFT",
+      "expected": null,
+      "message": "Visible or hidden derived Markdown differs from deterministic output.",
+      "path": "TC-003"
+    }
+  ],
+  "valid": false
+}

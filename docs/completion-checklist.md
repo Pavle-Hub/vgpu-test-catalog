@@ -36,9 +36,11 @@ agent repair success.
    an incorrect timeout rejected at the checker step. The user captured a
    screenshot of the blocked merge. Retain that screenshot with the PR and run
    URLs as the final merge-enforcement evidence.
-4. Select representative input/output catalogs, JSON reports, tables, screenshots,
-   and architecture figures for the thesis. Package the raw final results and
-   transcripts for reproducibility; `eval/results/` is currently Git-ignored.
+4. Three representative cases and a portable, hashed evidence pack are prepared;
+   see `docs/representative-examples.md`. Capture the suggested evidence views
+   and prepare aggregate charts and architecture figures for the thesis.
+   The user reports a separate backup of the raw collection; `eval/results/`
+   remains Git-ignored. Keep that archive alongside the portable examples.
 5. Freeze the final release and write the implementation, methodology, results,
    limitations, and conclusion chapters using the verified evidence.
 

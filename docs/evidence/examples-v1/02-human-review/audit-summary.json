@@ -1,0 +1,16 @@
+{
+  "turn_completed": true,
+  "checker_attempts": 0,
+  "evidence_read": false,
+  "violations": [
+    "checker-attempt-budget-violation",
+    "missing-auditable-MCP-evidence"
+  ],
+  "audit_limit": "Command-text and file-diff audit; not a proof against deliberate obfuscation.",
+  "mcp_calls": {
+    "env-mcp/list_mcp_resource_templates": 1,
+    "env-mcp/list_mcp_resources": 1,
+    "env-mcp/read_mcp_resource": 1,
+    "metrics-mcp/list_testcases": 1
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "baseline_sha256": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+  "changed_paths": [],
+  "checker_attempts": 0,
+  "checker_valid": false,
+  "condition": "fault",
+  "evidence_read": false,
+  "fault_class": "broken-format",
+  "finished_at": "2026-10-28T10:20:05.734789+00:00",
+  "human_review_reported": true,
+  "infrastructure_issues": [],
+  "mode": "with-checker",
+  "order": 56,
+  "original_success": false,
+  "original_violations": [
+    "checker-attempt-budget-violation",
+    "missing-auditable-MCP-evidence"
+  ],
+  "output_sha256": "9fa1b091b8428b25c77e1bf5a28e621519e28712110d32b50c2c1d0c067b7e28",
+  "pair_id": "broken-format-r02",
+  "protected_fields_preserved": true,
+  "repetition": 2,
+  "returncode": 0,
+  "run_id": "ce1-broken-format-r02-with-checker",
+  "scope_preserved": true,
+  "started_at": "2026-10-28T10:19:28.252083+00:00",
+  "status": "completed",
+  "success": false,
+  "testcase_id": "TC-004",
+  "timed_out": false,
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 127744,
+    "input_tokens": 158694,
+    "output_tokens": 1295,
+    "reasoning_output_tokens": 454
+  },
+  "violations": [
+    "checker-attempt-budget-violation",
+    "missing-auditable-MCP-evidence"
+  ]
+}
