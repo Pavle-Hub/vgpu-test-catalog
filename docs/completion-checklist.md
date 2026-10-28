@@ -37,8 +37,9 @@ agent repair success.
    screenshot of the blocked merge. Retain that screenshot with the PR and run
    URLs as the final merge-enforcement evidence.
 4. Three representative cases and a portable, hashed evidence pack are prepared;
-   see `docs/representative-examples.md`. Capture the suggested evidence views
-   and prepare aggregate charts and architecture figures for the thesis.
+   see `docs/representative-examples.md`. Aggregate/class tables and PNG/SVG
+   figures with interpretation are prepared in `docs/results-for-thesis.md`.
+   Capture the suggested evidence views and prepare the architecture diagram.
    The user reports a separate backup of the raw collection; `eval/results/`
    remains Git-ignored. Keep that archive alongside the portable examples.
 5. Freeze the final release and write the implementation, methodology, results,

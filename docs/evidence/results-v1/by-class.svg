@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="815" viewBox="0 0 1250 815" role="img">
+<title>Rezultati korigovane analize audit-v2</title>
+<desc>Opažene stope uspeha i 95% Wilson intervali; kontrole su odvojene.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="46" y="60" font-size="30" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Autonomna popravka po klasi greške</text>
+<text x="46" y="98" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Tačke: opažena uspešnost  |  Linije: 95% Wilson intervali</text>
+<circle cx="55" cy="126" r="6" fill="#2366A8"/>
+<text x="75" y="133" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">with-checker</text>
+<rect x="319" y="120" width="12" height="12" fill="#BD641C"/>
+<text x="345" y="133" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">without-checker</text>
+<line x1="365.0" y1="180" x2="365.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="350.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">0</text>
+<line x1="483.0" y1="180" x2="483.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="468.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">20</text>
+<line x1="601.0" y1="180" x2="601.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="586.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">40</text>
+<line x1="719.0" y1="180" x2="719.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="704.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">60</text>
+<line x1="837.0" y1="180" x2="837.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="822.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">80</text>
+<line x1="955.0" y1="180" x2="955.0" y2="645" stroke="#DDE3E9" stroke-width="1"/>
+<text x="940.0" y="675" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">100</text>
+<text x="545" y="709" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Uspešnost (%)</text>
+<text x="46" y="218" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Pogrešna vrednost</text>
+<text x="46" y="241" font-size="16" font-family="Segoe UI,Arial,sans-serif" fill="#607080">wrong-value</text>
+<line x1="698.6553457779269" y1="207" x2="955.0" y2="207" stroke="#2366A8" stroke-width="3"/>
+<line x1="698.6553457779269" y1="201" x2="698.6553457779269" y2="213" stroke="#2366A8" stroke-width="2"/>
+<line x1="955.0" y1="201" x2="955.0" y2="213" stroke="#2366A8" stroke-width="2"/>
+<circle cx="955.0" cy="207" r="6" fill="#2366A8"/>
+<text x="989" y="213" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">5/5 (100,0%)</text>
+<line x1="698.6553457779269" y1="235" x2="955.0" y2="235" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="229" x2="698.6553457779269" y2="241" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="229" x2="955.0" y2="241" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="229" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="241" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="306" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Zastarela vrednost</text>
+<text x="46" y="329" font-size="16" font-family="Segoe UI,Arial,sans-serif" fill="#607080">stale-value</text>
+<line x1="698.6553457779269" y1="295" x2="955.0" y2="295" stroke="#2366A8" stroke-width="3"/>
+<line x1="698.6553457779269" y1="289" x2="698.6553457779269" y2="301" stroke="#2366A8" stroke-width="2"/>
+<line x1="955.0" y1="289" x2="955.0" y2="301" stroke="#2366A8" stroke-width="2"/>
+<circle cx="955.0" cy="295" r="6" fill="#2366A8"/>
+<text x="989" y="301" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">5/5 (100,0%)</text>
+<line x1="698.6553457779269" y1="323" x2="955.0" y2="323" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="317" x2="698.6553457779269" y2="329" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="317" x2="955.0" y2="329" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="317" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="329" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="394" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Izmišljeno polje</text>
+<text x="46" y="417" font-size="16" font-family="Segoe UI,Arial,sans-serif" fill="#607080">hallucinated-field</text>
+<line x1="698.6553457779269" y1="383" x2="955.0" y2="383" stroke="#2366A8" stroke-width="3"/>
+<line x1="698.6553457779269" y1="377" x2="698.6553457779269" y2="389" stroke="#2366A8" stroke-width="2"/>
+<line x1="955.0" y1="377" x2="955.0" y2="389" stroke="#2366A8" stroke-width="2"/>
+<circle cx="955.0" cy="383" r="6" fill="#2366A8"/>
+<text x="989" y="389" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">5/5 (100,0%)</text>
+<line x1="698.6553457779269" y1="411" x2="955.0" y2="411" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="405" x2="698.6553457779269" y2="417" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="405" x2="955.0" y2="417" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="405" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="417" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="482" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Narušen format</text>
+<text x="46" y="505" font-size="16" font-family="Segoe UI,Arial,sans-serif" fill="#607080">broken-format</text>
+<line x1="386.3722240931338" y1="471" x2="733.4345684401101" y2="471" stroke="#2366A8" stroke-width="3"/>
+<line x1="386.3722240931338" y1="465" x2="386.3722240931338" y2="477" stroke="#2366A8" stroke-width="2"/>
+<line x1="733.4345684401101" y1="465" x2="733.4345684401101" y2="477" stroke="#2366A8" stroke-width="2"/>
+<circle cx="483.0" cy="471" r="6" fill="#2366A8"/>
+<text x="989" y="477" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">1/5 (20,0%)</text>
+<line x1="698.6553457779269" y1="499" x2="955.0" y2="499" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="493" x2="698.6553457779269" y2="505" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="493" x2="955.0" y2="505" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="493" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="505" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="570" font-size="21" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Netačno poreklo</text>
+<text x="46" y="593" font-size="16" font-family="Segoe UI,Arial,sans-serif" fill="#607080">false-provenance</text>
+<line x1="698.6553457779269" y1="559" x2="955.0" y2="559" stroke="#2366A8" stroke-width="3"/>
+<line x1="698.6553457779269" y1="553" x2="698.6553457779269" y2="565" stroke="#2366A8" stroke-width="2"/>
+<line x1="955.0" y1="553" x2="955.0" y2="565" stroke="#2366A8" stroke-width="2"/>
+<circle cx="955.0" cy="559" r="6" fill="#2366A8"/>
+<text x="989" y="565" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">5/5 (100,0%)</text>
+<line x1="698.6553457779269" y1="587" x2="955.0" y2="587" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="581" x2="698.6553457779269" y2="593" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="581" x2="955.0" y2="593" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="581" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="593" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="752" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">n = 5 po klasi i režimu. Neotklonjeni kvarovi: 4 (broken-format / with-checker).</text>
+<text x="46" y="784" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">audit-v2 · isti ciljni kvar po klasi · studija nije opšti rang modela</text>
+</svg>

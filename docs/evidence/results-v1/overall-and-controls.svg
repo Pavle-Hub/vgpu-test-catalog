@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="725" viewBox="0 0 1250 725" role="img">
+<title>Rezultati korigovane analize audit-v2</title>
+<desc>Opažene stope uspeha i 95% Wilson intervali; kontrole su odvojene.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="46" y="60" font-size="30" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Popravke i kontrole — odvojeni ishodi</text>
+<text x="46" y="98" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Tačke: opažena uspešnost  |  Linije: 95% Wilson intervali</text>
+<circle cx="55" cy="126" r="6" fill="#2366A8"/>
+<text x="75" y="133" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">with-checker</text>
+<rect x="319" y="120" width="12" height="12" fill="#BD641C"/>
+<text x="345" y="133" font-size="20" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">without-checker</text>
+<line x1="365.0" y1="180" x2="365.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="350.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">0</text>
+<line x1="483.0" y1="180" x2="483.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="468.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">20</text>
+<line x1="601.0" y1="180" x2="601.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="586.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">40</text>
+<line x1="719.0" y1="180" x2="719.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="704.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">60</text>
+<line x1="837.0" y1="180" x2="837.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="822.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">80</text>
+<line x1="955.0" y1="180" x2="955.0" y2="280" stroke="#DDE3E9" stroke-width="1"/>
+<text x="940.0" y="310" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">100</text>
+<text x="545" y="344" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Uspešnost (%)</text>
+<text x="46" y="218" font-size="22" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Sa greškom (n = 25)</text>
+<text x="46" y="245" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Autonomna popravka</text>
+<line x1="750.5436325176447" y1="205" x2="917.219636405609" y2="205" stroke="#2366A8" stroke-width="3"/>
+<line x1="750.5436325176447" y1="199" x2="750.5436325176447" y2="211" stroke="#2366A8" stroke-width="2"/>
+<line x1="917.219636405609" y1="199" x2="917.219636405609" y2="211" stroke="#2366A8" stroke-width="2"/>
+<circle cx="860.5999999999999" cy="205" r="6" fill="#2366A8"/>
+<text x="989" y="211" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">21/25 (84,0%)</text>
+<line x1="876.4165719459613" y1="243" x2="954.9999999999999" y2="243" stroke="#BD641C" stroke-width="3"/>
+<line x1="876.4165719459613" y1="237" x2="876.4165719459613" y2="249" stroke="#BD641C" stroke-width="2"/>
+<line x1="954.9999999999999" y1="237" x2="954.9999999999999" y2="249" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="237" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="249" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">25/25 (100,0%)</text>
+<line x1="365.0" y1="390" x2="365.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="350.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">0</text>
+<line x1="483.0" y1="390" x2="483.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="468.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">20</text>
+<line x1="601.0" y1="390" x2="601.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="586.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">40</text>
+<line x1="719.0" y1="390" x2="719.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="704.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">60</text>
+<line x1="837.0" y1="390" x2="837.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="822.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">80</text>
+<line x1="955.0" y1="390" x2="955.0" y2="490" stroke="#DDE3E9" stroke-width="1"/>
+<text x="940.0" y="520" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">100</text>
+<text x="545" y="554" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Uspešnost (%)</text>
+<text x="46" y="428" font-size="22" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Kontrole (n = 5)</text>
+<text x="46" y="455" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Uspešna kontrolna sesija</text>
+<line x1="698.6553457779269" y1="415" x2="955.0" y2="415" stroke="#2366A8" stroke-width="3"/>
+<line x1="698.6553457779269" y1="409" x2="698.6553457779269" y2="421" stroke="#2366A8" stroke-width="2"/>
+<line x1="955.0" y1="409" x2="955.0" y2="421" stroke="#2366A8" stroke-width="2"/>
+<circle cx="955.0" cy="415" r="6" fill="#2366A8"/>
+<text x="989" y="421" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#2366A8">5/5 (100,0%)</text>
+<line x1="698.6553457779269" y1="453" x2="955.0" y2="453" stroke="#BD641C" stroke-width="3"/>
+<line x1="698.6553457779269" y1="447" x2="698.6553457779269" y2="459" stroke="#BD641C" stroke-width="2"/>
+<line x1="955.0" y1="447" x2="955.0" y2="459" stroke="#BD641C" stroke-width="2"/>
+<rect x="949.0" y="447" width="12" height="12" fill="#BD641C"/>
+<text x="989" y="459" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#BD641C">5/5 (100,0%)</text>
+<text x="46" y="627" font-size="19" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Popravke: with − without = −16 pp; egzaktni upareni test: p = 0,125.</text>
+<text x="46" y="662" font-size="18" font-family="Segoe UI,Arial,sans-serif" fill="#263342">Kontrole su odvojene. Piloti i infrastrukturni prekid nisu ocenjeni.</text>
+<text x="46" y="697" font-size="17" font-family="Segoe UI,Arial,sans-serif" fill="#263342">audit-v2 · opisni intervali · bez dokaza opšte prednosti jednog režima</text>
+</svg>
