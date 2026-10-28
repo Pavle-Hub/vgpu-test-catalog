@@ -1,0 +1,33 @@
+{
+  "baseline_sha256": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+  "changed_paths": [],
+  "checker_attempts": 1,
+  "checker_valid": true,
+  "condition": "clean",
+  "evidence_read": true,
+  "fault_class": "",
+  "finished_at": "2026-10-28T00:12:42.388194+00:00",
+  "infrastructure_issues": [],
+  "mode": "with-checker",
+  "order": 9,
+  "output_sha256": "7a582c3975441c695ea27ff50f21dc78d058dbd5e009609ee8b670e02caf1706",
+  "pair_id": "clean-r02",
+  "protected_fields_preserved": true,
+  "repetition": 2,
+  "returncode": 0,
+  "run_id": "ce1-clean-r02-with-checker",
+  "scope_preserved": true,
+  "started_at": "2026-10-28T00:11:30.888628+00:00",
+  "status": "completed",
+  "success": true,
+  "testcase_id": "",
+  "timed_out": false,
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 394368,
+    "input_tokens": 431321,
+    "output_tokens": 3774,
+    "reasoning_output_tokens": 322
+  },
+  "violations": []
+}

@@ -1,0 +1,15 @@
+{
+  "turn_completed": true,
+  "checker_attempts": 1,
+  "evidence_read": true,
+  "violations": [],
+  "audit_limit": "Command-text and file-diff audit; not a proof against deliberate obfuscation.",
+  "mcp_calls": {
+    "env-mcp/list_mcp_resource_templates": 1,
+    "env-mcp/list_mcp_resources": 1,
+    "env-mcp/read_mcp_resource": 11,
+    "metrics-mcp/get_duration_stats": 19,
+    "metrics-mcp/get_pass_rate": 19,
+    "metrics-mcp/list_testcases": 1
+  }
+}

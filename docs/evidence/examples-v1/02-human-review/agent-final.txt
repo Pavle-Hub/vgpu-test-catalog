@@ -1,0 +1,8 @@
+Stopped: [TC-004 hidden JSON](catalog/test_catalog.md:283) is missing a comma. The [canonical skill](.cursor/skills/sync-catalog/SKILL.md:128) states that structural errors “require human review.”
+
+- Source validation passed; both MCP identities match.
+- Source hash: `83c9a22581b017a0ebc967d7c5bd4ef53f6c9edcb246e696ab402314a5eef394`
+- Checker attempts: **0**
+- Test-case fields and Summaries changed: **none**
+- Purpose/Notes: untouched
+- Git scope: clean; no files changed

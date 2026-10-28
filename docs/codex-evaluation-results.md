@@ -86,6 +86,9 @@ režima, a intervali ne rešavaju pitanje reprezentativnosti odabranih kvarova.
 
 ## Artefakti i reprodukcija
 
+Tri odabrana slučaja, objašnjenja i prenosivi paket dokaza opisani su u
+[reprezentativnim primerima](representative-examples.md).
+
 Za novu odvojenu kopiju analize, bez agentskih poziva:
 
 ```powershell
