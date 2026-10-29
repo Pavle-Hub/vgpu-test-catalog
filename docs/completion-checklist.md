@@ -1,12 +1,15 @@
 # Completion checklist
 
-Status checked on 2026-10-28.
+Status checked on 2026-10-29.
 
 ## Implemented and locally verified
 
 - Local read-only dashboard for the catalog, three saved cases, corrected
   results and architecture, documented in `docs/dashboard.md`. This is a
   presentation layer added after collection, not a new experimental condition.
+- Complete 60-session evidence export, filterable session browser, paired
+  mode comparison and explicit saved success criteria. Node/DOM contract
+  tests supplement Python checks; they are not full browser E2E coverage.
 
 - Reference dataset, generator, manifest hashes, JSON schemas, and validation.
 - Declarative rules and mixed-ownership Markdown catalog.

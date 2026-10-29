@@ -23,6 +23,7 @@ CASE_FILES = (
 ASSETS = {
     "/": ("web/dashboard/index.html", "text/html; charset=utf-8"),
     "/app.js": ("web/dashboard/app.js", "text/javascript; charset=utf-8"),
+    "/sessions.js": ("web/dashboard/sessions.js", "text/javascript; charset=utf-8"),
     "/style.css": ("web/dashboard/style.css", "text/css; charset=utf-8"),
     "/figures/by-class.svg": ("docs/evidence/results-v1/by-class.svg", "image/svg+xml"),
     "/figures/overall.svg": ("docs/evidence/results-v1/overall-and-controls.svg", "image/svg+xml"),
@@ -68,9 +69,23 @@ def snapshot(root: Path = ROOT) -> dict[str, Any]:
     verify_pack(root, "docs/evidence/examples-v1", "export_sha256")
     verify_pack(root, "docs/evidence/results-v1", "files_sha256")
     verify_pack(root, "docs/evidence/architecture-v1", "files_sha256")
+    verify_pack(root, "docs/evidence/sessions-v1", "files_sha256")
+    session_data = load(root, "docs/evidence/sessions-v1/sessions.json")
     data = load(root, "docs/evidence/results-v1/data.json")
     if analyze(data["attempts"], data["summary"]["expected_runs"]) != data["summary"]:
         raise ValueError("Saved scores do not reproduce the summary.")
+    sessions = session_data["sessions"]
+    completed = {r["run_id"]: r for r in data["attempts"] if r["status"] == "completed"}
+    corrected = [s["result"] for s in sessions.values()] + [
+        r for r in data["attempts"] if r["status"] == "interrupted"
+    ]
+    if (session_data["summary"] != data["summary"]
+            or session_data["collection_head"] != data["collection_head"]
+            or analyze(corrected, data["summary"]["expected_runs"]) != data["summary"]
+            or set(sessions) != set(completed)
+            or any(sessions[key]["result"].get(k) != v
+                   for key, row in completed.items() for k, v in row.items())):
+        raise ValueError("Session evidence differs from corrected scores.")
     cases = {}
     for case in CASES:
         case_data = {}
@@ -84,6 +99,7 @@ def snapshot(root: Path = ROOT) -> dict[str, Any]:
         "collection_head": data["collection_head"], "revision": data["score_revision"],
         "summary": data["summary"], "attempts": data["attempts"],
         "corrections": data["corrected_attempts"],
+        "sessions": sessions,
         "catalog": catalog_records(catalog.decode("utf-8")),
         "catalog_sha256": sha256_bytes(catalog),
         "source": load(root, "dataset/manifest.json"), "cases": cases,

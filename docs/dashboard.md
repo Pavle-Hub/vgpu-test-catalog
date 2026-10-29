@@ -38,6 +38,15 @@ JavaScript dobija podatke sa lokalnog `/api/data` endpoint-a.
    očuvanog kataloga; diff ubrizgavanja i popravke; odlomci ili ceo ulaz/izlaz;
    početni/završni evaluatorski JSON, agentska poruka i ocena sa auditom.
 4. **Arhitektura:** slike održavanja i odvojenog eksperimentalnog/CI toka.
+5. **Sve sesije i parovi:** 60 završenih sesija, filteri po grupi, režimu,
+   klasi, ishodu i identifikatoru. Dugme Uporedi ili izbor para otvara oba
+   režima istog kvara/ponavljanja, bez obzira na filter liste. Prikazani su
+   ciljni odlomci, diff celog kataloga, završne ocene, hash-evi i izveštaji.
+
+Panel **Šta je provereno?** odvojeno prikazuje validnost kataloga, zaštićena
+polja, scope, MCP dokaze, broj agentskih provera, audit i završetak sesije.
+Prikazuje već sačuvane ocene, ne novu validaciju. Nepoznati kriterijumi se ne
+predstavljaju kao uspešni. Zbirni brojevi i napomene u webu izvode se iz podataka.
 
 Ovo je **pregled istorijskih dokaza**, ne izvršavanje agenta uživo. Nema dugmeta
 za nove eksperimente ili popravku kataloga. Početni i završni evaluatorski
@@ -49,6 +58,14 @@ uspeh kompletne sesije predstavljeni su kao različite činjenice.
 Dashboard koristi prenosive, verzionisane pakete u `docs/evidence/`: `examples-v1`,
 `results-v1` i `architecture-v1`, kao i trenutni `catalog/test_catalog.md` i
 metapodatke iz `dataset/manifest.json`. Ne zahteva Git-ignored raw arhivu.
+Detalji svih završenih sesija izvezeni su u `docs/evidence/sessions-v1/`.
+Njihov manifest beleži hash-eve izvornih dokaza i generatora. Izvoz se obavlja
+skriptom `tools/export_session_evidence.py`; originalna arhiva nije promenjena.
+Paket ne uključuje pristupne podatke, komandne logove, runtime ili kompletne
+agentske transkripte. Za kontrole je prikazan samo TC-001 kao ilustrativan
+odlomak, ali diff i hash-evi odnose se na cele kataloge. Jedan infrastrukturni
+prekid je sačuvan u originalnoj zbirci i brojčanom sažetku, ne među 60 završenih
+sesija. Pilot-sesije ostaju isključene.
 Pri pokretanju proverava hash-eve izvezenih dokaza i ponovo izračunava zbirnu
 analizu iz sačuvanih ocena. Originalni rezultati nisu prepisani i nema novih
 agentskih ili checker poziva. Eksperimentalni izvori su sintetički; ne treba
@@ -86,3 +103,16 @@ provereno je da nema horizontalnog preliva cele stranice. To nije potpuni
 cross-browser ili accessibility audit. Automatski testovi proveravaju snapshot,
 integritet paketa, HTTP rute i header-e, odbijanje write metoda i stranih Host
 vrednosti i odsustvo pokretanja podprocesa pri učitavanju dokaza.
+
+## Provera dopune sa sesijama
+
+Dodati su Node testovi čistih pravila filtera/parova/kriterijuma i DOM contract
+testovi koji izvršavaju stvarni app.js uz mali testni DOM. Proveravaju promenu
+filtera, poništavanje, prazne rezultate, izbor para, kriterijume i pretragu
+kataloga. To nisu punopravni headless-browser E2E testovi. Pytest ih pokreće kada
+je Node dostupan; bez Node-a taj test se jasno preskače. Nema novih npm paketa.
+U stvarnom browser-u provereni su učitavanje svih sesija, filter neuspeha i
+par broken-format-r02 sa različitim ishodima i sedam kriterijuma po režimu.
+Mobilna širina 390 px proverena je bez horizontalnog preliva cele stranice;
+široka tabela ima svoj horizontalni scroll. Izvoz svih sesija je nov paket,
+ne promena originalnog eksperimentalnog skupa niti naknadno prikupljanje.

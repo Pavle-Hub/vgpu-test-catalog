@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="sr-Latn">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Catalog Observatory · vGPU</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<title>Catalog Observatory · vGPU</title><link rel="stylesheet" href="/style.css"><script src="/sessions.js" defer></script><script src="/app.js" defer></script></head>
 <body>
 <aside class="sidebar"><a href="#results" class="brand"><span class="logo">C/O</span><span>Catalog<br><strong>Observatory</strong></span></a>
 <p class="nav-label">RADNI PROSTOR</p><nav aria-label="Glavna navigacija">
@@ -9,6 +9,7 @@
 <a href="#catalog" data-view="catalog">02 <span>Katalog testova</span></a>
 <a href="#cases" data-view="cases">03 <span>Reprezentativni primeri</span></a>
 <a href="#architecture" data-view="architecture">04 <span>Arhitektura</span></a></nav>
+<nav aria-label="Detalji eksperimenata"><a href="#sessions" data-view="sessions">05 <span>Sve sesije i parovi</span></a></nav>
 <div class="sidebar-bottom"><span class="status-dot"></span> Lokalni prikaz · samo čitanje<p>Bez agentskih poziva.<br>Bez izmena dokaza.</p></div></aside>
 <main><header><div class="breadcrumb">DIPLOMSKI RAD <span>/</span> vGPU test catalog</div><span class="pill">SAČUVANI REZULTATI</span></header>
 <div id="loading" role="status">Učitavanje i provera dokaza…</div>
@@ -24,5 +25,19 @@
 <section id="view-catalog" class="view" hidden><p class="eyebrow">TRENUTNA DATOTEKA / 10 TEST-SLUČAJEVA</p><h1>Katalog testova.</h1><p class="lead">Čitanje izvedenih vrednosti i ljudski pisanih opisa.</p><div class="notice">Ovo je katalog učitan pri pokretanju dashboard-a. Nije pokrenuta nova checker provera. GPU-A/B/C i merenja pripadaju sintetičkom skupu.</div><label class="search">Pretraži test, GPU ili opis<input id="search" type="search" placeholder="npr. TC-003, GPU-C, compute…"></label><div class="catalog-layout"><div id="catalog-list" class="catalog-list"></div><article id="catalog-detail" class="panel"></article></div></section>
 <section id="view-cases" class="view" hidden><p class="eyebrow">SAČUVANI DOKAZI / TRI ILUSTRATIVNA ISHODA</p><h1>Prati jednu promenu.</h1><p class="lead">Ulaz, agentska izmena i završno nezavisno ocenjivanje.</p><div id="case-choices" class="case-choices"></div><div id="case-content"></div></section>
 <section id="view-architecture" class="view" hidden><p class="eyebrow">LOGIČKI PREGLED</p><h1>Kako je sistem povezan.</h1><p class="lead">Agentsko održavanje, eksperimentalno ocenjivanje i razvojni CI tok.</p><article class="panel"><h2>Održavanje kataloga</h2><p>Agent koristi MCP dokaze; checker lokalno računa očekivano stanje. Povratna veza agentu postoji samo u with-checker režimu.</p><img src="/figures/maintenance.svg" alt="Arhitektura: izvori, MCP serveri, agent, katalog i deterministički checker."></article><article class="panel"><h2>Evaluacija nije agentska povratna informacija</h2><p>Završni evaluator proverava oba režima. GitHub Actions je zaseban razvojni tok i ne pokreće agentske eksperimente.</p><img src="/figures/evaluation.svg" alt="Odvojeni tokovi eksperimentalnog ocenjivanja i GitHub CI kontrole."></article></section>
+<section id="view-sessions" class="view" hidden>
+<p class="eyebrow">KOMPLETNA SERIJA / AUDIT-V2</p><h1>Sesije, parovi i kriterijumi.</h1>
+<p class="lead">Svaka završena sesija, sa objašnjenjem ocene i drugim režimom iz istog para.</p>
+<div class="notice" id="session-notice"></div>
+<div class="filters panel">
+<label>Grupa<select id="filter-condition"><option value="">Sve grupe</option><option value="fault">Sa greškom</option><option value="clean">Kontrole</option></select></label>
+<label>Režim<select id="filter-mode"><option value="">Oba režima</option><option>with-checker</option><option>without-checker</option></select></label>
+<label>Klasa<select id="filter-fault"><option value="">Sve klase</option></select></label>
+<label>Ishod<select id="filter-outcome"><option value="">Svi ishodi</option><option value="success">Uspeh</option><option value="failure">Neuspeh</option></select></label>
+<label>Identifikator<input type="search" id="filter-query" placeholder="Pretraži sesije…"></label>
+<button type="button" id="reset-filters" class="button">Poništi filtere</button></div>
+<article class="panel"><h2 id="session-count" aria-live="polite"></h2><div class="table-wrap session-table"><table><thead><tr><th>Redosled / sesija</th><th>Grupa</th><th>Režim</th><th>Validan katalog</th><th>Uspeh sesije</th><th>Par</th></tr></thead><tbody id="session-rows"></tbody></table></div></article>
+<article class="panel"><label for="pair-choice">Upareno pokretanje (isti kvar i ponavljanje)</label><select id="pair-choice"></select><p class="muted">Par sadrži obe sesije i kada filter liste prikazuje samo jednu. Broj provera je broj agentskih poziva, ne evaluatorskih provera.</p><div id="pair-panels" class="pair-panels"></div></article>
+</section>
 <footer><span>CATALOG OBSERVATORY</span><span>Kontrolisana studija · korigovane ocene audit-v2 · bez novih izvršavanja</span></footer>
 </div></main></body></html>
