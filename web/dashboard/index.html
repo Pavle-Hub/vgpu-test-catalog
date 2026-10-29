@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catalog Observatory · vGPU</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<aside class="sidebar"><a href="#results" class="brand"><span class="logo">C/O</span><span>Catalog<br><strong>Observatory</strong></span></a>
+<p class="nav-label">RADNI PROSTOR</p><nav aria-label="Glavna navigacija">
+<a href="#results" data-view="results">01 <span>Rezultati</span></a>
+<a href="#catalog" data-view="catalog">02 <span>Katalog testova</span></a>
+<a href="#cases" data-view="cases">03 <span>Reprezentativni primeri</span></a>
+<a href="#architecture" data-view="architecture">04 <span>Arhitektura</span></a></nav>
+<div class="sidebar-bottom"><span class="status-dot"></span> Lokalni prikaz · samo čitanje<p>Bez agentskih poziva.<br>Bez izmena dokaza.</p></div></aside>
+<main><header><div class="breadcrumb">DIPLOMSKI RAD <span>/</span> vGPU test catalog</div><span class="pill">SAČUVANI REZULTATI</span></header>
+<div id="loading" role="status">Učitavanje i provera dokaza…</div>
+<div id="app" hidden>
+<section id="view-results" class="view">
+<div class="heading"><div><p class="eyebrow">EKSPERIMENTALNI PREGLED / AUDIT-V2</p><h1>Od predloga do dokaza.</h1><p class="lead">Šta je agent promenio, šta je provereno i gde je stao.</p></div><a class="button" href="#cases">Istraži primere ↗</a></div>
+<div class="notice">Ovo je pregled istorijskih izvršavanja, ne demonstracija uživo. Izvori su sintetički; agentske sesije su stvarno izvršene.</div>
+<div id="stats" class="stats"></div>
+<div class="panel"><div class="panel-title"><div><p class="eyebrow">PO KLASI GREŠKE</p><h2>Autonomne popravke</h2></div><span class="muted">5 ponavljanja / klasa / režim</span></div><div class="table-wrap"><table><thead><tr><th>Klasa</th><th>with-checker</th><th>without-checker</th><th>Napomena</th></tr></thead><tbody id="classes"></tbody></table></div></div>
+<div class="two-col"><article class="panel"><p class="eyebrow">NEIZVESNOST PROCENE</p><h2>Rezultat nije opšta garancija.</h2><p>Grafikon prikazuje opažene stope i 95% Wilson intervale. Pet ponavljanja istog ciljnog kvara ne predstavlja uzorak pet različitih kvarova.</p><img src="/figures/overall.svg" alt="Popravke: 21/25 sa checker-om, 25/25 bez; kontrole 5/5 u oba režima, uz Wilson intervale."></article><article class="panel"><p class="eyebrow">TUMAČENJE</p><h2>Četiri zaustavljanja,<br>ne četiri pogrešne provere.</h2><p>Četiri sesije klase broken-format u režimu with-checker zatražile su ljudski pregled. Katalog nije popravljen, a agent nije ni pozvao checker.</p><div class="callout">Uparena razlika: −16 procentnih poena<br>Egzaktni dvostrani test: p = 0,125</div><p>Ovo ne dokazuje opštu prednost jednog režima, niti njihovu jednakost. Kontrole su odvojene od popravki.</p><p class="muted">Sedam lažnih audit oznaka korigovano je u audit-v2. Originalni dokazi nisu menjani.</p></article></div>
+<details class="panel"><summary>Konfiguracija i poreklo podataka</summary><pre id="provenance"></pre></details>
+</section>
+<section id="view-catalog" class="view" hidden><p class="eyebrow">TRENUTNA DATOTEKA / 10 TEST-SLUČAJEVA</p><h1>Katalog testova.</h1><p class="lead">Čitanje izvedenih vrednosti i ljudski pisanih opisa.</p><div class="notice">Ovo je katalog učitan pri pokretanju dashboard-a. Nije pokrenuta nova checker provera. GPU-A/B/C i merenja pripadaju sintetičkom skupu.</div><label class="search">Pretraži test, GPU ili opis<input id="search" type="search" placeholder="npr. TC-003, GPU-C, compute…"></label><div class="catalog-layout"><div id="catalog-list" class="catalog-list"></div><article id="catalog-detail" class="panel"></article></div></section>
+<section id="view-cases" class="view" hidden><p class="eyebrow">SAČUVANI DOKAZI / TRI ILUSTRATIVNA ISHODA</p><h1>Prati jednu promenu.</h1><p class="lead">Ulaz, agentska izmena i završno nezavisno ocenjivanje.</p><div id="case-choices" class="case-choices"></div><div id="case-content"></div></section>
+<section id="view-architecture" class="view" hidden><p class="eyebrow">LOGIČKI PREGLED</p><h1>Kako je sistem povezan.</h1><p class="lead">Agentsko održavanje, eksperimentalno ocenjivanje i razvojni CI tok.</p><article class="panel"><h2>Održavanje kataloga</h2><p>Agent koristi MCP dokaze; checker lokalno računa očekivano stanje. Povratna veza agentu postoji samo u with-checker režimu.</p><img src="/figures/maintenance.svg" alt="Arhitektura: izvori, MCP serveri, agent, katalog i deterministički checker."></article><article class="panel"><h2>Evaluacija nije agentska povratna informacija</h2><p>Završni evaluator proverava oba režima. GitHub Actions je zaseban razvojni tok i ne pokreće agentske eksperimente.</p><img src="/figures/evaluation.svg" alt="Odvojeni tokovi eksperimentalnog ocenjivanja i GitHub CI kontrole."></article></section>
+<footer><span>CATALOG OBSERVATORY</span><span>Kontrolisana studija · korigovane ocene audit-v2 · bez novih izvršavanja</span></footer>
+</div></main></body></html>

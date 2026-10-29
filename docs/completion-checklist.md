@@ -4,6 +4,10 @@ Status checked on 2026-10-28.
 
 ## Implemented and locally verified
 
+- Local read-only dashboard for the catalog, three saved cases, corrected
+  results and architecture, documented in `docs/dashboard.md`. This is a
+  presentation layer added after collection, not a new experimental condition.
+
 - Reference dataset, generator, manifest hashes, JSON schemas, and validation.
 - Declarative rules and mixed-ownership Markdown catalog.
 - Read-only metrics and environment MCP servers.
