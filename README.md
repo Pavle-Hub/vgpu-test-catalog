@@ -1,5 +1,11 @@
 # vGPU Test Catalog
 
+## Local read-only dashboard
+
+Run `.venv\Scripts\python.exe tools\run_dashboard.py` and open
+`http://127.0.0.1:8765`. See [dashboard guide](docs/dashboard.md).
+This replays committed evidence; it does not run agents or modify results.
+
 An academic demonstration of reliable AI-agent automation for maintaining a
 software artifact. An agent reads synthetic measurements through MCP servers
 and proposes updates to a test catalog. A deterministic checker independently
