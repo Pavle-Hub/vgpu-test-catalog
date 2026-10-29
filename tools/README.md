@@ -1,5 +1,9 @@
 # Tools
 
+- `check_demo.py` checks local demo readiness without agents, network or writes.
+- `run_dashboard.py` serves the local read-only evidence dashboard.
+- `../Start-Dashboard.cmd` runs the preflight and dashboard from its own project directory.
+
 - `gen_dataset.py` is a thin CLI wrapper around the deterministic generator.
 - `validate_dataset.py` validates schemas, references, hashes, timestamps, seed,
   and snapshot identity.

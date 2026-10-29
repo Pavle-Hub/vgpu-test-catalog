@@ -11,6 +11,9 @@ baze podataka, CDN resursa ni spoljnog hostovanja.
 
 ## Pokretanje
 
+Za preflight, Windows pokretač i pripremu drugog računara videti
+[spremnost za demonstraciju](demo-readiness.md).
+
 Iz korena repozitorijuma:
 
 ```powershell

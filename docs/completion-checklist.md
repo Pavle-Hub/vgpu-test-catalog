@@ -4,6 +4,9 @@ Status checked on 2026-10-29.
 
 ## Implemented and locally verified
 
+- Read-only demo preflight (`tools/check_demo.py`), Windows dashboard launcher
+  and instructions for another computer in `docs/demo-readiness.md`.
+
 - Local read-only dashboard for the catalog, three saved cases, corrected
   results and architecture, documented in `docs/dashboard.md`. This is a
   presentation layer added after collection, not a new experimental condition.
