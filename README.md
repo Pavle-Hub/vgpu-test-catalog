@@ -6,6 +6,10 @@ Run `.venv\Scripts\python.exe tools\run_dashboard.py` and open
 `http://127.0.0.1:8765`. See [dashboard guide](docs/dashboard.md).
 This replays committed evidence; it does not run agents or modify results.
 
+On Windows, after environment setup, double-click `Start-Dashboard.cmd` to run
+the preflight and start the dashboard. See [demo readiness](docs/demo-readiness.md)
+for setup on another computer and the final demonstration checklist.
+
 An academic demonstration of reliable AI-agent automation for maintaining a
 software artifact. An agent reads synthetic measurements through MCP servers
 and proposes updates to a test catalog. A deterministic checker independently
@@ -22,7 +26,7 @@ The agent may write only contract-defined derived fields. Human-authored fields,
 the source snapshot, derivation rules, and the merge decision remain outside the
 agent's control.
 
-## Planned components
+## Implemented components
 
 - deterministic synthetic measurement generator;
 - content-addressed dataset manifest;
@@ -40,7 +44,8 @@ agent's control.
 The repository contains a versioned reference dataset, a validated `rules.yaml`
 contract, a mixed-ownership Markdown catalog, two read-only MCP 2.x servers, a
 project-level Cursor and Codex integrations, a controlled evaluation framework,
-and a GitHub Actions workflow awaiting hosted verification.
+and a GitHub Actions workflow. Hosted CI and merge-enforcement evidence are
+documented separately; local checks do not prove current GitHub settings.
 `metrics-mcp` exposes structured measurement tools; `env-mcp` exposes capability
 resources. The `sync-catalog` Skill composes their evidence under a bounded
 three-attempt repair policy. `catalog-check` independently reads the raw pinned
@@ -52,6 +57,10 @@ fault operators and clean controls measure checker and agent behavior separately
 - Python 3.11-3.14 (Python 3.13 is recommended for the reference environment)
 - Git
 - Cursor or Codex for the agent demonstration
+
+The saved-evidence dashboard needs only the installed Python environment;
+it does not need Cursor, Codex login, agent quota or an internet connection.
+Node is optional for frontend contract tests, not for running the dashboard.
 
 ## Quick verification
 
